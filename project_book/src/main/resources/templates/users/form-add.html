@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        form {
+            width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        /*.user{*/
+        /*    background-color: bisque;*/
+        /*    font-size: x-large;*/
+        /*    width: 100%;*/
+        /*    padding-left: 400px ;*/
+        /*}*/
+    </style>
+</head>
+<h1 style="text-align: center;background-color: #f1f1f1">THÊM MỚI NGƯỜI DÙNG</h1>
+<body>
+<form method="POST" action="/users/add" th:object="${add}">
+    <div class="user">
+        <div>
+            <label for="name">Name:</label><br>
+            <input id="name" type="text" th:field="*{name}" placeholder="Dang Tuan Vu"/>
+            <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+        <div>
+            <label for="phoneNumber">PhoneNumbers:</label><br>
+            <input id="phoneNumber" type="text" th:field="*{phoneNumber}" placeholder="ex:0123456789"/>
+            <span style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
+        </div>
+        <div>
+            <label for="myDate">DateOfBirth:</label><br>
+            <input type="date" id="myDate" onchange="validateDate()" th:field="*{dateOfBirth}">
+            <span style="color: red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span>
+        </div>
+        <div>
+            <label for="email">Email:</label><br>
+            <input id="email" type="text" th:field="*{email}" placeholder="exam@gmail.com"/>
+            <span style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        </div>
+        <div>
+            <label for="gender">Gender:</label><br>
+            <input id="gender" type="text" th:field="*{gender}" placeholder="ex:Nam|Nữ|Khác"/>
+            <span style="color: red" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
+        </div>
+        <div>
+            <label for="pass">Pass:</label><br>
+            <input id="pass" type="text" th:field="*{pass}"/>
+            <span style="color: red" th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}"></span>
+        </div>
+        <div>
+            <label for="userType">UsersType:</label><br>
+            <select id="userType" th:field="*{usersType}">
+                <option th:each="t, items : ${userType}" th:text="${t.name}" th:value="${t.id}">
+                </option>
+            </select>
+        </div>
+        <input type="submit"/>
+    </div>
+</form>
+<script>
+    function validateDate() {
+        let inputDate = new Date(document.getElementById("myDate").value);
+        let currentDate = new Date();
+
+        if (inputDate > currentDate) {
+            alert("Vui lòng nhập một ngày nhỏ hơn tương lai.");
+            document.getElementById("myDate").value = "";
+        }
+    }
+</script>
+</body>
+</html>
