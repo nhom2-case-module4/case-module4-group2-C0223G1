@@ -1,7 +1,7 @@
-package com.example.bookstore.service;
+package com.example.project_book.service;
 
-import com.example.bookstore.model.Users;
-import com.example.bookstore.model.UsersType;
+
+import com.example.project_book.model.UsersType;
 
 import java.util.List;
 

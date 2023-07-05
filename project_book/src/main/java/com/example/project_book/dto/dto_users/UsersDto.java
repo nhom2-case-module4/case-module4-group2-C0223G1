@@ -1,6 +1,6 @@
-package com.example.bookstore.dto;
+package com.example.project_book.dto.dto_users;
 
-import com.example.bookstore.model.UsersType;
+import com.example.project_book.model.UsersType;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

@@ -1,7 +1,9 @@
-package com.example.bookstore.service;
+package com.example.project_book.service;
 
-import com.example.bookstore.model.Users;
-import com.example.bookstore.repo.IUsersRepo;
+
+
+import com.example.project_book.model.Users;
+import com.example.project_book.repo.IUsersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.data.domain.Page;
@@ -12,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class UsersService implements IUsersService{
+public class UsersService implements IUsersService {
     @Autowired
     private IUsersRepo usersRepo;
 //    @Override

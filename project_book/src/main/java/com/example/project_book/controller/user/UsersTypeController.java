@@ -1,8 +1,8 @@
-package com.example.bookstore.controller;
+package com.example.project_book.controller.user;
 
-import com.example.bookstore.dto.UsersTypeDto;
-import com.example.bookstore.model.UsersType;
-import com.example.bookstore.service.IUsersTypeService;
+import com.example.project_book.dto.UsersTypeDto;
+import com.example.project_book.model.UsersType;
+import com.example.project_book.service.IUsersTypeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

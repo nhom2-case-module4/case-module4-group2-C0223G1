@@ -1,6 +1,6 @@
-package com.example.bookstore.repo;
+package com.example.project_book.repo;
 
-import com.example.bookstore.model.Users;
+import com.example.project_book.model.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,8 +1,8 @@
-package com.example.bookstore.service;
+package com.example.project_book.service;
 
-import com.example.bookstore.model.UsersType;
-import com.example.bookstore.repo.IUsersRepo;
-import com.example.bookstore.repo.IUsersTypeRepo;
+
+import com.example.project_book.model.UsersType;
+import com.example.project_book.repo.IUsersTypeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

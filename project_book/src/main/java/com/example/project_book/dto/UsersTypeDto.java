@@ -1,4 +1,4 @@
-package com.example.bookstore.dto;
+package com.example.project_book.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;

@@ -1,4 +1,4 @@
-package com.example.bookstore.model;
+package com.example.project_book.model;
 
 import javax.persistence.*;
 
