@@ -86,7 +86,7 @@
         </div>
         <div>
             <label for="userType">UsersType:</label><br>
-            <select id="userType" th:field="${roleUser}">
+            <select id="userType" th:field="*{roleUser.idRole}">
                 <option th:each="t, items : ${roleUser}" th:text="${t.nameRole}" th:value="${t.idRole}">
                 </option>
             </select>
