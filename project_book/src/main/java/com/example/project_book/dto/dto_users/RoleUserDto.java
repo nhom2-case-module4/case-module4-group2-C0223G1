@@ -3,7 +3,7 @@ package com.example.project_book.dto.dto_users;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-public class UsersTypeDto {
+public class RoleUserDto {
     private int idRole;
     @NotBlank
     @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "tên không hợp lệ")
@@ -11,10 +11,10 @@ public class UsersTypeDto {
 
     private boolean isDelete=false;
 
-    public UsersTypeDto() {
+    public RoleUserDto() {
     }
 
-    public UsersTypeDto(int idRole, String nameRole, boolean isDelete) {
+    public RoleUserDto(int idRole, String nameRole, boolean isDelete) {
         this.idRole = idRole;
         this.nameRole = nameRole;
         this.isDelete = isDelete;

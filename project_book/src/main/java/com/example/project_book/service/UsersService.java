@@ -1,25 +1,33 @@
 package com.example.project_book.service;
 
 
-
 import com.example.project_book.model.User;
 import com.example.project_book.repo.IUsersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UsersService implements IUsersService {
     @Autowired
     private IUsersRepo usersRepo;
-//    @Override
+    //    @Override
 //    public List<Users> getListUsers() {
 //        return usersRepo.findAll();
 //    }
 
+    //    Create by: Huynh Duc
+    //    Day: 06/07/2023
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    //    Create by: Huynh Duc
+    //    Day: 06/07/2023
     @Override
     public void add(User users) {
+        users.setPassUser(bCryptPasswordEncoder.encode(users.getPassUser()));
         usersRepo.save(users);
     }
 
@@ -31,7 +39,7 @@ public class UsersService implements IUsersService {
     @Override
     public User findById(int id) {
         for (int i = 0; i < usersRepo.findAll().size(); i++) {
-            if(usersRepo.findAll().get(i).getIdUser()==id){
+            if (usersRepo.findAll().get(i).getIdUser() == id) {
                 return usersRepo.findAll().get(i);
             }
         }
@@ -50,11 +58,17 @@ public class UsersService implements IUsersService {
 
     @Override
     public Page<User> findOne(String name, Pageable pageable) {
-        return this.usersRepo.searchByName(name,pageable);
+        return this.usersRepo.searchByName(name, pageable);
     }
 
     @Override
     public void deleteById(int id) {
         usersRepo.deleteById(id);
+    }
+    //    Create: Huynh Duc
+    //    Day: 06/07/2023
+    @Override
+    public boolean existsByEmailUser(String emailUser) {
+        return usersRepo.existsByEmailUser(emailUser);
     }
 }

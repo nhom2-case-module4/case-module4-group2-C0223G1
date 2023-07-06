@@ -34,9 +34,8 @@ public class UsersController {
 
     @GetMapping("/form-add")
     public String showFormAdd(Model model) {
-
         model.addAttribute("add", new UsersDto());
-        model.addAttribute("userType", this.usersTypeService.getListUsers());
+        model.addAttribute("roleUser", this.usersTypeService.getListUsers());
         return "/form-add";
     }
 
@@ -72,7 +71,7 @@ public class UsersController {
             return "redirect:/users";
         } else {
             model.addAttribute("edit", usersService.findById(id));
-            model.addAttribute("userType", this.usersTypeService.getListUsers());
+            model.addAttribute("roleUser", this.usersTypeService.getListUsers());
             return "/form-edit";
         }
 

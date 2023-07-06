@@ -47,7 +47,7 @@
 </head>
 <h1 style="text-align: center;background-color: #f1f1f1">THÊM MỚI NGƯỜI DÙNG</h1>
 <body>
-<form method="POST" action="/users/add" th:object="${add}">
+<form method="POST" th:action="@{/home/create}" th:object="${add}">
     <div class="user">
         <div>
             <label for="name">Name:</label><br>
