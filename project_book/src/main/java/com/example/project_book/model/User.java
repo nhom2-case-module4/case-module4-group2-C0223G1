@@ -12,6 +12,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idUser;
     @Column(nullable = false)
+    private String name;
+    @Column(nullable = false)
     private String phone;
     @Column(nullable = false)
     private LocalDate birthOfDay;
@@ -29,8 +31,9 @@ public class User {
     public User() {
     }
 
-    public User(int idUser, String phone, LocalDate birthOfDay, String emailUser, boolean genderUser, String passUser, boolean isDelete, RoleUser roleUser) {
+    public User(int idUser, String nameUser, String phone, LocalDate birthOfDay, String emailUser, boolean genderUser, String passUser, boolean isDelete, RoleUser roleUser) {
         this.idUser = idUser;
+        this.name = nameUser;
         this.phone = phone;
         this.birthOfDay = birthOfDay;
         this.emailUser = emailUser;
@@ -46,6 +49,14 @@ public class User {
 
     public void setIdUser(int idUser) {
         this.idUser = idUser;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String nameUser) {
+        this.name = nameUser;
     }
 
     public String getPhone() {
