@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Book Store</title>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="author" content="">
+	    <meta name="keywords" content="">
+	    <meta name="description" content="">
+
+	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
+	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
+	    <link rel="stylesheet" type="text/css" href="/style.css">
+
+		<!-- script
+		================================================== -->
+		<script src="/js/modernizr.js"></script>
+
+	</head>
+
+<body>
+
+
+<div th:insert="user/navbar :: copy"></div>
+
+<section class="bg-sand padding-large">
+	<div class="container">
+		<div class="row" th:object="${book}">
+
+			<div class="col-md-6">
+				<a href="#" class="product-image"><img th:src="${book.getImg()}"></a>
+			</div>
+
+			<div class="col-md-6 pl-5">
+				<div class="product-detail">
+					<h1 th:text="${book.getNameProduct()}"></h1>
+					<p th:text="'Author: '+${book.getAuthor()}"></p>
+					<p th:text="${book.getTypeProduct().getNameTypeProduct()}"></p>
+					<span class="price colored" th:text="'$ '+${book.getPriceBook()}"></span>
+
+					<p th:text="${book.getDescribeBook()}"></p>
+
+					<button type="submit" name="add-to-cart" value="27545" class="button"><a>Add to cart</a></button>
+					
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+<div th:insert="user/footer :: copy"></div>
+
+<script src="/js/jquery-1.11.0.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/script.js"></script>
+
+</body>
+</html>	
