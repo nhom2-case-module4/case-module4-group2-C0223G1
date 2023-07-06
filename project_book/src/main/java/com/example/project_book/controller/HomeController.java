@@ -1,18 +1,24 @@
 package com.example.project_book.controller;
 
+import com.example.project_book.model.Cart;
 import com.example.project_book.service.home.IHomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@SessionAttributes("cart")
 @RequestMapping("/home")
 public class HomeController {
     @Autowired
     private IHomeService homeService;
+
+    @ModelAttribute("cart")
+    public Cart setupCart() {
+        return new Cart();
+    }
+
 
     @GetMapping("")
     public String showHome(Model model){
@@ -34,5 +40,10 @@ public class HomeController {
         model.addAttribute("list3", homeService.getBooksByType(3));
         model.addAttribute("list4", homeService.getBooksByType(4));
         return "user/shop";
+    }
+
+    @GetMapping("/show-cart")
+    public String showCart(){
+        return "user/cart";
     }
 }

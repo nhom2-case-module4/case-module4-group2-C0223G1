@@ -22,6 +22,6 @@ public class HomeService implements IHomeService {
 
     @Override
     public List<Product> getBooksByType(int idType) {
-        return homeRepesitory.findByisDeleteIsFalseAndTypeProduct_idTypeProductIs(idType);
+        return homeRepesitory.findByisDeleteIsFalseAndTypeProduct_idProductIs(idType);
     }
 }

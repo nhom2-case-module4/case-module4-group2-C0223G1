@@ -8,7 +8,7 @@ public class TypeProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_type_product")
-    private int IdProduct;
+    private int idProduct;
     @Column(columnDefinition = "longtext",nullable = false,name = "name_type_product")
     private String nameTypeProduct;
 
@@ -16,16 +16,16 @@ public class TypeProduct {
     }
 
     public TypeProduct(int idProduct, String nameTypeProduct) {
-        IdProduct = idProduct;
+        this.idProduct = idProduct;
         this.nameTypeProduct = nameTypeProduct;
     }
 
     public int getIdProduct() {
-        return IdProduct;
+        return idProduct;
     }
 
     public void setIdProduct(int idProduct) {
-        IdProduct = idProduct;
+        this.idProduct = idProduct;
     }
 
     public String getNameTypeProduct() {

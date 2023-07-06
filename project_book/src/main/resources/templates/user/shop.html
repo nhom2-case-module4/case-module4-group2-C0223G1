@@ -49,7 +49,7 @@
                                     </a>
                                     <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
                                         <a style="text-decoration: none; color: white"
-                                           th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">Add to Cart</a>
+                                           th:href="@{/cart/add/{id}/{num}(id=${book.getIdProduct()},num =1)}">Add to Cart</a>
                                     </button>
                                     <figcaption>
                                         <h3><a style="text-decoration: none"
