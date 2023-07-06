@@ -29,12 +29,12 @@ public class Product {
     private boolean isDelete;
     @ManyToOne
     @JoinColumn(name = "id_type_product",nullable = false)
-    private RoleUser roleUser;
+    private TypeProduct typeProduct;
 
     public Product() {
     }
 
-    public Product(int idProduct, String img, String nameProduct, String publicationYear, String author, String describeBook, String nationBook, String publishingCompany, int quantityBooks, double priceBook, boolean isDelete, RoleUser roleUser) {
+    public Product(int idProduct, String img, String nameProduct, String publicationYear, String author, String describeBook, String nationBook, String publishingCompany, int quantityBooks, double priceBook, boolean isDelete, TypeProduct typeProduct) {
         this.idProduct = idProduct;
         this.img = img;
         this.nameProduct = nameProduct;
@@ -46,7 +46,7 @@ public class Product {
         this.quantityBooks = quantityBooks;
         this.priceBook = priceBook;
         this.isDelete = isDelete;
-        this.roleUser = roleUser;
+        this.typeProduct = typeProduct;
     }
 
     public int getIdProduct() {
@@ -137,11 +137,11 @@ public class Product {
         isDelete = delete;
     }
 
-    public RoleUser getTypeProduct() {
-        return roleUser;
+    public TypeProduct getTypeProduct() {
+        return typeProduct;
     }
 
-    public void setTypeProduct(RoleUser typeProduct) {
-        this.roleUser = typeProduct;
+    public void setTypeProduct(TypeProduct typeProduct) {
+        this.typeProduct = typeProduct;
     }
 }
