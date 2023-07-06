@@ -19,7 +19,7 @@ public class UsersDto implements Validator {
     private String birthOfDay;
     @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "Email không hợp lệ")
     private String emailUser;
-    @Pattern(regexp = "^(Nam|Nữ|Khác)$", message = "Giới tính không hợp lệ")
+//    @Pattern(regexp = "^(Nam|Nữ|Khác)$", message = "Giới tính không hợp lệ")
     private String genderUser;
     @NotBlank
     private String passUser;
