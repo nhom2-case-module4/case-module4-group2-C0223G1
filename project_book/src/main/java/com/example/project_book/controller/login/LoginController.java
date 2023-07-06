@@ -20,17 +20,23 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/home")
 public class LoginController {
-
+    //    Create: Huynh Duc
+    //    Day: 06/07/2023
     @Autowired
     private IUsersService usersService;
+
+    //    Create: Huynh Duc
+    //    Day: 06/07/2023
     @Autowired
     private IUsersTypeService usersTypeService;
+
+    //    Create: Huynh Duc
+    //    Day: 06/07/2023
     @Autowired
     private HttpSession session;
 
     //    Create: Huynh Duc
     //    Day: 06/07/2023
-
     @GetMapping("")
     public String showHome(Model model) {
 //        model.addAttribute("list", homeService.getlistBook());
@@ -61,7 +67,7 @@ public class LoginController {
     }
 
     //    Create: Huynh Duc
-//    Day: 06/07/2023
+    //    Day: 06/07/2023
     @PostMapping("/create")
     public String createUser(@Valid @ModelAttribute(name = "add") UsersDto usersDto, BindingResult bindingResult,
                              RedirectAttributes redirectAttributes) {
