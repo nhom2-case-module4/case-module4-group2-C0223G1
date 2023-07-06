@@ -13,4 +13,8 @@ public interface IUsersService {
     void delete(User users);
     Page<User> findOne(String name, Pageable pageable);
     void deleteById(int id);
+
+    //    Create: Huynh Duc
+    //    Day: 06/07/2023
+    boolean existsByEmailUser(String emailUser);
 }
