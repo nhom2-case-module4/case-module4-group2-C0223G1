@@ -24,7 +24,7 @@ public class User {
     @JsonIgnore
     private String passUser;
     @ManyToOne
-    @JoinColumn(name="nameRole",nullable = false)
+    @JoinColumn(name="idRole",nullable = false)
     private RoleUser roleUser;
 
     private boolean isDelete =false;
