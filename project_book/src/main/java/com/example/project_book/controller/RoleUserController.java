@@ -1,6 +1,6 @@
 package com.example.project_book.controller;
 
-import com.example.project_book.dto.dto_users.UsersTypeDto;
+import com.example.project_book.dto.dto_users.RoleUserDto;
 import com.example.project_book.model.RoleUser;
 import com.example.project_book.service.IUsersTypeService;
 import org.springframework.beans.BeanUtils;
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/usersType")
-public class UsersTypeController {
+public class RoleUserController {
     @Autowired
     private IUsersTypeService usersTypeService;
     @GetMapping()
@@ -26,11 +26,11 @@ public class UsersTypeController {
     }
     @GetMapping("/form-add-userType")
     public String showFormAdd(Model model){
-        model.addAttribute("add",new UsersTypeDto());
+        model.addAttribute("add",new RoleUserDto());
         return "/form-add-userType";
     }
     @PostMapping("/add")
-    public  String add(@ModelAttribute(name="add") UsersTypeDto usersTypeDto, BindingResult bindingResult,
+    public  String add(@ModelAttribute(name="add") RoleUserDto usersTypeDto, BindingResult bindingResult,
                        RedirectAttributes redirectAttributes){
         if(bindingResult.hasErrors()){
             return "/form-add-userType";
