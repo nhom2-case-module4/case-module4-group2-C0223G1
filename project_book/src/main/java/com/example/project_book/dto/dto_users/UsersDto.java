@@ -19,18 +19,18 @@ public class UsersDto implements Validator {
     private String birthOfDay;
     @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "Email không hợp lệ")
     private String emailUser;
-    @Pattern(regexp = "^(Nam|Nữ|Khác)$", message = "Giới tính không hợp lệ")
+//    @Pattern(regexp = "^(Nam|Nữ|Khác)$", message = "Giới tính không hợp lệ")
     private String genderUser;
     @NotBlank
     private String passUser;
 
-    private RoleUser usersType;
+    private RoleUser roleUser;
     private boolean isDelete=false;
 
     public UsersDto() {
     }
 
-    public UsersDto(int idUser, String name, String phone, String birthOfDay, String emailUser, String genderUser, String passUser, RoleUser usersType, boolean isDelete) {
+    public UsersDto(int idUser, String name, String phone, String birthOfDay, String emailUser, String genderUser, String passUser, RoleUser roleUser, boolean isDelete) {
         this.idUser = idUser;
         this.name = name;
         this.phone = phone;
@@ -38,7 +38,7 @@ public class UsersDto implements Validator {
         this.emailUser = emailUser;
         this.genderUser = genderUser;
         this.passUser = passUser;
-        this.usersType = usersType;
+        this.roleUser = roleUser;
         this.isDelete = isDelete;
     }
 
@@ -98,12 +98,12 @@ public class UsersDto implements Validator {
         this.passUser = passUser;
     }
 
-    public RoleUser getUsersType() {
-        return usersType;
+    public RoleUser getRoleUser() {
+        return roleUser;
     }
 
-    public void setUsersType(RoleUser usersType) {
-        this.usersType = usersType;
+    public void setRoleUser(RoleUser roleUser) {
+        this.roleUser = roleUser;
     }
 
     public boolean isDelete() {

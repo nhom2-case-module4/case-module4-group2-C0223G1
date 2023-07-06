@@ -9,5 +9,9 @@ public interface OrderProjection {
     LocalDate getDayTake();
     boolean getFlagDelete();
     String getNameProduct();
-//    String get
+    String getNameStatus();
+    String getNameUser();
+    String getNoteOrder();
+    int getNumberDetail();
+
 }
