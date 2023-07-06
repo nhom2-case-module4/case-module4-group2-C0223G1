@@ -43,12 +43,6 @@
         input[type="submit"]:hover {
             background-color: #45a049;
         }
-        /*.user{*/
-        /*    background-color: bisque;*/
-        /*    font-size: x-large;*/
-        /*    width: 100%;*/
-        /*    padding-left: 400px ;*/
-        /*}*/
     </style>
 </head>
 <h1 style="text-align: center;background-color: #f1f1f1">THÊM MỚI NGƯỜI DÙNG</h1>
@@ -62,33 +56,33 @@
         </div>
         <div>
             <label for="phoneNumber">PhoneNumbers:</label><br>
-            <input id="phoneNumber" type="text" th:field="*{phoneNumber}" placeholder="ex:0123456789"/>
-            <span style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
+            <input id="phoneNumber" type="text" th:field="*{phone}" placeholder="ex:0123456789"/>
+            <span style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
         </div>
         <div>
             <label for="myDate">DateOfBirth:</label><br>
-            <input type="date" id="myDate" onchange="validateDate()" th:field="*{dateOfBirth}">
-            <span style="color: red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span>
+            <input type="date" id="myDate" onchange="validateDate()" th:field="*{birthOfDay}">
+            <span style="color: red" th:if="${#fields.hasErrors('birthOfDay')}" th:errors="*{birthOfDay}"></span>
         </div>
         <div>
             <label for="email">Email:</label><br>
-            <input id="email" type="text" th:field="*{email}" placeholder="exam@gmail.com"/>
-            <span style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            <input id="email" type="text" th:field="*{emailUser}" placeholder="exam@gmail.com"/>
+            <span style="color: red" th:if="${#fields.hasErrors('emailUser')}" th:errors="*{emailUser}"></span>
         </div>
         <div>
             <label for="gender">Gender:</label><br>
-            <input id="gender" type="text" th:field="*{gender}" placeholder="ex:Nam|Nữ|Khác"/>
-            <span style="color: red" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
+            <input id="gender" type="text" th:field="*{genderUser}" placeholder="ex:Nam|Nữ|Khác"/>
+            <span style="color: red" th:if="${#fields.hasErrors('genderUser')}" th:errors="*{genderUser}"></span>
         </div>
         <div>
             <label for="pass">Pass:</label><br>
-            <input id="pass" type="text" th:field="*{pass}"/>
-            <span style="color: red" th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}"></span>
+            <input id="pass" type="text" th:field="*{passUser}"/>
+            <span style="color: red" th:if="${#fields.hasErrors('passUser')}" th:errors="*{passUser}"></span>
         </div>
         <div>
             <label for="userType">UsersType:</label><br>
             <select id="userType" th:field="*{usersType}">
-                <option th:each="t, items : ${userType}" th:text="${t.name}" th:value="${t.id}">
+                <option th:each="t, items : ${userType}" th:text="${t.nameRole}" th:value="${t.idRole}">
                 </option>
             </select>
         </div>

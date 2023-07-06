@@ -1,56 +1,53 @@
 package com.example.project_book.dto.dto_users;
 
-import com.example.project_book.model.UsersType;
+import com.example.project_book.model.RoleUser;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import java.time.LocalDate;
 
 public class UsersDto implements Validator {
 
-    private int id;
+    private int idUser;
 
     @Pattern(regexp = "^[A-Z][a-z]*(\\s[A-Z][a-z]*)*$", message = "Họ tên không hợp lệ")
     private String name;
     @Pattern(regexp = "^0\\d{9}$", message = "Số điện thoại không hợp lệ")
-    private String phoneNumber;
+    private String phone;
 
-    private String dateOfBirth;
+    private String birthOfDay;
     @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "Email không hợp lệ")
-    private String email;
+    private String emailUser;
     @Pattern(regexp = "^(Nam|Nữ|Khác)$", message = "Giới tính không hợp lệ")
-    private String gender;
+    private String genderUser;
     @NotBlank
-    private String pass;
+    private String passUser;
 
-    private UsersType usersType;
-    private boolean flagDelete=false;
+    private RoleUser usersType;
+    private boolean isDelete=false;
 
     public UsersDto() {
     }
 
-    public UsersDto(int id, String name, String phoneNumber, String dateOfBirth, String email, String gender, String pass, UsersType usersType, boolean flagDelete) {
-        this.id = id;
+    public UsersDto(int idUser, String name, String phone, String birthOfDay, String emailUser, String genderUser, String passUser, RoleUser usersType, boolean isDelete) {
+        this.idUser = idUser;
         this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.dateOfBirth = dateOfBirth;
-        this.email = email;
-        this.gender = gender;
-        this.pass = pass;
+        this.phone = phone;
+        this.birthOfDay = birthOfDay;
+        this.emailUser = emailUser;
+        this.genderUser = genderUser;
+        this.passUser = passUser;
         this.usersType = usersType;
-        this.flagDelete = flagDelete;
+        this.isDelete = isDelete;
     }
 
-    public int getId() {
-        return id;
+    public int getIdUser() {
+        return idUser;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public String getName() {
@@ -61,60 +58,60 @@ public class UsersDto implements Validator {
         this.name = name;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
+    public String getBirthOfDay() {
+        return birthOfDay;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setBirthOfDay(String birthOfDay) {
+        this.birthOfDay = birthOfDay;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmailUser() {
+        return emailUser;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmailUser(String emailUser) {
+        this.emailUser = emailUser;
     }
 
-    public String getGender() {
-        return gender;
+    public String getGenderUser() {
+        return genderUser;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setGenderUser(String genderUser) {
+        this.genderUser = genderUser;
     }
 
-    public String getPass() {
-        return pass;
+    public String getPassUser() {
+        return passUser;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setPassUser(String passUser) {
+        this.passUser = passUser;
     }
 
-    public UsersType getUsersType() {
+    public RoleUser getUsersType() {
         return usersType;
     }
 
-    public void setUsersType(UsersType usersType) {
+    public void setUsersType(RoleUser usersType) {
         this.usersType = usersType;
     }
 
-    public boolean isFlagDelete() {
-        return flagDelete;
+    public boolean isDelete() {
+        return isDelete;
     }
 
-    public void setFlagDelete(boolean flagDelete) {
-        this.flagDelete = flagDelete;
+    public void setDelete(boolean delete) {
+        isDelete = delete;
     }
 
     @Override
