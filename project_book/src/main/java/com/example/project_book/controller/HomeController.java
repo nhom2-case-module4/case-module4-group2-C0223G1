@@ -1,7 +1,7 @@
 package com.example.project_book.controller;
 
 import com.example.project_book.dto.dto_users.UsersDto;
-import com.example.project_book.model.Users;
+import com.example.project_book.model.User;
 import com.example.project_book.service.IUsersService;
 import com.example.project_book.service.IUsersTypeService;
 import org.springframework.beans.BeanUtils;
@@ -25,85 +25,85 @@ public class HomeController {
         return "index";
     }
 
-    @Controller
-    @RequestMapping("/users")
-    public static class UsersController {
-        @Autowired
-        private IUsersService usersService;
-        @Autowired
-        private IUsersTypeService usersTypeService;
-
-        @GetMapping()
-        public String getList(@PageableDefault(size = 5) Pageable pageable, Model model) {
-            model.addAttribute("users", this.usersService.findAllByFlagDeleteIsFalse(pageable));
-            return "/list";
-        }
-
-        @GetMapping("/form-add")
-        public String showFormAdd(Model model) {
-
-            model.addAttribute("add", new UsersDto());
-            model.addAttribute("userType", this.usersTypeService.getListUsers());
-            return "/form-add";
-        }
-
-        @PostMapping("/add")
-        public String addUser(@Valid @ModelAttribute(name = "add") UsersDto usersDto, BindingResult bindingResult,
-                              RedirectAttributes redirectAttributes) {
-            new UsersDto().validate(usersDto, bindingResult);
-            if (bindingResult.hasErrors()) {
-                return "/form-add";
-            }
-            Users users = new Users();
-            BeanUtils.copyProperties(usersDto, users);
-            this.usersService.add(users);
-            redirectAttributes.addFlashAttribute("msg", "thêm thanh công");
-            return "redirect:/users";
-        }
-
-        @GetMapping("/{id}/delete")
-        public String delete(@PathVariable int id, Users users, RedirectAttributes redirectAttributes) {
-            if (usersService.findById(id) == null) {
-                redirectAttributes.addFlashAttribute("msg", "không tìm thấy id");
-                return "redirect:/users";
-            }
-            usersService.delete(users);
-            redirectAttributes.addFlashAttribute("msg", "đã xoá thành công");
-            return "redirect:/users";
-        }
-
-        @GetMapping("/{id}/edit")
-        public String showFormEdit(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
-            if (usersService.findById(id) == null) {
-                redirectAttributes.addFlashAttribute("msg", "không tìm thấy id");
-                return "redirect:/users";
-            } else {
-                model.addAttribute("edit", usersService.findById(id));
-                model.addAttribute("userType", this.usersTypeService.getListUsers());
-                return "/form-edit";
-            }
-
-        }
-
-        @PostMapping("/edit")
-        public String edit(@ModelAttribute(name = "edit") UsersDto usersDto, RedirectAttributes redirectAttributes) {
-            if (usersService.findById(usersDto.getId()) == null) {
-                redirectAttributes.addFlashAttribute("msg", "sửa không thành công");
-            } else {
-                Users users = new Users();
-                BeanUtils.copyProperties(usersDto, users);
-                usersService.edit(users);
-                redirectAttributes.addFlashAttribute("msg", "sửa thành công");
-            }
-            return "redirect:/users";
-        }
-        @GetMapping("/search")
-        public String search(@RequestParam(name="name") String name, Pageable pageable, Model model) {
-                Page<Users> users = usersService.findOne(name, pageable);
-                model.addAttribute("users", users);
-                model.addAttribute("search",name);
-                 return"/list";
-            }
-
-    }
+//    @Controller
+//    @RequestMapping("/users")
+//    public static class UsersController {
+//        @Autowired
+//        private IUsersService usersService;
+//        @Autowired
+//        private IUsersTypeService usersTypeService;
+//
+//        @GetMapping()
+//        public String getList(@PageableDefault(size = 5) Pageable pageable, Model model) {
+//            model.addAttribute("users", this.usersService.findAllByIsDeleteIsFalse(pageable));
+//            return "/list";
+//        }
+//
+//        @GetMapping("/form-add")
+//        public String showFormAdd(Model model) {
+//
+//            model.addAttribute("add", new UsersDto());
+//            model.addAttribute("userType", this.usersTypeService.getListUsers());
+//            return "/form-add";
+//        }
+//
+//        @PostMapping("/add")
+//        public String addUser(@Valid @ModelAttribute(name = "add") UsersDto usersDto, BindingResult bindingResult,
+//                              RedirectAttributes redirectAttributes) {
+//            new UsersDto().validate(usersDto, bindingResult);
+//            if (bindingResult.hasErrors()) {
+//                return "/form-add";
+//            }
+//            User users = new User();
+//            BeanUtils.copyProperties(usersDto, users);
+//            this.usersService.add(users);
+//            redirectAttributes.addFlashAttribute("msg", "thêm thanh công");
+//            return "redirect:/users";
+//        }
+//
+//        @GetMapping("/{id}/delete")
+//        public String delete(@PathVariable int id, User users, RedirectAttributes redirectAttributes) {
+////            if (usersService.findById(id) == null) {
+////                redirectAttributes.addFlashAttribute("msg", "không tìm thấy id");
+////                return "redirect:/users";
+////            }
+////            usersService.delete(users);
+////            redirectAttributes.addFlashAttribute("msg", "đã xoá thành công");
+//            return "redirect:/users";
+//        }
+//
+//        @GetMapping("/{id}/edit")
+//        public String showFormEdit(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
+//            if (usersService.findById(id) == null) {
+//                redirectAttributes.addFlashAttribute("msg", "không tìm thấy id");
+//                return "redirect:/users";
+//            } else {
+//                model.addAttribute("edit", usersService.findById(id));
+//                model.addAttribute("userType", this.usersTypeService.getListUsers());
+//                return "/form-edit";
+//            }
+//
+//        }
+//
+//        @PostMapping("/edit")
+//        public String edit(@ModelAttribute(name = "edit") UsersDto usersDto, RedirectAttributes redirectAttributes) {
+//            if (usersService.findById(usersDto.getId()) == null) {
+//                redirectAttributes.addFlashAttribute("msg", "sửa không thành công");
+//            } else {
+//                User users = new User();
+//                BeanUtils.copyProperties(usersDto, users);
+//                usersService.edit(users);
+//                redirectAttributes.addFlashAttribute("msg", "sửa thành công");
+//            }
+//            return "redirect:/users";
+//        }
+//        @GetMapping("/search")
+//        public String search(@RequestParam(name="name") String name, Pageable pageable, Model model) {
+//                Page<User> users = usersService.findOne(name, pageable);
+//                model.addAttribute("users", users);
+//                model.addAttribute("search",name);
+//                 return"/list";
+//            }
+//
+//    }
 }

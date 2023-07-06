@@ -1,7 +1,7 @@
 package com.example.project_book.service;
 
 
-import com.example.project_book.model.UsersType;
+import com.example.project_book.model.RoleUser;
 import com.example.project_book.repo.IUsersTypeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,12 @@ public class UsersTypeService implements IUsersTypeService {
     private IUsersTypeRepo usersTypeRepo;
 
     @Override
-    public List<UsersType> getListUsers() {
+    public List<RoleUser> getListUsers() {
         return usersTypeRepo.findAll();
     }
 
     @Override
-    public void add(UsersType usersType) {
+    public void add(RoleUser usersType) {
             usersTypeRepo.save(usersType);
     }
 }
