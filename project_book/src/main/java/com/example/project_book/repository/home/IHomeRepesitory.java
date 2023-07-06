@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface IHomeRepesitory extends JpaRepository<Product,Integer> {
-    List<Product> findByisDeleteIsFalse();
-
-    List<Product> findByisDeleteIsFalseAndTypeProduct_idTypeProductIs(int idType);
+//    List<Product> findByisDeleteIsFalse();
+//
+//    List<Product> findByisDeleteIsFalseAndTypeProduct_idTypeProductIs(int idType);
 }

@@ -8,20 +8,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class HomeService implements IHomeService {
-    @Autowired
-    private IHomeRepesitory homeRepesitory;
-    @Override
-    public List<Product> getlistBook() {
-        return homeRepesitory.findByisDeleteIsFalse();
-    }
-
-    @Override
-    public Product getBookById(int id) {
-        return homeRepesitory.findById(id).orElse(null);
-    }
-
-    @Override
-    public List<Product> getBooksByType(int idType) {
-        return homeRepesitory.findByisDeleteIsFalseAndTypeProduct_idTypeProductIs(idType);
-    }
+//    @Autowired
+//    private IHomeRepesitory homeRepesitory;
+//    @Override
+//    public List<Product> getlistBook() {
+//        return homeRepesitory.findByisDeleteIsFalse();
+//    }
+//
+//    @Override
+//    public Product getBookById(int id) {
+//        return homeRepesitory.findById(id).orElse(null);
+//    }
+//
+//    @Override
+//    public List<Product> getBooksByType(int idType) {
+//        return homeRepesitory.findByisDeleteIsFalseAndTypeProduct_idTypeProductIs(idType);
+//    }
 }
