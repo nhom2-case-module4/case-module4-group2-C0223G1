@@ -24,31 +24,31 @@ public class User {
     @JsonIgnore
     private String passUser;
     @ManyToOne
-    @JoinColumn(name="idType",nullable = false)
-    private RoleUser usersType;
+    @JoinColumn(name="nameRole",nullable = false)
+    private RoleUser roleUser;
 
     private boolean isDelete =false;
     public User() {
     }
 
-    public User(int id, String name, String phoneNumber, String dateOfBirth, String email, String gender, String pass, RoleUser usersType, boolean flagDelete) {
-        this.idUser = id;
+    public User(int idUser, String name, String phone, String birthOfDay, String emailUser, String genderUser, String passUser, RoleUser roleUser, boolean isDelete) {
+        this.idUser = idUser;
         this.name = name;
-        this.phone = phoneNumber;
-        this.birthOfDay = dateOfBirth;
-        this.emailUser = email;
-        this.genderUser = gender;
-        this.passUser = pass;
-        this.usersType = usersType;
-        this.isDelete =flagDelete;
+        this.phone = phone;
+        this.birthOfDay = birthOfDay;
+        this.emailUser = emailUser;
+        this.genderUser = genderUser;
+        this.passUser = passUser;
+        this.roleUser = roleUser;
+        this.isDelete = isDelete;
     }
 
     public int getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(int id) {
-        this.idUser = id;
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public String getName() {
@@ -63,55 +63,55 @@ public class User {
         return phone;
     }
 
-    public void setPhone(String phoneNumber) {
-        this.phone = phoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getBirthOfDay() {
         return birthOfDay;
     }
 
-    public void setBirthOfDay(String dateOfBirth) {
-        this.birthOfDay = dateOfBirth;
+    public void setBirthOfDay(String birthOfDay) {
+        this.birthOfDay = birthOfDay;
     }
 
     public String getEmailUser() {
         return emailUser;
     }
 
-    public void setEmailUser(String email) {
-        this.emailUser = email;
+    public void setEmailUser(String emailUser) {
+        this.emailUser = emailUser;
     }
 
     public String getGenderUser() {
         return genderUser;
     }
 
-    public void setGenderUser(String gender) {
-        this.genderUser = gender;
+    public void setGenderUser(String genderUser) {
+        this.genderUser = genderUser;
     }
 
     public String getPassUser() {
         return passUser;
     }
 
-    public void setPassUser(String pass) {
-        this.passUser = pass;
+    public void setPassUser(String passUser) {
+        this.passUser = passUser;
     }
 
-    public RoleUser getUsersType() {
-        return usersType;
+    public RoleUser getRoleUser() {
+        return roleUser;
     }
 
-    public void setUsersType(RoleUser usersType) {
-        this.usersType = usersType;
+    public void setRoleUser(RoleUser roleUser) {
+        this.roleUser = roleUser;
     }
 
-    public boolean isIsDelete() {
+    public boolean isDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(boolean flagDelete) {
-        this.isDelete = flagDelete;
+    public void setDelete(boolean delete) {
+        isDelete = delete;
     }
 }

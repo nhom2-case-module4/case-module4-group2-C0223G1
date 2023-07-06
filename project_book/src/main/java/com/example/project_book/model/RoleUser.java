@@ -3,7 +3,7 @@ package com.example.project_book.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="UserTypes")
+@Table(name="roleUser")
 public class RoleUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
