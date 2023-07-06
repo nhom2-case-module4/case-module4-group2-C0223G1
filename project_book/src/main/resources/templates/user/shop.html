@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Book Store</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
+    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="/js/modernizr.js"></script>
+
+</head>
+
+<body>
+<div th:insert="user/navbar :: copy"></div>
+<section class="padding-large">
+    <div class="container">
+        <div class="row">
+
+            <ul class="tabs">
+                <li data-tab-target="#all-genre" class="active tab">All Genre</li>
+                <li data-tab-target="#business" class="tab">Business</li>
+                <li data-tab-target="#technology" class="tab">Technology</li>
+                <li data-tab-target="#romantic" class="tab">Romantic</li>
+                <li data-tab-target="#adventure" class="tab">Adventure</li>
+                <li data-tab-target="#fictional" class="tab">Fictional</li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="all-genre" data-tab-content class="active">
+                    <div class="container">
+                        <div class="row container">
+                            <div class="products-grid grid">
+                                <figure class="product-style" th:each="book : ${list}">
+                                    <a style="text-decoration: none"
+                                       th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">
+                                        <img th:src="${book.getImg()}" alt="Books" class="product-item">
+                                    </a>
+                                    <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
+                                        <a style="text-decoration: none; color: white"
+                                           th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">Add to Cart</a>
+                                    </button>
+                                    <figcaption>
+                                        <h3><a style="text-decoration: none"
+                                               th:href="@{/home/view/{id}(id=${book.getIdProduct()})}"
+                                               th:text="${book.getNameProduct()}"></a></h3>
+                                        <p th:text="${book.getAuthor()}"></p>
+                                        <div class="item-price" th:text="'$ '+${book.getPriceBook()}"></div>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div id="business" data-tab-content class="active">
+                    <div class="container">
+                        <div class="row container">
+                            <div class="products-grid grid">
+                                <figure class="product-style" th:each="book : ${list1}">
+                                    <a style="text-decoration: none"
+                                       th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">
+                                        <img th:src="${book.getImg()}" alt="Books" class="product-item">
+                                    </a>
+                                    <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
+                                        <a style="text-decoration: none; color: white"
+                                           th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">Add to Cart</a>
+                                    </button>
+                                    <figcaption>
+                                        <h3><a style="text-decoration: none"
+                                               th:href="@{/home/view/{id}(id=${book.getIdProduct()})}"
+                                               th:text="${book.getNameProduct()}"></a></h3>
+                                        <p th:text="${book.getAuthor()}"></p>
+                                        <div class="item-price" th:text="'$ '+${book.getPriceBook()}"></div>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div id="technology" data-tab-content class="active">
+                    <div class="container">
+                        <div class="row container">
+                            <div class="products-grid grid">
+                                <figure class="product-style" th:each="book : ${list2}">
+                                    <a style="text-decoration: none"
+                                       th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">
+                                        <img th:src="${book.getImg()}" alt="Books" class="product-item">
+                                    </a>
+                                    <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
+                                        <a style="text-decoration: none; color: white"
+                                           th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">Add to Cart</a>
+                                    </button>
+                                    <figcaption>
+                                        <h3><a style="text-decoration: none"
+                                               th:href="@{/home/view/{id}(id=${book.getIdProduct()})}"
+                                               th:text="${book.getNameProduct()}"></a></h3>
+                                        <p th:text="${book.getAuthor()}"></p>
+                                        <div class="item-price" th:text="'$ '+${book.getPriceBook()}"></div>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div id="romantic" data-tab-content class="active">
+                    <div class="container">
+                        <div class="row container">
+                            <div class="products-grid grid">
+                                <figure class="product-style" th:each="book : ${list3}">
+                                    <a style="text-decoration: none"
+                                       th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">
+                                        <img th:src="${book.getImg()}" alt="Books" class="product-item">
+                                    </a>
+                                    <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
+                                        <a style="text-decoration: none; color: white"
+                                           th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">Add to Cart</a>
+                                    </button>
+                                    <figcaption>
+                                        <h3><a style="text-decoration: none"
+                                               th:href="@{/home/view/{id}(id=${book.getIdProduct()})}"
+                                               th:text="${book.getNameProduct()}"></a></h3>
+                                        <p th:text="${book.getAuthor()}"></p>
+                                        <div class="item-price" th:text="'$ '+${book.getPriceBook()}"></div>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div id="adventure" data-tab-content class="active">
+                    <div class="container">
+                        <div class="row container">
+                            <div class="products-grid grid">
+                                <figure class="product-style" th:each="book : ${list4}">
+                                    <a style="text-decoration: none"
+                                       th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">
+                                        <img th:src="${book.getImg()}" alt="Books" class="product-item">
+                                    </a>
+                                    <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
+                                        <a style="text-decoration: none; color: white"
+                                           th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">Add to Cart</a>
+                                    </button>
+                                    <figcaption>
+                                        <h3><a style="text-decoration: none"
+                                               th:href="@{/home/view/{id}(id=${book.getIdProduct()})}"
+                                               th:text="${book.getNameProduct()}"></a></h3>
+                                        <p th:text="${book.getAuthor()}"></p>
+                                        <div class="item-price" th:text="'$ '+${book.getPriceBook()}"></div>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="fictional" data-tab-content>
+                <div class="row">
+                    <div class="col-md-3">
+                        <figure class="product-style">
+                            <img src="/images/tab-item5.jpg" alt="Books" class="product-item">
+                            <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
+                                Cart
+                            </button>
+                            <figcaption>
+                                <h3>Life among the pirates</h3>
+                                <p>Armor Ramsey</p>
+                                <div class="item-price">$ 40.00</div>
+                            </figcaption>
+                        </figure>
+                    </div>
+
+                    <div class="col-md-3">
+                        <figure class="product-style">
+                            <img src="/images/tab-item7.jpg" alt="Books" class="product-item">
+                            <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
+                                Cart
+                            </button>
+                            <figcaption>
+                                <h3>Simple way of piece life</h3>
+                                <p>Armor Ramsey</p>
+                                <div class="item-price">$ 40.00</div>
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    </div>
+</section>
+
+
+<div th:insert="user/footer :: copy"></div>
+
+<script src="/js/jquery-1.11.0.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/script.js"></script>
+
+</body>
+</html>	
