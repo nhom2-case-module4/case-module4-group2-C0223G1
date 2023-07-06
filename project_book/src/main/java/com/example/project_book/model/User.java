@@ -1,6 +1,5 @@
 package com.example.project_book.model;
 
-import com.example.project_book.model.RoleUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -18,20 +17,20 @@ public class User {
     private String birthOfDay;
     @Column(columnDefinition = "longtext",nullable = false)
     private String emailUser;
-    @Column(nullable = false)
-    private String genderUser;
+    @Column(nullable = true)
+    private Boolean genderUser;
     @Column(columnDefinition = "longtext",nullable = false)
     @JsonIgnore
     private String passUser;
     @ManyToOne
-    @JoinColumn(name="idRole",nullable = false)
+    @JoinColumn(name="id_role",nullable = false)
     private RoleUser roleUser;
 
     private boolean isDelete =false;
     public User() {
     }
 
-    public User(int idUser, String name, String phone, String birthOfDay, String emailUser, String genderUser, String passUser, RoleUser roleUser, boolean isDelete) {
+    public User(int idUser, String name, String phone, String birthOfDay, String emailUser, Boolean genderUser, String passUser, RoleUser roleUser, boolean isDelete) {
         this.idUser = idUser;
         this.name = name;
         this.phone = phone;
@@ -83,11 +82,11 @@ public class User {
         this.emailUser = emailUser;
     }
 
-    public String getGenderUser() {
+    public Boolean getGenderUser() {
         return genderUser;
     }
 
-    public void setGenderUser(String genderUser) {
+    public void setGenderUser(Boolean genderUser) {
         this.genderUser = genderUser;
     }
 
