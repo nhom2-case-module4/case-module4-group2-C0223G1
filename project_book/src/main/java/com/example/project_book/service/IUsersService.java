@@ -1,17 +1,16 @@
 package com.example.project_book.service;
 
-import com.example.project_book.model.Users;
+import com.example.project_book.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
 public interface IUsersService {
 //    List<Users>getListUsers();
-    void add(Users users);
-    Page<Users> findAllByFlagDeleteIsFalse(Pageable pageable);
-    Users findById(int id);
-    void edit(Users users);
-    void delete(Users users);
-    Page<Users> findOne(String name,Pageable pageable);
+    void add(User users);
+    Page<User> findAllByIsDeleteIsFalse(Pageable pageable);
+    User findById(int id);
+    void edit(User users);
+    void delete(User users);
+    Page<User> findOne(String name, Pageable pageable);
+    void deleteById(int id);
 }

@@ -2,16 +2,12 @@ package com.example.project_book.service;
 
 
 
-import com.example.project_book.model.Users;
+import com.example.project_book.model.User;
 import com.example.project_book.repo.IUsersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class UsersService implements IUsersService {
@@ -23,19 +19,19 @@ public class UsersService implements IUsersService {
 //    }
 
     @Override
-    public void add(Users users) {
+    public void add(User users) {
         usersRepo.save(users);
     }
 
     @Override
-    public Page<Users> findAllByFlagDeleteIsFalse(Pageable pageable) {
-        return usersRepo.findAllByFlagDeleteIsFalse(pageable);
+    public Page<User> findAllByIsDeleteIsFalse(Pageable pageable) {
+        return usersRepo.findAllByIsDeleteIsFalse(pageable);
     }
 
     @Override
-    public Users findById(int id) {
+    public User findById(int id) {
         for (int i = 0; i < usersRepo.findAll().size(); i++) {
-            if(usersRepo.findAll().get(i).getId()==id){
+            if(usersRepo.findAll().get(i).getIdUser()==id){
                 return usersRepo.findAll().get(i);
             }
         }
@@ -43,17 +39,22 @@ public class UsersService implements IUsersService {
     }
 
     @Override
-    public void edit(Users users) {
+    public void edit(User users) {
         usersRepo.save(users);
     }
 
     @Override
-    public void delete(Users users) {
+    public void delete(User users) {
         usersRepo.delete(users);
     }
 
     @Override
-    public Page<Users> findOne(String name, Pageable pageable) {
+    public Page<User> findOne(String name, Pageable pageable) {
         return this.usersRepo.searchByName(name,pageable);
+    }
+
+    @Override
+    public void deleteById(int id) {
+        usersRepo.deleteById(id);
     }
 }
