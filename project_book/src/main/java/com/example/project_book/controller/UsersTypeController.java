@@ -1,7 +1,7 @@
-package com.example.project_book.controller.user;
+package com.example.project_book.controller;
 
-import com.example.project_book.dto.UsersTypeDto;
-import com.example.project_book.model.UsersType;
+import com.example.project_book.dto.dto_users.UsersTypeDto;
+import com.example.project_book.model.RoleUser;
 import com.example.project_book.service.IUsersTypeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class UsersTypeController {
     private IUsersTypeService usersTypeService;
     @GetMapping()
     public String getListUsersType(Model model){
-        model.addAttribute("users",this.usersTypeService.getListUsers());
+        model.addAttribute("user",this.usersTypeService.getListUsers());
         return "/list-userType";
     }
     @GetMapping("/form-add-userType")
@@ -35,7 +35,7 @@ public class UsersTypeController {
         if(bindingResult.hasErrors()){
             return "/form-add-userType";
         }
-        UsersType usersType= new UsersType();
+        RoleUser usersType= new RoleUser();
         BeanUtils.copyProperties(usersType,usersTypeDto);
         this.usersTypeService.add(usersType);
         redirectAttributes.addFlashAttribute("msg","Thêm thành công");
