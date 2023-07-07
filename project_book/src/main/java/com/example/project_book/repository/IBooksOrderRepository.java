@@ -23,4 +23,6 @@ public interface IBooksOrderRepository extends JpaRepository<Order,Integer> {
     @Transactional
     @Query(value = "UPDATE `books_shop`.`order_book` SET `status_id_status` = :option WHERE (`id_order` = :id)",nativeQuery = true)
     void updateStatus(@Param("id") int id,@Param("option")int option);
+
+    Order findFirstByOrderByIdOrderDesc();
 }

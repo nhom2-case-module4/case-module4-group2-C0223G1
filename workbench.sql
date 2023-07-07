@@ -4,18 +4,18 @@ CREATE TABLE `books_shop`.`role_user` (
   `id_role` INT NOT NULL AUTO_INCREMENT,
   `name_role` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id_role`));
-  CREATE TABLE `books_shop`.`user` (
+  CREATE TABLE `books_shop`.`users` (
   `id_user` INT NOT NULL AUTO_INCREMENT,
-  `birth_of_day` DATE NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `birth_of_day` VARCHAR(255) NOT NULL,
   `email_user` LONGTEXT NOT NULL,
-  `gender_user` BIT(1) NOT NULL,
+  `gender_user` BIT(1) ,
   `is_delete` BIT(1) NOT NULL,
   `pass_user` LONGTEXT NOT NULL,
   `phone` VARCHAR(255) NOT NULL,
-  `role_user_id_role` INT NULL,
+  `id_role` INT NULL,
   PRIMARY KEY (`id_user`),
-    FOREIGN KEY (`role_user_id_role`)
-    REFERENCES `books_shop`.`role_user` (`id_role`));
+    FOREIGN KEY (`id_role`) REFERENCES `books_shop`.`role_user` (`id_role`));
 CREATE TABLE `books_shop`.`status_order` (
   `id_status` INT NOT NULL AUTO_INCREMENT,
   `name_status` VARCHAR(255) NULL,
@@ -44,7 +44,7 @@ CREATE TABLE `books_shop`.`type_product` (
   `address_people` LONGTEXT NOT NULL,
   `day_order` DATE NOT NULL,
   `day_take` DATE NULL,
-  `falg_delete` BIT(1) NOT NULL,
+  `flag_delete` BIT(1) NOT NULL,
   `note_order` LONGTEXT NULL,
   `status_id_status` INT NULL,
   `user_id_user` INT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE `books_shop`.`type_product` (
     FOREIGN KEY (`status_id_status`)
     REFERENCES `books_shop`.`status_order` (`id_status`),
     FOREIGN KEY (`user_id_user`)
-    REFERENCES `books_shop`.`user` (`id_user`));
+    REFERENCES `books_shop`.`users` (`id_user`));
     CREATE TABLE `books_shop`.`order_detail` (
   `id_detail` INT NOT NULL AUTO_INCREMENT,
   `number_of_detail` INT NOT NULL,
