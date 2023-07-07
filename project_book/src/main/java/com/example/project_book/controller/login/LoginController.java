@@ -49,11 +49,12 @@ public class LoginController {
     //    Day: 07/07/2023
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showFormLogin() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (authentication != null && authentication.isAuthenticated()) {
-//            return "redirect:/home";
-//        }
-        return "/login/login";
+        String authentication = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!"anonymousUser".equals(authentication)){
+            return "redirect:/home";
+
+        }
+            return "/login/login";
     }
 
     //    Create: Huynh Duc
