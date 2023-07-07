@@ -16,6 +16,8 @@ public interface IUsersRepo extends JpaRepository<User, Integer> {
 
     Page<User> findAllByIsDeleteIsFalse(Pageable pageable);
 
+//    Create: Huynh Duc
+//    Day: 06/07/2023
     User findByEmailUser(String email);
 
     List<User> findAllByRoleUser(RoleUser roleUser);
@@ -23,4 +25,5 @@ public interface IUsersRepo extends JpaRepository<User, Integer> {
     //    Create: Huynh Duc
     //    Day: 06/07/2023
     boolean existsByEmailUser(String emailUser);
+
 }

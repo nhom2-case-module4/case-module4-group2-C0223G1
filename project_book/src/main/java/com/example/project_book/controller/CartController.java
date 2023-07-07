@@ -6,12 +6,16 @@ import com.example.project_book.service.cart.ICartService;
 import com.example.project_book.service.home.IHomeService;
 import com.example.project_book.service.order.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +52,7 @@ public class CartController {
     @GetMapping("/show-cart")
     public String showCart(@SessionAttribute Cart cart, Model model) {
         model.addAttribute("cart", cart);
-        model.addAttribute("order",new Order());
+        model.addAttribute("order", new Order());
         return "user/cart";
     }
 
@@ -85,15 +89,20 @@ public class CartController {
         return "user/cart";
     }
 
-    @PostMapping("")
-    public String oderBook(@SessionAttribute Cart cart, @ModelAttribute Order order, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
+    //    Create: Huynh Duc
+//    Day: 07/07/2023
+    @PostMapping("/send")
+    public String oderBook(@SessionAttribute Cart cart, @ModelAttribute Order order,Model model, BindingResult bindingResult, HttpServletRequest request) {
+        if (bindingResult.hasErrors()) {
             return "";
         }
+        String email = request.getUserPrincipal().getName();
+        User user = usersService.findByEmailUser(email);
         order.setDayOrder(LocalDate.now());
-        order.setUser(usersService.findById(1));
-        cartService.oderBook(cart,order);
+        order.setUser(user);
+        cartService.oderBook(cart, order);
         cart.clearCart();
+        model.addAttribute("user", user);
         return "user/thank-you";
 
     }
