@@ -43,10 +43,18 @@
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+        .background-image {
+            background-image: url("https://haycafe.vn/wp-content/uploads/2022/03/background-sach-nen-may-tinh.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            height: 150vh;
+        }
     </style>
 </head>
 <h1 style="text-align: center; background-color: #f1f1f1">CHỈNH SỬA NGƯỜI DÙNG</h1>
 <body>
+<div class="background-image">
 <form method="POST" action="/users/edit" th:object="${edit}">
     <div class="table">
         <div>
@@ -94,5 +102,6 @@
     </div>
     <input type="submit"/>
 </form>
+</div>
 </body>
 </html>

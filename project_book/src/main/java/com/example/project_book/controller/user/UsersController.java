@@ -1,4 +1,4 @@
-package com.example.project_book.controller;
+package com.example.project_book.controller.user;
 
 import com.example.project_book.dto.dto_users.UsersDto;
 import com.example.project_book.model.User;
@@ -80,7 +80,6 @@ public class UsersController {
             model.addAttribute("roleUser", this.usersTypeService.getListUsers());
             return "/form-edit";
         }
-
     }
     //    Create by: Tuan Vu
     //    Day: 06/07/2023

@@ -1,4 +1,4 @@
-package com.example.project_book.controller;
+package com.example.project_book.controller.user;
 
 import com.example.project_book.dto.dto_users.RoleUserDto;
 import com.example.project_book.model.RoleUser;
