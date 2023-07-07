@@ -30,7 +30,6 @@ public class UsersService implements IUsersService {
         users.setPassUser(bCryptPasswordEncoder.encode(users.getPassUser()));
         usersRepo.save(users);
     }
-
     @Override
     public Page<User> findAllByIsDeleteIsFalse(Pageable pageable) {
         return usersRepo.findAllByIsDeleteIsFalse(pageable);

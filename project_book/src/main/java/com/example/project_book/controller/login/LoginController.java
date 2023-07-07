@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +53,7 @@ public class LoginController {
     //    Create: Huynh Duc
     //    Day: 06/07/2023
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String showFormRegisteraddUser(Model model) {
+    public String showFormRegisteredUser(Model model) {
         model.addAttribute("add", new UsersDto());
         model.addAttribute("roleUser", this.usersTypeService.getListUsers());
         return "/login/register";
