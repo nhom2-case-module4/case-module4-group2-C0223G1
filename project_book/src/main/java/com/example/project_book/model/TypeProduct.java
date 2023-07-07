@@ -8,24 +8,24 @@ public class TypeProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_type_product")
-    private int idProduct;
+    private int idTypeProduct;
     @Column(columnDefinition = "longtext",nullable = false,name = "name_type_product")
     private String nameTypeProduct;
 
     public TypeProduct() {
     }
 
-    public TypeProduct(int idProduct, String nameTypeProduct) {
-        this.idProduct = idProduct;
+    public TypeProduct(int idTypeProduct, String nameTypeProduct) {
+        this.idTypeProduct = idTypeProduct;
         this.nameTypeProduct = nameTypeProduct;
     }
 
-    public int getIdProduct() {
-        return idProduct;
+    public int getIdTypeProduct() {
+        return idTypeProduct;
     }
 
-    public void setIdProduct(int idProduct) {
-        this.idProduct = idProduct;
+    public void setIdTypeProduct(int idTypeProduct) {
+        this.idTypeProduct = idTypeProduct;
     }
 
     public String getNameTypeProduct() {

@@ -1,40 +1,44 @@
-package com.example.project_book.model;
+package com.example.project_book.dto.dto_product;
 
-import javax.persistence.*;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
-@Entity
-@Table(name = "products")
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+
+public class ProductDto implements Validator {
+
     private int idProduct;
-    @Column(columnDefinition = "longtext",nullable = false)
+    @NotNull(message = "Image URL cannot be null")
     private String img;
-    @Column(nullable = false)
+    @NotNull(message = "Product name cannot be null")
+    @Size(min = 2, max = 100, message = "Product nam must be >2 and <100 characters")
     private String nameProduct;
-    @Column(nullable = false)
-    private String publicationYear;
-    @Column(nullable = false)
-    private String author;
-    @Column(columnDefinition = "longtext",nullable = true)
-    private String describeBook;
-    @Column(nullable = false)
-    private String nationBook;
-    @Column(nullable = false)
-    private String publishingCompany;
-    @Column(nullable = false)
-    private int quantityBooks;
-    @Column(nullable = false)
-    private double priceBook;
-    private boolean isDelete =false;
-    @ManyToOne
-    @JoinColumn(name = "id_type_product",nullable = false)
-    private TypeProduct typeProduct;
 
-    public Product() {
+    @Pattern(regexp = "\\d{4}", message = "Publication year must be a 4-degit number")
+    private String publicationYear;
+    @NotNull(message = "Author cannot be null")
+    private String author;
+    @NotNull(message = "not null")
+    private String describeBook;
+    @NotNull(message = "not null")
+    private String nationBook;
+    @NotNull(message = "not null")
+    private String publishingCompany;
+    @NotNull(message = "Quantity of books cannot be null")
+    private int quantityBooks;
+    @NotNull(message = "Price of book cannot be null")
+    private double priceBook;
+    private boolean isDelete;
+
+    private TypeProductDto typeProductDto;
+
+    public ProductDto() {
     }
 
-    public Product(int idProduct, String img, String nameProduct, String publicationYear, String author, String describeBook, String nationBook, String publishingCompany, int quantityBooks, double priceBook, boolean isDelete, TypeProduct typeProduct) {
+    public ProductDto(int idProduct, String img, String nameProduct, String publicationYear, String author, String describeBook, String nationBook, String publishingCompany, int quantityBooks, double priceBook, boolean isDelete, TypeProductDto typeProductDto) {
         this.idProduct = idProduct;
         this.img = img;
         this.nameProduct = nameProduct;
@@ -46,7 +50,7 @@ public class Product {
         this.quantityBooks = quantityBooks;
         this.priceBook = priceBook;
         this.isDelete = isDelete;
-        this.typeProduct = typeProduct;
+        this.typeProductDto = typeProductDto;
     }
 
     public int getIdProduct() {
@@ -137,11 +141,21 @@ public class Product {
         isDelete = delete;
     }
 
-    public TypeProduct getTypeProduct() {
-        return typeProduct;
+    public TypeProductDto getTypeProductDto() {
+        return typeProductDto;
     }
 
-    public void setTypeProduct(TypeProduct typeProduct) {
-        this.typeProduct = typeProduct;
+    public void setTypeProductDto(TypeProductDto typeProductDto) {
+        this.typeProductDto = typeProductDto;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+
     }
 }
