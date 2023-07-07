@@ -17,9 +17,11 @@ import java.util.List;
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private IUsersRepo usersRepo;
+
     public CustomUserDetailsService(IUsersRepo usersRepo) {
         this.usersRepo = usersRepo;
     }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         com.example.project_book.model.User users = this.usersRepo.findByEmailUser(email);
@@ -31,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         List<GrantedAuthority> grantList = new ArrayList<>();
         if (userRole != null) {
             for (com.example.project_book.model.User u : userRole) {
-                GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_"+u.getRoleUser().getNameRole());
+                GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + u.getRoleUser().getNameRole());
                 grantList.add(authority);
             }
         }

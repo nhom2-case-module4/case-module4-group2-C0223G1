@@ -12,8 +12,10 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-</head>
+   </head>
 <body style="background: rgb(243, 242, 236)">
+
+
 <section class="h-100 h-custom" style="background: rgb(243, 242, 236)" th:object="${cart}">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -29,7 +31,8 @@
                                     </div>
                                     <hr class="my-4">
 
-                                    <div class="row mb-4 d-flex justify-content-between align-items-center"  th:each="item: ${cart.getItems()}">
+                                    <div class="row mb-4 d-flex justify-content-between align-items-center"
+                                         th:each="item: ${cart.getItems()}">
                                         <div class="col-md-2 col-lg-2 col-xl-2">
                                             <img
                                                     th:src="${item.getProduct().getImg()}"
@@ -80,7 +83,7 @@
                                     <div class="d-flex justify-content-between mb-4">
                                         <h5 class="text-uppercase" th:text="'Item: '+${cart.getItems().size()}"></h5>
                                     </div>
-                                    <form th:action="@{/cart}" method="post" th:object="${order}">
+                                    <form th:action="@{/cart/send}" method="post" th:object="${order}">
                                         <h5 class="text-uppercase mb-3">Address<span style="color: red">*</span></h5>
 
                                         <div class="mb-4 pb-2">
@@ -94,7 +97,8 @@
 
                                         <div class="mb-5">
                                             <div class="form-outline">
-                                                <textarea th:field="*{noteOrder}" placeholder="note" style="width: 100%"></textarea>
+                                                <textarea th:field="*{noteOrder}" placeholder="note"
+                                                          style="width: 100%"></textarea>
                                             </div>
                                         </div>
 
@@ -119,6 +123,8 @@
         </div>
     </div>
 </section>
+
+
 </body>
 </html>
 <!doctype html>
