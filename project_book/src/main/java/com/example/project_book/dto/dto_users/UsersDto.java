@@ -19,18 +19,21 @@ public class UsersDto implements Validator {
     private String birthOfDay;
     @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "Email không hợp lệ")
     private String emailUser;
-//    @Pattern(regexp = "^(Nam|Nữ|Khác)$", message = "Giới tính không hợp lệ")
-    private String genderUser;
+
+    //    Create: Huynh Duc
+//    Day: 06/07/2023
+    //    @Pattern(regexp = "^(Nam|Nữ|Khác)$", message = "Giới tính không hợp lệ")
+    private Boolean genderUser;
     @NotBlank
     private String passUser;
 
     private RoleUser roleUser;
-    private boolean isDelete=false;
+    private boolean isDelete = false;
 
     public UsersDto() {
     }
 
-    public UsersDto(int idUser, String name, String phone, String birthOfDay, String emailUser, String genderUser, String passUser, RoleUser roleUser, boolean isDelete) {
+    public UsersDto(int idUser, String name, String phone, String birthOfDay, String emailUser, Boolean genderUser, String passUser, RoleUser roleUser, boolean isDelete) {
         this.idUser = idUser;
         this.name = name;
         this.phone = phone;
@@ -82,11 +85,15 @@ public class UsersDto implements Validator {
         this.emailUser = emailUser;
     }
 
-    public String getGenderUser() {
+    //    Create: Huynh Duc
+    //    Day: 06/07/2023
+    public Boolean getGenderUser() {
         return genderUser;
     }
 
-    public void setGenderUser(String genderUser) {
+    //    Create: Huynh Duc
+    //    Day: 06/07/2023
+    public void setGenderUser(Boolean genderUser) {
         this.genderUser = genderUser;
     }
 

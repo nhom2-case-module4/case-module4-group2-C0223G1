@@ -19,11 +19,27 @@
     <!-- script
     ================================================== -->
     <script src="/js/modernizr.js"></script>
-
+    <style>
+        .toast {
+            background-color: rgb(231, 216, 169);
+            color: #7a6565;
+            padding: 15px;
+            border-radius: 10px;
+            position: fixed;
+            top: 300px;
+            right: 0px;
+            font-weight: bold;
+            z-index: 1;
+            display: none;
+            animation: slideInLeft ease 2s, fadeOut linear 1s 2s forwards;
+            transition: all linear 0.3s;
+        }
+    </style>
 </head>
 
 <body>
 <div th:insert="user/navbar :: copy"></div>
+<div id="toastMessage" class="toast"></div>
 <section class="padding-large">
     <div class="container">
         <div class="row">
@@ -44,16 +60,16 @@
                             <div class="products-grid grid">
                                 <figure class="product-style" th:each="book : ${list}">
                                     <a style="text-decoration: none"
-                                       th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">
+                                       th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}">
                                         <img th:src="${book.getImg()}" alt="Books" class="product-item">
                                     </a>
                                     <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
                                         <a style="text-decoration: none; color: white"
-                                           th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">Add to Cart</a>
+                                           th:href="@{/cart/add/{id}/{num}(id=${book.getIdProduct()},num =1)}">Add to Cart</a>
                                     </button>
                                     <figcaption>
                                         <h3><a style="text-decoration: none"
-                                               th:href="@{/home/view/{id}(id=${book.getIdProduct()})}"
+                                               th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}"
                                                th:text="${book.getNameProduct()}"></a></h3>
                                         <p th:text="${book.getAuthor()}"></p>
                                         <div class="item-price" th:text="'$ '+${book.getPriceBook()}"></div>
@@ -71,16 +87,16 @@
                             <div class="products-grid grid">
                                 <figure class="product-style" th:each="book : ${list1}">
                                     <a style="text-decoration: none"
-                                       th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">
+                                       th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}">
                                         <img th:src="${book.getImg()}" alt="Books" class="product-item">
                                     </a>
                                     <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
                                         <a style="text-decoration: none; color: white"
-                                           th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">Add to Cart</a>
+                                           th:href="@{/cart/add/{id}/{num}(id=${book.getIdProduct()},num =1)}">Add to Cart</a>
                                     </button>
                                     <figcaption>
                                         <h3><a style="text-decoration: none"
-                                               th:href="@{/home/view/{id}(id=${book.getIdProduct()})}"
+                                               th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}"
                                                th:text="${book.getNameProduct()}"></a></h3>
                                         <p th:text="${book.getAuthor()}"></p>
                                         <div class="item-price" th:text="'$ '+${book.getPriceBook()}"></div>
@@ -98,16 +114,16 @@
                             <div class="products-grid grid">
                                 <figure class="product-style" th:each="book : ${list2}">
                                     <a style="text-decoration: none"
-                                       th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">
+                                       th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}">
                                         <img th:src="${book.getImg()}" alt="Books" class="product-item">
                                     </a>
                                     <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
                                         <a style="text-decoration: none; color: white"
-                                           th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">Add to Cart</a>
+                                           th:href="@{/cart/add/{id}/{num}(id=${book.getIdProduct()},num =1)}">Add to Cart</a>
                                     </button>
                                     <figcaption>
                                         <h3><a style="text-decoration: none"
-                                               th:href="@{/home/view/{id}(id=${book.getIdProduct()})}"
+                                               th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}"
                                                th:text="${book.getNameProduct()}"></a></h3>
                                         <p th:text="${book.getAuthor()}"></p>
                                         <div class="item-price" th:text="'$ '+${book.getPriceBook()}"></div>
@@ -125,16 +141,16 @@
                             <div class="products-grid grid">
                                 <figure class="product-style" th:each="book : ${list3}">
                                     <a style="text-decoration: none"
-                                       th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">
+                                       th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}">
                                         <img th:src="${book.getImg()}" alt="Books" class="product-item">
                                     </a>
                                     <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
                                         <a style="text-decoration: none; color: white"
-                                           th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">Add to Cart</a>
+                                           th:href="@{/cart/add/{id}/{num}(id=${book.getIdProduct()},num =1)}">Add to Cart</a>
                                     </button>
                                     <figcaption>
                                         <h3><a style="text-decoration: none"
-                                               th:href="@{/home/view/{id}(id=${book.getIdProduct()})}"
+                                               th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}"
                                                th:text="${book.getNameProduct()}"></a></h3>
                                         <p th:text="${book.getAuthor()}"></p>
                                         <div class="item-price" th:text="'$ '+${book.getPriceBook()}"></div>
@@ -152,16 +168,16 @@
                             <div class="products-grid grid">
                                 <figure class="product-style" th:each="book : ${list4}">
                                     <a style="text-decoration: none"
-                                       th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">
+                                       th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}">
                                         <img th:src="${book.getImg()}" alt="Books" class="product-item">
                                     </a>
                                     <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
                                         <a style="text-decoration: none; color: white"
-                                           th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">Add to Cart</a>
+                                           th:href="@{/cart/add/{id}/{num}(id=${book.getIdProduct()},num =1)}">Add to Cart</a>
                                     </button>
                                     <figcaption>
                                         <h3><a style="text-decoration: none"
-                                               th:href="@{/home/view/{id}(id=${book.getIdProduct()})}"
+                                               th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}"
                                                th:text="${book.getNameProduct()}"></a></h3>
                                         <p th:text="${book.getAuthor()}"></p>
                                         <div class="item-price" th:text="'$ '+${book.getPriceBook()}"></div>
@@ -174,33 +190,27 @@
             </div>
 
             <div id="fictional" data-tab-content>
-                <div class="row">
-                    <div class="col-md-3">
-                        <figure class="product-style">
-                            <img src="/images/tab-item5.jpg" alt="Books" class="product-item">
-                            <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                Cart
-                            </button>
-                            <figcaption>
-                                <h3>Life among the pirates</h3>
-                                <p>Armor Ramsey</p>
-                                <div class="item-price">$ 40.00</div>
-                            </figcaption>
-                        </figure>
-                    </div>
-
-                    <div class="col-md-3">
-                        <figure class="product-style">
-                            <img src="/images/tab-item7.jpg" alt="Books" class="product-item">
-                            <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                Cart
-                            </button>
-                            <figcaption>
-                                <h3>Simple way of piece life</h3>
-                                <p>Armor Ramsey</p>
-                                <div class="item-price">$ 40.00</div>
-                            </figcaption>
-                        </figure>
+                <div class="container">
+                    <div class="row container">
+                        <div class="products-grid grid">
+                            <figure class="product-style" th:each="book : ${list5}">
+                                <a style="text-decoration: none"
+                                   th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}">
+                                    <img th:src="${book.getImg()}" alt="Books" class="product-item">
+                                </a>
+                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
+                                    <a style="text-decoration: none; color: white"
+                                       th:href="@{/cart/add/{id}/{num}(id=${book.getIdProduct()},num =1)}">Add to Cart</a>
+                                </button>
+                                <figcaption>
+                                    <h3><a style="text-decoration: none"
+                                           th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}"
+                                           th:text="${book.getNameProduct()}"></a></h3>
+                                    <p th:text="${book.getAuthor()}"></p>
+                                    <div class="item-price" th:text="'$ '+${book.getPriceBook()}"></div>
+                                </figcaption>
+                            </figure>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -211,12 +221,28 @@
     </div>
 </section>
 
-
 <div th:insert="user/footer :: copy"></div>
 
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/plugins.js"></script>
 <script src="/js/script.js"></script>
+<script th:if="${check}">
+    // Function to show the toast message
+    function showToast(message) {
+        var toast = document.getElementById("toastMessage");
+        toast.style.display = "block";
+        toast.innerText = message;
+
+        setTimeout(function () {
+            toast.style.display = "none";
+        }, 1200); // Hide the toast message after 3 seconds
+    }
+
+    // Automatically show the toast message when the page is reloaded
+    window.addEventListener('load', function () {
+        showToast("Item Added to your Cart!");
+    });
+</script>
 
 </body>
 </html>	

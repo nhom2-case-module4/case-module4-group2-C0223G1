@@ -22,53 +22,47 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
     @Autowired
     private CustomUserDetailsService userDetailsService;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder;
     }
+
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl();
         return memory;
     }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/home", "/login", "/logout", "/register","/css/**","/icomoon/**","/images/**","/js/**","/static/**","/order/**").permitAll();
-        http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
-        http.authorizeRequests().antMatchers("/users","/order","/product").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/welcome", "/welcome/login", "/welcome/logout", "welcome/register"
+                ,"/css/**","/icomoon/**","/images/**","/js/**","/static/**","cart/add/{id}/{num}"
+                ,"/cart/show-cart","/cart/plus/{id}","/cart/minus/{id}","/cart/delete/{id}").permitAll();
+        http.authorizeRequests().antMatchers("/cart/send","welcome/*").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/users", "/order", "/product").access("hasRole('ROLE_ADMIN')");
 
 //        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
-        http.authorizeRequests().and().formLogin()//
+        http.authorizeRequests()
+                .and().formLogin()//
 
                 // Submit URL của trang login
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
-                .loginPage("/home/login")//
-                .defaultSuccessUrl("/home")//
-                .failureUrl("/login?error=true")//
+                .loginPage("/welcome/login")//
+                .defaultSuccessUrl("/welcome")//
+                .failureUrl("/login?error=true")
                 .usernameParameter("email")//
                 .passwordParameter("password")
 
                 // Cấu hình cho Logout Page.
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
-        http
-                // Các cấu hình khác
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessHandler((request, response, authentication) -> {
-                    HttpSession session = request.getSession(false);
-                    if (session != null) {
-                        session.invalidate();
-                    }
-                    // Xử lý logic sau khi logout
-                    // ...
-                    response.sendRedirect("/login?logout"); // Chuyển hướng sau khi logout
-                })
-                .permitAll();
+                .and().logout().logoutUrl("/welcome/logout").logoutSuccessUrl("/welcome/login?logout");
+
     }
 }

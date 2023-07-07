@@ -1,6 +1,7 @@
 package com.example.project_book.service;
 
 
+import com.example.project_book.model.RoleUser;
 import com.example.project_book.model.User;
 import com.example.project_book.repo.IUsersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,10 @@ public class UsersService implements IUsersService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //    Create by: Huynh Duc
-    //    Day: 06/07/2023
+    //    Day: 07/07/2023
     @Override
     public void add(User users) {
+        users.setRoleUser(new RoleUser(2, "USER"));
         users.setPassUser(bCryptPasswordEncoder.encode(users.getPassUser()));
         usersRepo.save(users);
     }
@@ -63,12 +65,23 @@ public class UsersService implements IUsersService {
 
     @Override
     public void deleteById(int id) {
-        usersRepo.deleteById(id);
+        User user = this.findById(id);
+        user.setDelete(true);
+        usersRepo.save(user);
     }
+
     //    Create: Huynh Duc
     //    Day: 06/07/2023
     @Override
     public boolean existsByEmailUser(String emailUser) {
         return usersRepo.existsByEmailUser(emailUser);
+    }
+
+
+    //    Create: Huynh Duc
+    //    Day: 07/07/2023
+    @Override
+    public User findByEmailUser(String email) {
+        return usersRepo.findByEmailUser(email);
     }
 }

@@ -7,13 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Title</title>
     <style>
-        body{
+        body {
 
             width: 100%;
         }
+
         .table {
             width: 100%;
-            font-size: large; height: 100%;
+            font-size: large;
+            height: 100%;
         }
 
         .font {
@@ -51,6 +53,7 @@
         .search-box button[type="submit"]:hover {
             background-color: slategray;
         }
+
         .background-image {
             background-image: url("https://haycafe.vn/wp-content/uploads/2022/03/background-sach-nen-may-tinh.jpg");
             background-repeat: no-repeat;
@@ -97,7 +100,19 @@
                 <td th:text="${list.phone}"></td>
                 <td th:text="${list.birthOfDay}"></td>
                 <td th:text="${list.emailUser}"></td>
-                <td th:text="${list.genderUser}"></td>
+                <td>
+<!--                    //    Create: Huynh Duc-->
+<!--                    //    Day: 07/07/2023-->
+                    <span th:if="${list.getGenderUser()==false}">
+                        Male
+                    </span>
+                    <span th:if="${list.getGenderUser()==true}">
+                        Female
+                    </span>
+                    <span th:if="${list.getGenderUser()==null}">
+                        Other
+                    </span>
+                </td>
                 <td th:text="${list.roleUser.nameRole}"></td>
                 <td><a th:href="@{/users/{id}/delete(id=${list.getIdUser()})}"><span class="font"><i
                         class="fa-solid fa-trash"></i></span></a></td>
