@@ -43,8 +43,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/home", "/login", "/logout", "/register","/css/**","/icomoon/**","/images/**","/js/**","/static/**","/order/**").permitAll();
-        http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/welcome", "/welcome/login", "/welcome/logout", "welcome/register"
+                ,"/css/**","/icomoon/**","/images/**","/js/**","/static/**","cart/add/{id}/{num}"
+                ,"/cart/show-cart","/cart/plus/{id}","/cart/minus/{id}","/cart/delete/{id}").permitAll();
+        http.authorizeRequests().antMatchers("/cart/send","welcome/*").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
         http.authorizeRequests().antMatchers("/users", "/order", "/product").access("hasRole('ROLE_ADMIN')");
 
 //        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
@@ -53,14 +55,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // Submit URL của trang login
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
-                .loginPage("/home/login")//
-                .defaultSuccessUrl("/home?success")//
+                .loginPage("/welcome/login")//
+                .defaultSuccessUrl("/welcome")//
                 .failureUrl("/login?error=true")
                 .usernameParameter("email")//
                 .passwordParameter("password")
 
                 // Cấu hình cho Logout Page.
-                .and().logout().logoutUrl("/home/logout").logoutSuccessUrl("/home/login?logout");
+                .and().logout().logoutUrl("/welcome/logout").logoutSuccessUrl("/welcome/login?logout");
 
     }
 }

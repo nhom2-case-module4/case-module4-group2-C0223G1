@@ -28,7 +28,7 @@ public class UsersService implements IUsersService {
     //    Day: 07/07/2023
     @Override
     public void add(User users) {
-        users.setRoleUser(new RoleUser(2,"USER"));
+        users.setRoleUser(new RoleUser(2, "USER"));
         users.setPassUser(bCryptPasswordEncoder.encode(users.getPassUser()));
         usersRepo.save(users);
     }
@@ -67,10 +67,19 @@ public class UsersService implements IUsersService {
     public void deleteById(int id) {
         usersRepo.deleteById(id);
     }
+
     //    Create: Huynh Duc
     //    Day: 06/07/2023
     @Override
     public boolean existsByEmailUser(String emailUser) {
         return usersRepo.existsByEmailUser(emailUser);
+    }
+
+
+    //    Create: Huynh Duc
+    //    Day: 07/07/2023
+    @Override
+    public User findByEmailUser(String email) {
+        return usersRepo.findByEmailUser(email);
     }
 }
