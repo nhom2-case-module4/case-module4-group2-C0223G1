@@ -3,6 +3,7 @@ package com.example.project_book.dto.dto_product;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -11,23 +12,24 @@ import javax.validation.constraints.Size;
 public class ProductDto implements Validator {
 
     private int idProduct;
-    @NotNull(message = "Image URL cannot be null")
+    @NotBlank(message = "Image URL cannot be null")
     private String img;
-    @NotNull(message = "Product name cannot be null")
+    @NotBlank(message = "Product name cannot be null")
     @Size(min = 2, max = 100, message = "Product nam must be >2 and <100 characters")
     private String nameProduct;
 
     @Pattern(regexp = "\\d{4}", message = "Publication year must be a 4-degit number")
     private String publicationYear;
-    @NotNull(message = "Author cannot be null")
+    @NotBlank(message = "Author cannot be null")
     private String author;
-    @NotNull(message = "not null")
+    @NotBlank(message = "not null")
     private String describeBook;
-    @NotNull(message = "not null")
+    @NotBlank(message = "not null")
     private String nationBook;
-    @NotNull(message = "not null")
+    @NotBlank(message = "not null")
     private String publishingCompany;
-    @NotNull(message = "Quantity of books cannot be null")
+
+//    @Pattern(regexp = "\"^(?!0\\d)\\d+$\"gm")
     private int quantityBooks;
     @NotNull(message = "Price of book cannot be null")
     private double priceBook;

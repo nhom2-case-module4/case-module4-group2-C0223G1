@@ -33,7 +33,7 @@ public class ProductController {
     private ITypeProductService typeProductService;
 
     @GetMapping()
-    public String getList(@PageableDefault(size = 2) Pageable pageable, Model model) {
+    public String getList(@PageableDefault(size = 5) Pageable pageable, Model model) {
         model.addAttribute("productList", this.productService.findAllByIsDeleteIsFalse(pageable));
         return "/product/list";
     }
@@ -129,7 +129,7 @@ public class ProductController {
 
 
     @GetMapping("/search")
-    public String search(@RequestParam(name="name") String name, Pageable pageable, Model model) {
+    public String search( @RequestParam(name="name") String name, Pageable pageable, Model model) {
         Page<Product> products = productService.findOne(name, pageable);
         model.addAttribute("productList", products);
         return"/product/list";

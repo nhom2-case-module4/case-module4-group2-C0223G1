@@ -4,13 +4,14 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 
 public class TypeProductDto implements Validator {
 
     private int idTypeProduct;
-    @NotNull(message = "Image URL cannot be null")
+    @NotBlank(message = "Type Product cannot be null")
     private String nameTypeProduct;
 
     public TypeProductDto() {
