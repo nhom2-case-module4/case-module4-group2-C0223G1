@@ -65,7 +65,9 @@ public class UsersService implements IUsersService {
 
     @Override
     public void deleteById(int id) {
-        usersRepo.deleteById(id);
+        User user = this.findById(id);
+        user.setDelete(true);
+        usersRepo.save(user);
     }
 
     //    Create: Huynh Duc
