@@ -7,7 +7,9 @@ import javax.persistence.*;
 public class RoleUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_role")
     private int idRole;
+
     private String nameRole;
 
 
