@@ -48,9 +48,7 @@ public class CartController {
     @GetMapping("/show-cart")
     public String showCart(@SessionAttribute Cart cart, Model model) {
         model.addAttribute("cart", cart);
-        Order order = new Order();
-        order.setAddressPeople("da nang");
-        model.addAttribute("order",order);
+        model.addAttribute("order",new Order());
         return "user/cart";
     }
 
