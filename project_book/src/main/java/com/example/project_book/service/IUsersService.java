@@ -17,4 +17,8 @@ public interface IUsersService {
     //    Create: Huynh Duc
     //    Day: 06/07/2023
     boolean existsByEmailUser(String emailUser);
+
+    //    Create: Huynh Duc
+    //    Day: 07/07/2023
+    User findByEmailUser(String email);
 }
