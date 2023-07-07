@@ -37,7 +37,16 @@
                                     </div>
                                     <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your
                                         account</h5>
-
+                                    <div class="alert alert-success" role="alert" th:if="${param.logout}">
+                                        <strong>
+                                            You have been logged out successfully.
+                                        </strong>
+                                    </div>
+                                    <div class="alert alert-success" role="alert" th:if="${param.login}">
+                                        <strong>
+                                            Tài khoản hoặc mật khẩu không đúng
+                                        </strong>
+                                    </div>
                                     <div class="form-outline mb-4">
                                         <input type="text" id="form2Example17"
                                                class="form-control form-control-lg"

@@ -14,9 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private IUsersRepo usersRepo;
+    public CustomUserDetailsService(IUsersRepo usersRepo) {
+        this.usersRepo = usersRepo;
+    }
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         com.example.project_book.model.User users = this.usersRepo.findByEmailUser(email);

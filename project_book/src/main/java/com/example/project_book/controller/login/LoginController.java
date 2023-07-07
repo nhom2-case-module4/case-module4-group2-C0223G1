@@ -6,6 +6,8 @@ import com.example.project_book.service.IUsersService;
 import com.example.project_book.service.IUsersTypeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,17 +21,23 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/home")
 public class LoginController {
-
+    //    Create: Huynh Duc
+    //    Day: 06/07/2023
     @Autowired
     private IUsersService usersService;
+
+    //    Create: Huynh Duc
+    //    Day: 06/07/2023
     @Autowired
     private IUsersTypeService usersTypeService;
+
+    //    Create: Huynh Duc
+    //    Day: 06/07/2023
     @Autowired
     private HttpSession session;
 
     //    Create: Huynh Duc
     //    Day: 06/07/2023
-
     @GetMapping("")
     public String showHome(Model model) {
 //        model.addAttribute("list", homeService.getlistBook());
@@ -37,17 +45,26 @@ public class LoginController {
     }
 
     //    Create: Huynh Duc
-    //    Day: 06/07/2023
+    //    Day: 07/07/2023
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showFormLogin() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (authentication != null && authentication.isAuthenticated()) {
+//            return "redirect:/home";
+//        }
         return "/login/login";
     }
 
     //    Create: Huynh Duc
     //    Day: 06/07/2023
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(HttpServletRequest request) {
-        return "/home/login";
+    public String logout(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            SecurityContextHolder.clearContext();
+            redirectAttributes.addFlashAttribute("msg", "Đăng xuất thành công");
+        }
+        return "/login/login";
     }
 
     //    Create: Huynh Duc
@@ -60,7 +77,7 @@ public class LoginController {
     }
 
     //    Create: Huynh Duc
-//    Day: 06/07/2023
+    //    Day: 07/07/2023
     @PostMapping("/create")
     public String createUser(@Valid @ModelAttribute(name = "add") UsersDto usersDto, BindingResult bindingResult,
                              RedirectAttributes redirectAttributes) {
@@ -72,7 +89,8 @@ public class LoginController {
         BeanUtils.copyProperties(usersDto, users);
         boolean check = usersService.existsByEmailUser(users.getEmailUser());
         if (check) {
-            throw new IllegalArgumentException("Email already exists");
+            redirectAttributes.addFlashAttribute("msg", "Email already exists");
+            return "/login/register";
         } else {
             this.usersService.add(users);
             redirectAttributes.addFlashAttribute("msg", "Đăng kí thành công");
