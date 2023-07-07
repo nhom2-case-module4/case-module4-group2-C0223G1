@@ -104,14 +104,11 @@
 					<div class="col-md-3" th:each="book,loop: ${list}">
 						<div th:if="${loop.count le 4}">
 						<figure class="product-style">
-							<a style="text-decoration: none" th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">
+							<a style="text-decoration: none" th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}">
 								<img th:src="${book.getImg()}" alt="Books" class="product-item">
 							</a>
-								<button type="button" class="add-to-cart" data-product-tile="add-to-cart">
-									<a style="text-decoration: none; color: white" th:href="@{/home/view/{id}(id=${book.getIdProduct()})}">Add to Cart</a>
-                                </button>
 							<figcaption>
-								<h3><a style="text-decoration: none" th:href="@{/home/view/{id}(id=${book.getIdProduct()})}"th:text="${book.getNameProduct()}"></a></h3>
+								<h3><a style="text-decoration: none" th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}"th:text="${book.getNameProduct()}"></a></h3>
 								<p th:text="${book.getAuthor()}"></p>
 								<div class="item-price" th:text="'$ '+${book.getPriceBook()}"></div>
 							</figcaption>
@@ -128,7 +125,7 @@
 			<div class="col-md-12">
 
 				<div class="btn-wrap align-right">
-					<a th:href="@{/home/view-all}" class="btn-accent-arrow">View all products <i class="icon icon-ns-arrow-right"></i></a>
+					<a th:href="@{/welcome/view-all}" class="btn-accent-arrow">View all products <i class="icon icon-ns-arrow-right"></i></a>
 				</div>
 
 			</div>
@@ -344,7 +341,7 @@
 				<div class="row">
 
 					<div class="btn-wrap align-center">
-						<a href="#" class="btn btn-outline-accent btn-accent-arrow" tabindex="0">Read All Articles<i class="icon icon-ns-arrow-right"></i></a>
+						<a th:href="@{/welcome/view-blog}" class="btn btn-outline-accent btn-accent-arrow" tabindex="0">Read All Articles<i class="icon icon-ns-arrow-right"></i></a>
 					</div>
 				</div>
 

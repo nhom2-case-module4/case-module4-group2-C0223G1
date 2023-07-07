@@ -1,11 +1,13 @@
 package com.example.project_book.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
     private List<Item> items;
 
     public Cart() {
+        items = new ArrayList<>();
     }
 
     public Cart(List<Item> items) {
@@ -34,11 +36,29 @@ public class Cart {
     }
 
     public void addItem(Item item) {
-        if (getItemById(item.getProduct().getIdProduct())!= null){
+        if (getItemById(item.getProduct().getIdProduct()) != null) {
             Item m = getItemById(item.getProduct().getIdProduct());
-            m.setAmount(m.getAmount()+item.getAmount());
-        }else {
+            m.setAmount(m.getAmount() + item.getAmount());
+        } else {
             items.add(item);
         }
+    }
+
+    public void removeItem(int id) {
+        if (getItemById(id) != null) {
+            items.remove(getItemById(id));
+        }
+    }
+
+    public double getTotalMoney() {
+        double total = 0;
+        for (Item i: items) {
+            total+=(i.getAmount()*i.getProduct().getPriceBook());
+        }
+        return total;
+    }
+
+    public void clearCart(){
+        items = new ArrayList<>();
     }
 }

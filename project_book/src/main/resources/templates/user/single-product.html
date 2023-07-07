@@ -44,7 +44,7 @@
 
 					<p th:text="${book.getDescribeBook()}"></p>
 
-					<button type="submit" name="add-to-cart" value="27545" class="button"><a style="color: white">Add to cart</a></button>
+					<button type="submit" name="add-to-cart" value="27545" class="button"><a th:href="@{/cart/add/{id}/{num}(id=${book.getIdProduct()},num=1)}" style="color: white">Add to cart</a></button>
 					
 				</div>
 			</div>

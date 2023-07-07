@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @SessionAttributes("cart")
-@RequestMapping("/home")
+@RequestMapping("/welcome")
 public class HomeController {
     @Autowired
     private IHomeService homeService;
@@ -33,17 +33,20 @@ public class HomeController {
     }
 
     @GetMapping("/view-all")
-    public String showAll(Model model){
+    public String showAll(@SessionAttribute Cart cart, Model model){
+        model.addAttribute("cart",cart);
         model.addAttribute("list", homeService.getlistBook());
         model.addAttribute("list1", homeService.getBooksByType(1));
         model.addAttribute("list2", homeService.getBooksByType(2));
         model.addAttribute("list3", homeService.getBooksByType(3));
         model.addAttribute("list4", homeService.getBooksByType(4));
+        model.addAttribute("list5", homeService.getBooksByType(5));
         return "user/shop";
     }
 
-    @GetMapping("/show-cart")
-    public String showCart(){
-        return "user/cart";
+    @GetMapping("/view-blog")
+    private String viewBlog(){
+        return "user/blog";
     }
+
 }
