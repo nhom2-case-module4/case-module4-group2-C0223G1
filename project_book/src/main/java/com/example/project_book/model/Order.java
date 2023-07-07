@@ -21,7 +21,7 @@ public class Order {
     @JoinColumn(name = "status_id_status", columnDefinition = "int default 1")
     private Status status;
     @ManyToOne
-    @JoinColumn(name = "user_id_user", columnDefinition = "int default 1")
+    @JoinColumn(name = "user_id_user")
     private User user;
 
     public Order() {

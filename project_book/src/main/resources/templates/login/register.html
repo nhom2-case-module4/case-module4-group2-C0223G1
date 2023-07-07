@@ -47,20 +47,22 @@
 </head>
 <h1 style="text-align: center;background-color: #f1f1f1">THÊM MỚI NGƯỜI DÙNG</h1>
 <body>
+<!--        Create: Huynh Duc-->
+<!--        Day: 07/07/2023-->
 <form method="POST" th:action="@{/home/create}" th:object="${add}">
     <div class="user">
         <div>
-            <label for="name">Name:</label><br>
+            <label for="name">Tên:</label><br>
             <input id="name" type="text" th:field="*{name}" placeholder="Dang Tuan Vu"/>
             <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
         </div>
         <div>
-            <label for="phoneNumber">PhoneNumbers:</label><br>
+            <label for="phoneNumber">Số điện thoại:</label><br>
             <input id="phoneNumber" type="text" th:field="*{phone}" placeholder="ex:0123456789"/>
             <span style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
         </div>
         <div>
-            <label for="myDate">DateOfBirth:</label><br>
+            <label for="myDate">Ngày Sinh:</label><br>
             <input type="date" id="myDate" onchange="validateDate()" th:field="*{birthOfDay}">
             <span style="color: red" th:if="${#fields.hasErrors('birthOfDay')}" th:errors="*{birthOfDay}"></span>
         </div>
@@ -69,22 +71,18 @@
             <input id="email" type="text" th:field="*{emailUser}" placeholder="exam@gmail.com"/>
             <span style="color: red" th:if="${#fields.hasErrors('emailUser')}" th:errors="*{emailUser}"></span>
         </div>
+        <!--        Create: Huynh Duc-->
+        <!--        Day: 07/07/2023-->
         <div>
-            <label for="gender">Gender:</label><br>
-            <input id="gender" type="text" th:field="*{genderUser}" placeholder="ex:Nam|Nữ|Khác"/>
-            <span style="color: red" th:if="${#fields.hasErrors('genderUser')}" th:errors="*{genderUser}"></span>
+            <label>Giới tính:</label>
+            <input type="radio" th:field="*{genderUser}" id="male" value="0"/>Nam
+            <input type="radio" th:field="*{genderUser}" id="female" value="1"/>Nữ
+            <input type="radio" th:field="*{genderUser}" id="other" value=""/>Khác
         </div>
         <div>
-            <label for="pass">Pass:</label><br>
+            <label for="pass">Mật khẩu:</label><br>
             <input id="pass" type="text" th:field="*{passUser}"/>
             <span style="color: red" th:if="${#fields.hasErrors('passUser')}" th:errors="*{passUser}"></span>
-        </div>
-        <div>
-            <label for="userType">UsersType:</label><br>
-            <select id="userType" th:field="*{roleUser.idRole}">
-                <option th:each="r, items : ${roleUser}" th:text="${r.nameRole}" th:value="${r.idRole}">
-                </option>
-            </select>
         </div>
         <input type="submit"/>
     </div>
