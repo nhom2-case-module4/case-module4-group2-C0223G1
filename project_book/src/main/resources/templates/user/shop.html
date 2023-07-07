@@ -19,11 +19,27 @@
     <!-- script
     ================================================== -->
     <script src="/js/modernizr.js"></script>
-
+    <style>
+        .toast {
+            background-color: rgb(231, 216, 169);
+            color: #7a6565;
+            padding: 15px;
+            border-radius: 10px;
+            position: fixed;
+            top: 300px;
+            right: 0px;
+            font-weight: bold;
+            z-index: 1;
+            display: none;
+            animation: slideInLeft ease 2s, fadeOut linear 1s 2s forwards;
+            transition: all linear 0.3s;
+        }
+    </style>
 </head>
 
 <body>
 <div th:insert="user/navbar :: copy"></div>
+<div id="toastMessage" class="toast"></div>
 <section class="padding-large">
     <div class="container">
         <div class="row">
@@ -205,12 +221,28 @@
     </div>
 </section>
 
-
 <div th:insert="user/footer :: copy"></div>
 
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/plugins.js"></script>
 <script src="/js/script.js"></script>
+<script th:if="${check}">
+    // Function to show the toast message
+    function showToast(message) {
+        var toast = document.getElementById("toastMessage");
+        toast.style.display = "block";
+        toast.innerText = message;
+
+        setTimeout(function () {
+            toast.style.display = "none";
+        }, 1200); // Hide the toast message after 3 seconds
+    }
+
+    // Automatically show the toast message when the page is reloaded
+    window.addEventListener('load', function () {
+        showToast("Item Added to your Cart!");
+    });
+</script>
 
 </body>
 </html>	

@@ -39,11 +39,13 @@ public class CartController {
 
 
     @GetMapping("/add/{id}/{num}")
-    public String addCart(@SessionAttribute Cart cart, @PathVariable int id, @PathVariable int num) {
+    public String addCart(@SessionAttribute Cart cart, @PathVariable int id, @PathVariable int num,
+                          RedirectAttributes redirectAttributes) {
         Product product = homeService.getBookById(id);
         if (product == null) {
             return "";
         } else {
+            redirectAttributes.addFlashAttribute("check","add");
             cart.addItem(new Item(product, num));
             return "redirect:/welcome/view-all";
         }
