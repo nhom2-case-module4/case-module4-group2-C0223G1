@@ -59,14 +59,13 @@ public class UsersController {
     //    Create by: Tuan Vu
     //    Day: 06/07/2023
     @GetMapping("/{id}/delete")
-    public String delete(@PathVariable int id, RedirectAttributes redirectAttributes) {
+    @ResponseBody
+    public void delete(@PathVariable int id, RedirectAttributes redirectAttributes) {
         if (usersService.findById(id) == null) {
             redirectAttributes.addFlashAttribute("msg", "not found");
-            return "redirect:/users";
         }
         usersService.deleteById(id);
         redirectAttributes.addFlashAttribute("msg", "successfully");
-        return "redirect:/users";
     }
     //    Create by: Tuan Vu
     //    Day: 06/07/2023
@@ -86,7 +85,7 @@ public class UsersController {
     @PostMapping("/edit")
     public String edit(@ModelAttribute(name = "edit") UsersDto usersDto, RedirectAttributes redirectAttributes) {
         if (usersService.findById(usersDto.getIdUser()) == null) {
-            redirectAttributes.addFlashAttribute("msg", "sửa không thành công");
+            redirectAttributes.addFlashAttribute("msg", "not found");
         } else {
             User users = new User();
             BeanUtils.copyProperties(usersDto, users);
