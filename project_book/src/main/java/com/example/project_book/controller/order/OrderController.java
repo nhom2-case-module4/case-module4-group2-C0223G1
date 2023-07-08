@@ -6,11 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,8 +47,25 @@ public class OrderController {
         if (!order.isPresent() || order.get().isFlagDelete()) {
             return "/orders/error.404";
         } else {
+            if (arrStr[0].equals("3")) {
+                order.get().setDayTake(LocalDate.now());
+                orderService.updateOrder(order.get());
+            } else {
+                order.get().setDayTake(null);
+                orderService.updateOrder(order.get());
+            }
             orderService.optionStatus(Integer.parseInt(arrStr[1]), Integer.parseInt(arrStr[0]));
             return "redirect:/order";
         }
+    }
+
+    @PostMapping("/search")
+    public String searchOrder(@RequestParam("dateStart") String dateStart, @RequestParam("dateEnd") String dateEnd, @RequestParam("select") int select, Pageable pageable, Model model) {
+        if (dateEnd.equals("") && dateStart.equals("")) {
+            dateEnd= "2050-05-16";
+            dateStart = "2020-04-26";
+        }
+        model.addAttribute("orders", orderService.searchAllOrder(dateStart, dateEnd, select, pageable));
+        return "orders/list";
     }
 }
