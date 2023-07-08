@@ -1,7 +1,6 @@
 package com.example.project_book.dto.dto_users;
 
 import com.example.project_book.model.RoleUser;
-import org.springframework.data.repository.query.Param;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -13,25 +12,35 @@ import javax.validation.constraints.Size;
 public class UsersDto implements Validator {
 
     private int idUser;
-
-    @Pattern(regexp = "^[A-Z][a-z]*(\\s[A-Z][a-z]*)*$", message = "First and last name is wrong format")
-    @Size(min = 2, max = 40)
+    //    Create: Huynh Duc
+    //    Day: 06/07/2023
+    @NotBlank(message = "First and last name cannot be left blank")
+    @Max(value = 50,message = "Up to 50 characters")
+    @Pattern(regexp = "^[A-Z][a-z]*(\\s[A-Z][a-z]*)*$", message = "Invalid first and last name!")
     private String name;
-    @Pattern(regexp = "^0\\d{9}$", message = "\n" +
-            "phone number is not in the correct format")
+    //    Create: Huynh Duc
+    //    Day: 06/07/2023
+    @NotBlank(message = "Phone cannot be left blank")
+    @Pattern(regexp = "^0\\d{9}$", message = "Invalid phone number!")
     private String phone;
-
+    //    Create: Huynh Duc
+    //    Day: 06/07/2023
+    @NotBlank(message = "Cannot be left blank")
     private String birthOfDay;
-    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "Email invalidate")
-    @Size(min = 2, max = 40, message = "Name must be more than 2 characters and less than 40 characters")
+    //    Create: Huynh Duc
+    //    Day: 06/07/2023
+    @NotBlank(message = "Email cannot be left blank")
+    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "Invalid email!")
     private String emailUser;
 
     //    Create: Huynh Duc
 //    Day: 06/07/2023
     //    @Pattern(regexp = "^(Nam|Nữ|Khác)$", message = "Giới tính không hợp lệ")
     private Boolean genderUser;
-    @NotBlank
-    @Size(min = 5, max = 40, message ="Password must be more than 5 characters and less than 40 characters")
+    //    Create: Huynh Duc
+    //    Day: 06/07/2023
+    @NotBlank(message = "Cannot be left blank")
+    @Size(min = 6,max = 45,message = "Up to 50 characters, min 6 character")
     private String passUser;
 
     private RoleUser roleUser;
