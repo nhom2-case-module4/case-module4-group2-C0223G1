@@ -58,7 +58,7 @@ public class UsersController {
     }
     //    Create by: Tuan Vu
     //    Day: 06/07/2023
-    @GetMapping("/{id}/delete")
+    @GetMapping("/delete/{id}")
     @ResponseBody
     public void delete(@PathVariable int id, RedirectAttributes redirectAttributes) {
         if (usersService.findById(id) == null) {

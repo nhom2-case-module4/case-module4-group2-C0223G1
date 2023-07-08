@@ -1,11 +1,14 @@
 package com.example.project_book.controller;
 
+import com.example.project_book.controller.order.SendEmail;
 import com.example.project_book.model.*;
+import com.example.project_book.service.EmailService;
 import com.example.project_book.service.IUsersService;
 import com.example.project_book.service.cart.ICartService;
 import com.example.project_book.service.home.IHomeService;
 import com.example.project_book.service.order.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.time.LocalDate;
@@ -45,7 +49,7 @@ public class CartController {
         if (product == null) {
             return "";
         } else {
-            redirectAttributes.addFlashAttribute("check","add");
+            redirectAttributes.addFlashAttribute("check", "add");
             cart.addItem(new Item(product, num));
             return "redirect:/welcome/view-all";
         }
@@ -94,7 +98,7 @@ public class CartController {
     //    Create: Huynh Duc
 //    Day: 07/07/2023
     @PostMapping("/send")
-    public String oderBook(@SessionAttribute Cart cart, @ModelAttribute Order order,Model model, BindingResult bindingResult, HttpServletRequest request) {
+    public String oderBook(@SessionAttribute Cart cart, @ModelAttribute Order order, Model model, BindingResult bindingResult, HttpServletRequest request) throws MessagingException {
         if (bindingResult.hasErrors()) {
             return "";
         }
@@ -105,9 +109,18 @@ public class CartController {
         cartService.oderBook(cart, order);
         cart.clearCart();
         model.addAttribute("user", user);
+        SendEmail sendEmail = new SendEmail();
+        sendEmail.createOrder(order);
         return "user/thank-you";
 
     }
-
-
 }
+//    @Autowired
+//    private EmailService emailService;
+////    @PostMapping("/email")
+////    public ResponseEntity<Void> createOrder(@ModelAttribute Order oder){
+////        String emailBody = "Thank you for your purchase!";
+////        emailService.sendEmail(oder.getUser().getEmailUser(), "Order Confirmation", emailBody);
+////        return ResponseEntity.ok().build();
+////    }
+//}

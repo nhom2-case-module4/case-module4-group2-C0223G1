@@ -115,17 +115,16 @@
                     </span>
                 </td>
                 <td th:text="${list.roleUser.nameRole}"></td>
-                <td>
-                    <button type="button" th:attr="onclick=|deleteModal('${list.getIdUser()}','${order.getNameUser()}')|" data-bs-toggle="modal" data-bs-target="#deleteModal"><span class="font"><i
-                            class="fa-solid fa-trash"></i></span></button>
-                </td>
-<!--                <td><a th:href="@{/users/{id}/delete(id=${list.getIdUser()})}"><span class="font"><i-->
-<!--                            class="fa-solid fa-trash"></i></span></a></td>-->
+<!--                <td>-->
+<!--                    <button type="button" th:attr="onclick=|deleteModal('${list.getIdUser()}','${order.getNameUser()}')|" data-bs-toggle="modal" data-bs-target="#deleteModal"><span class="font"><i-->
+<!--                            class="fa-solid fa-trash"></i></span></button>-->
+<!--                </td>-->
+                <td><a th:href="@{/users/{id}/delete(id=${list.getIdUser()})}"><span class="font"><i
+                            class="fa-solid fa-trash"></i></span></a></td>
                 <td><a th:href="@{/users/{id}/edit(id=${list.getIdUser()})}"><span class="font"><i
                         class="fa-sharp fa-solid fa-user-pen"></i></span></a></td>
             </tr>
             </tbody>
-            ư
         </table>
     </form>
     <div class="d-flex container">
@@ -133,44 +132,44 @@
         <a th:if="${users.hasNext()}" th:href="@{/users(page=${users.number +1})}">Next</a>
     </div>
 </div>
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa Đơn Hàng</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h3>Tên Người Dùng<span id="nameCustomer"></span></h3>
-                <input type="hidden" id="blogId" name="blogId" >
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <input type="hidden" id="idOrder" name="orderDelete">
-                <button type="button" onclick="deleteOrder()"  class="btn btn-primary">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-    const deleteOrder=()=>{
-        let id=document.getElementById("idUser").value;
-        setTimeout(function (){
-            $.ajax({
-                url:'http://localhost:8080/users/'+id,
-                type:'GET',
-                success:function (){
-                    window.location.href='http://localhost:8080/users';
-                },
-                error:function (error){
-                    //TODO
-                }
-            })
-        })
-    }
+<!--<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa Đơn Hàng</h1>-->
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <h3>Tên Người Dùng<span id="nameCustomer"></span></h3>-->
+<!--                <input type="hidden" id="blogId" name="blogId" >-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+<!--                <input type="hidden" id="idOrder" name="orderDelete">-->
+<!--                <button type="button" onclick="deleteOrder()"  class="btn btn-primary">Delete</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+<!--<script>-->
+<!--    const deleteOrder=()=>{-->
+<!--        let id=document.getElementById("idUser").value;-->
+<!--        setTimeout(function (){-->
+<!--            $.ajax({-->
+<!--                url:'http://localhost:8080/users/'+id,-->
+<!--                type:'GET',-->
+<!--                success:function (){-->
+<!--                    window.location.href='http://localhost:8080/users';-->
+<!--                },-->
+<!--                error:function (error){-->
+<!--                    //TODO-->
+<!--                }-->
+<!--            })-->
+<!--        })-->
+<!--    }-->
 
-</script>
+<!--</script>-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>

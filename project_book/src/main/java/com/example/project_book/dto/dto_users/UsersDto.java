@@ -1,23 +1,29 @@
 package com.example.project_book.dto.dto_users;
 
 import com.example.project_book.model.RoleUser;
+import org.springframework.data.repository.query.Param;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class UsersDto implements Validator {
 
     private int idUser;
 
-    @Pattern(regexp = "^[A-Z][a-z]*(\\s[A-Z][a-z]*)*$", message = "Họ tên không hợp lệ")
+    @Pattern(regexp = "^[A-Z][a-z]*(\\s[A-Z][a-z]*)*$", message = "First and last name is wrong format")
+    @Size(min = 2, max = 40)
     private String name;
-    @Pattern(regexp = "^0\\d{9}$", message = "Số điện thoại không hợp lệ")
+    @Pattern(regexp = "^0\\d{9}$", message = "\n" +
+            "phone number is not in the correct format")
     private String phone;
 
     private String birthOfDay;
-    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "Email không hợp lệ")
+    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "Email invalidate")
+    @Size(min = 2, max = 40, message = "Name must be more than 2 characters and less than 40 characters")
     private String emailUser;
 
     //    Create: Huynh Duc
@@ -25,6 +31,7 @@ public class UsersDto implements Validator {
     //    @Pattern(regexp = "^(Nam|Nữ|Khác)$", message = "Giới tính không hợp lệ")
     private Boolean genderUser;
     @NotBlank
+    @Size(min = 5, max = 40, message ="Password must be more than 5 characters and less than 40 characters")
     private String passUser;
 
     private RoleUser roleUser;
