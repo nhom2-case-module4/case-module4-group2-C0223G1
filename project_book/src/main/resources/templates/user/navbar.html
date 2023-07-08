@@ -54,9 +54,9 @@
                     <!--                Day: 06/07/2023-->
                     <div class="right-element" th:if="${#request.userPrincipal!=null}" th:object="${user}">
                         <i class="icon icon-user"></i>
-                        <span th:text="${user.name}" >
+                        <b><span th:text="${user.name}" ></span></b>
                         </span>
-                        <a href="/welcome/logout" class="user-account for-buy"><span>Logout</span></a>
+                        <a href="/welcome/logout" class="user-account for-buy"><span> | Logout</span></a>
                         <a href="/cart/show-cart" class="cart for-buy"><i class="icon icon-clipboard"></i><span
                                 th:text="'Cart: '+${cart.getItems().size()}"></span></a>
 

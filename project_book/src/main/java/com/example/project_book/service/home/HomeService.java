@@ -24,4 +24,9 @@ public class HomeService implements IHomeService {
     public List<Product> getBooksByType(int idType) {
         return homeRepesitory.findByisDeleteIsFalseAndTypeProduct_idProductIs(idType);
     }
+
+    @Override
+    public void update(Product product) {
+        homeRepesitory.save(product);
+    }
 }

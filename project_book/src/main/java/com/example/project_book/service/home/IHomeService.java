@@ -10,4 +10,6 @@ public interface IHomeService {
     Product getBookById(int id);
 
     List<Product> getBooksByType(int idType);
+
+    void update (Product product);
 }
