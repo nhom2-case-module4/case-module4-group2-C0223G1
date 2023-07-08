@@ -82,7 +82,7 @@ public class HomeController {
                              RedirectAttributes redirectAttributes) {
         new UsersDto().validate(usersDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            return "/form-add";
+            return "/login/register";
         }
         User users = new User();
         BeanUtils.copyProperties(usersDto, users);
@@ -92,7 +92,7 @@ public class HomeController {
             return "/login/register";
         } else {
             this.usersService.add(users);
-            redirectAttributes.addFlashAttribute("msg", "Đăng kí thành công");
+            redirectAttributes.addFlashAttribute("msg", "Register success");
             return "/login/login";
         }
     }
