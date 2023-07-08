@@ -11,8 +11,8 @@
             border-collapse: collapse;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-   </head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+</head>
 <body style="background: rgb(243, 242, 236)">
 
 
@@ -42,21 +42,26 @@
                                             <h6 class="text-muted" th:text="${item.getProduct().getNameProduct()}"></h6>
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                            <button class="btn btn-link px-2">
-                                                <a th:href="@{/cart/minus/{id}(id=${item.getProduct().getIdProduct()})}">
+<!--                                            <button class="btn btn-link px-2">-->
+<!--                                                <a th:href="@{/cart/minus/{id}(id=${item.getProduct().getIdProduct()})}">-->
+<!--                                                    <i class="fas fa-minus"></i>-->
+<!--                                                </a>-->
+<!--                                            </button>-->
+                                            <button class="btn btn-link px-2" th:attr="onclick=|decreaseQuantity('${item.getProduct().getIdProduct()}','${item.getProduct().getPriceBook()}')|">
                                                     <i class="fas fa-minus"></i>
-                                                </a>
                                             </button>
-
                                             <input readonly min="0" name="quantity" th:value="${item.getAmount()}"
                                                    type="number"
                                                    class="form-control form-control-sm"/>
-
-                                            <button class="btn btn-link px-2">
-                                                <a th:href="@{/cart/plus/{id}(id=${item.getProduct().getIdProduct()})}">
-                                                    <i class="fas fa-plus"></i>
-                                                </a>
+                                            <button class="btn btn-link px-2" th:attr="onclick=|increaseQuantity('${item.getProduct().getIdProduct()}')|">
+                                                <i class="fas fa-plus"></i>
                                             </button>
+<!--                                            <button class="btn btn-link px-2">-->
+<!--                                                <a th:href="@{/cart/plus/{id}(id=${item.getProduct().getIdProduct()})}">-->
+<!--                                                    <i class="fas fa-plus"></i>-->
+<!--                                                </a>-->
+<!--                                            </button>-->
+
                                         </div>
                                         <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                             <h6 class="mb-0" th:text="'$ '+${item.getProduct().getPriceBook()}"></h6>
@@ -123,7 +128,36 @@
         </div>
     </div>
 </section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    // Tăng số lượng sản phẩm trong giỏ hàng
+    function increaseQuantity(productId,price) {
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/cart/increase/'+productId,
+            data: { productId: productId },
+            success: function(response) {
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
 
+    // Giảm số lượng sản phẩm trong giỏ hàng
+    function decreaseQuantity(productId) {
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/cart/decrease/'+productId,
+            data: { productId: productId },
+            success: function(response) {
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
 
 </body>
 </html>

@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 ,"/css/**","/icomoon/**","/images/**","/js/**","/static/**","cart/add/{id}/{num}"
                 ,"/cart/show-cart","/cart/plus/{id}","/cart/minus/{id}","/cart/delete/{id}").permitAll();
         http.authorizeRequests().antMatchers("/cart/send","welcome/*").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
-        http.authorizeRequests().antMatchers("/users", "/order", "/product").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/users", "/order/*", "/product").access("hasRole('ROLE_ADMIN')");
 
 //        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
         http.authorizeRequests()

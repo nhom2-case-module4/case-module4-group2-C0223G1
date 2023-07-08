@@ -6,6 +6,7 @@ import com.example.project_book.service.cart.ICartService;
 import com.example.project_book.service.home.IHomeService;
 import com.example.project_book.service.order.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -45,7 +46,7 @@ public class CartController {
         if (product == null) {
             return "";
         } else {
-            redirectAttributes.addFlashAttribute("check","add");
+            redirectAttributes.addFlashAttribute("check", "add");
             cart.addItem(new Item(product, num));
             return "redirect:/welcome/view-all";
         }
@@ -73,8 +74,8 @@ public class CartController {
     public String minusQuantityItem(@PathVariable int id, @SessionAttribute Cart cart, Model model,
                                     @ModelAttribute Order order, BindingResult bindingResult) {
         Product product = homeService.getBookById(id);
-        if (cart.getAmountById(id) <= 1) {
-            cart.removeItem(id);
+        if (cart.getAmountById(id) == 0) {
+//            cart.removeItem(id);
         } else {
             Item item = new Item(product, -1);
             cart.addItem(item);
@@ -94,7 +95,7 @@ public class CartController {
     //    Create: Huynh Duc
 //    Day: 07/07/2023
     @PostMapping("/send")
-    public String oderBook(@SessionAttribute Cart cart, @ModelAttribute Order order,Model model, BindingResult bindingResult, HttpServletRequest request) {
+    public String oderBook(@SessionAttribute Cart cart, @ModelAttribute Order order, Model model, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return "";
         }
@@ -102,10 +103,31 @@ public class CartController {
         User user = usersService.findByEmailUser(email);
         order.setDayOrder(LocalDate.now());
         order.setUser(user);
+        order.setStatus(new Status(1, "chưa xư lý"));
         cartService.oderBook(cart, order);
         cart.clearCart();
         model.addAttribute("user", user);
         return "user/thank-you";
+
+    }
+
+    @PostMapping("/increase/{id}")
+    @ResponseBody
+    public void increaseQuantity(@RequestBody String productId, @PathVariable int id, @SessionAttribute Cart cart) {
+        Product product = homeService.getBookById(id);
+        Item item = new Item(product, 1);
+        cart.addItem(item);
+    }
+
+    @PostMapping("/decrease/{id}")
+    @ResponseBody
+    public void decreaseQuantity(@RequestBody String productId,@PathVariable int id, @SessionAttribute Cart cart) {
+        Product product = homeService.getBookById(id);
+        if (cart.getAmountById(id) == 0) {
+        } else {
+            Item item = new Item(product, -1);
+            cart.addItem(item);
+        }
 
     }
 
