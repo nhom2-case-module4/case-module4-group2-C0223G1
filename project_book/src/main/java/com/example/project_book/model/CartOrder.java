@@ -17,6 +17,12 @@ public class CartOrder {
     public CartOrder() {
     }
 
+    public CartOrder(int idProduct, int quantityProduct, int idUser) {
+        this.idProduct = idProduct;
+        this.quantityProduct = quantityProduct;
+        this.idUser = idUser;
+    }
+
     public int getIdCart() {
         return idCart;
     }

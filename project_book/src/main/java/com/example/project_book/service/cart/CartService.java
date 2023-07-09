@@ -25,11 +25,13 @@ public class CartService implements ICartService {
         orderRepository.save(order);
         Order orderNew = orderRepository.findFirstByOrderByIdOrderDesc();
         for (Item i : cart.getItems()) {
-            OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setNumberOfDetail(i.getAmount());
-            orderDetail.setProduct(i.getProduct());
-            orderDetail.setOrder(orderNew);
-            oderDetailRepository.save(orderDetail);
+            if (i.getAmount()>0) {
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.setNumberOfDetail(i.getAmount());
+                orderDetail.setProduct(i.getProduct());
+                orderDetail.setOrder(orderNew);
+                oderDetailRepository.save(orderDetail);
+            }
         }
     }
 
@@ -41,5 +43,10 @@ public class CartService implements ICartService {
     @Override
     public void deleteCartByIdUser(int idUser) {
         cartOrdeRepository.deleteByIdUserIs(idUser);
+    }
+
+    @Override
+    public void updateCart(CartOrder cartOrder) {
+        cartOrdeRepository.save(cartOrder);
     }
 }
