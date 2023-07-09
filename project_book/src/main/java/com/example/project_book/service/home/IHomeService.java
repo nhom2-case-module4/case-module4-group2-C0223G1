@@ -14,7 +14,7 @@ public interface IHomeService {
 
     void update (Product product);
 
-    ProductProjection getProductByName();
+    List<ProductProjection> getProductBestSellByName();
 
     Product findBynameProductIs(String name);
 }
