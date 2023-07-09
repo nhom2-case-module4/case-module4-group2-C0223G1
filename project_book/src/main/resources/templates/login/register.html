@@ -35,7 +35,7 @@
             margin-top: 10px;
         }
 
-        input[type="text"],
+        input[type="text"],input[type="password"],
         input[type="email"],
         textarea {
             width: 100%;
@@ -60,8 +60,15 @@
         input[type="submit"]:hover {
             background-color: #45a049;
         }
-    </style>
 
+        /*Create: Huynh Duc*/
+        /*Day: 08/07/2023*/
+        .spanRed{
+            color: red;
+        }
+    </style>
+    <!--		Create: Huynh Duc-->
+    <!--		Day: 08/07/2023-->
 </head>
 <body style="background: rgb(243, 242, 236)">
 <div th:insert="user/navbar :: copy" ></div>
@@ -78,36 +85,42 @@
 <form method="POST" th:action="@{/welcome/create}" th:object="${add}">
     <div class="user">
         <div>
-            <label for="name">Full name</label><br>
+            <label for="name" style="font-weight: bold">Full name<span class="spanRed">(*)</span>:</label><br>
             <input id="name" type="text" th:field="*{name}" placeholder="Dang Tuan Vu"/>
             <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
         </div>
         <div>
-            <label for="phoneNumber">Phone:</label><br>
+            <label for="phoneNumber"style="font-weight: bold">Phone<span class="spanRed">(*)</span></label><br>
             <input id="phoneNumber" type="text" th:field="*{phone}" placeholder="ex:0123456789"/>
             <span style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
         </div>
-        <div>
-            <label for="myDate">Date of birth:</label><br>
-            <input type="date" id="myDate" onchange="validateDate()" th:field="*{birthOfDay}">
+        <div class="div1" style="margin-bottom: 10px;">
+            <label for="myDate" style="display: block;font-weight: bold;">Date of birth<span class="spanRed">(*)</span>:</label><br>
+            <input style="width: 100%;padding: 5px" type="date" id="myDate" onchange="validateDate()" th:field="*{birthOfDay}">
             <span style="color: red" th:if="${#fields.hasErrors('birthOfDay')}" th:errors="*{birthOfDay}"></span>
         </div>
         <div>
-            <label for="email">Email:</label><br>
-            <input id="email" type="text" th:field="*{emailUser}" placeholder="exam@gmail.com"/>
+            <label for="email"style="font-weight: bold">Email<span class="spanRed">(*)</span>:</label><br>
+            <input  id="email" type="text" th:field="*{emailUser}" placeholder="exam@gmail.com"/>
             <span style="color: red" th:if="${#fields.hasErrors('emailUser')}" th:errors="*{emailUser}"></span>
         </div>
         <!--        Create: Huynh Duc-->
         <!--        Day: 07/07/2023-->
         <div>
-            <label>Gender:</label>
+            <label style="font-weight: bold">Gender<span class="spanRed">(*)</span>:</label>
             <input type="radio" th:field="*{genderUser}" id="male" value="0"/>Male
             <input type="radio" th:field="*{genderUser}" id="female" value="1"/>Female
             <input type="radio" th:field="*{genderUser}" id="other" value=""/>Other
         </div>
         <div>
-            <label for="pass">Password:</label><br>
-            <input id="pass" type="text" th:field="*{passUser}"/>
+            <label style="font-weight:bold" for="pass">Password<span class="spanRed">(*)</span>:</label><br>
+            <input id="pass" type="password" th:field="*{passUser}"/>
+            <span style="color: red" th:if="${#fields.hasErrors('passUser')}" th:errors="*{passUser}"></span>
+        </div>
+        <div>
+            <label style="font-weight:bold" for="pass1">Confirm Password<span class="spanRed">(*)</span>:</label><br>
+            <input id="confirm-password" type="password"  oninput="checkPassword()"/>
+            <small id="pass1" class="mt-1" style="color: red;font-weight: bolder "></small>
             <span style="color: red" th:if="${#fields.hasErrors('passUser')}" th:errors="*{passUser}"></span>
         </div>
         <input type="submit" class="mt-4" style="background-color: #DAA55A"/>
@@ -125,6 +138,17 @@
         if (inputDate > currentDate) {
             alert("Vui lòng nhập một ngày nhỏ hơn tương lai.");
             document.getElementById("myDate").value = "";
+        }
+    }
+    function checkPassword() {
+        let passwordFirst = document.getElementById("pass").value;
+        let passwordLast = document.getElementById("confirm-password").value;
+        if (passwordLast !== "") {
+            if (passwordFirst === passwordLast) {
+                document.getElementById("pass1").innerText = "";
+            } else {
+                document.getElementById("pass1").innerText = "Invalid password";
+            }
         }
     }
 </script>

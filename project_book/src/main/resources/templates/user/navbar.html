@@ -15,7 +15,6 @@
     <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
     <link rel="stylesheet" type="text/css" href="/css/vendor.css">
     <link rel="stylesheet" type="text/css" href="/style.css">
-
     <!-- script
     ================================================== -->
     <script src="/js/modernizr.js"></script>
@@ -51,17 +50,47 @@
                 <div class="col-md-6">
 
                     <!--                Create: Huynh Duc-->
-                    <!--                Day: 06/07/2023-->
+                    <!--                Day: 09/07/2023-->
                     <div class="right-element" th:if="${#request.userPrincipal!=null}" th:object="${user}">
-                        <i class="icon icon-user"></i>
-                        <b><span th:text="${user.name}" ></span></b>
-                        </span>
-                        <a href="/welcome/logout" class="user-account for-buy"><span> | Logout</span></a>
+                        <!--admin-->
+                        <div class="dropdown" th:if="${user.roleUser.nameRole=='ADMIN'}">
+                            <button class="dropbtn">
+                                <i class="icon icon-user"></i>
+                                <span th:text="${user.name}"></span>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="#">
+                                    Product
+                                </a>
+                                <a href="#">
+                                    Order
+                                </a>
+                                <a href="/welcome/logout">
+                                    Logout
+                                </a>
+                            </div>
+                        </div>
+                        <!--admin-->
+
+
+                        <!--user-->
+                        <div class="dropdown" th:if="${user.roleUser.nameRole=='USER'}">
+                            <button class="dropbtn">
+                                <i class="icon icon-user"></i>
+                                <span th:text="${user.name}"></span>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="/welcome/logout">
+                                    Logout
+                                </a>
+                            </div>
+                        </div>
+                        <!--user-->
+
                         <a href="/cart/show-cart" class="cart for-buy"><i class="icon icon-clipboard"></i><span
                                 th:text="'Cart: '+${cart.getItems().size()}"></span></a>
 
                         <div class="action-menu">
-
                             <div class="search-bar">
                                 <a href="#" class="search-button search-toggle" data-selector="#header-wrap">
                                     <i class="icon icon-search"></i>
