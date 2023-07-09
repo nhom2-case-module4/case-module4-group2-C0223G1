@@ -1,10 +1,12 @@
 package com.example.project_book.controller;
 
 import com.example.project_book.dto.dto_users.UsersDto;
-import com.example.project_book.model.Cart;
-import com.example.project_book.model.User;
+import com.example.project_book.model.*;
+import com.example.project_book.repository.cart.ICartOrdeRepository;
 import com.example.project_book.service.IUsersService;
 import com.example.project_book.service.IUsersTypeService;
+import com.example.project_book.service.cart.CartService;
+import com.example.project_book.service.cart.ICartService;
 import com.example.project_book.service.home.IHomeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @SessionAttributes("cart")
@@ -45,6 +48,9 @@ public class HomeController {
 
     //    Create: Huynh Duc
     //    Day: 07/07/2023
+
+    @Autowired
+    private ICartService cartService;
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showFormLogin(Model model) {
         String authentication = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -163,7 +169,7 @@ public class HomeController {
     //    Create: Huynh Duc
     //    Day: 06/07/2023
     @GetMapping("/view-blog")
-    private String viewBlog(HttpServletRequest request, Model model) {
+    public String viewBlog(HttpServletRequest request, Model model) {
         if (request.getUserPrincipal() == null) {
             model.addAttribute("check", "check");
         } else {
@@ -171,6 +177,20 @@ public class HomeController {
             model.addAttribute("user", usersService.findByEmailUser(email));
         }
         return "user/blog";
+    }
+
+    @GetMapping("/begin")
+    public String goHome(@SessionAttribute Cart cart,HttpServletRequest request){
+        String email = request.getUserPrincipal().getName();
+        User user = usersService.findByEmailUser(email);
+        List<CartOrder> list = cartService.getCartByIdUser(user.getIdUser());
+        for (int i = 0; i < list.size(); i++) {
+            Product product = homeService.getBookById(list.get(i).getIdProduct());
+            int quantity = list.get(i).getQuantityProduct();
+            Item item = new Item(product,quantity);
+            cart.addItem(item);
+        }
+        return "redirect:/welcome";
     }
 
 }

@@ -35,3 +35,12 @@ INSERT INTO `books_shop`.`products` (`id_product`, `author`, `describe_book`, `i
 INSERT INTO `books_shop`.`products` (`id_product`, `author`, `describe_book`, `img`, `is_delete`, `name_product`, `nation_book`, `price_book`, `publication_year`, `publishing_company`, `quantity_books`, `id_type_product`) VALUES ('24', 'Phin', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '/images/product-item3.jpg', 0, 'The Lady Beauty Scarlett', 'France', '45', '2005', 'Kim dong', '10', '5');
 INSERT INTO `books_shop`.`products` (`id_product`, `author`, `describe_book`, `img`, `is_delete`, `name_product`, `nation_book`, `price_book`, `publication_year`, `publishing_company`, `quantity_books`, `id_type_product`) VALUES ('25', 'Phin', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '/images/product-item3.jpg', 0, 'The Lady Beauty Scarlett', 'France', '45', '2005', 'Kim dong', '10', '5');
 
+INSERT INTO `books_shop`.`role_user` (`id_role`, `name_role`) VALUES ('1', 'ADMIN');
+INSERT INTO `books_shop`.`role_user` (`id_role`, `name_role`) VALUES ('2', 'USER');
+
+INSERT INTO `books_shop`.`status_order` (`id_status`, `name_status`) VALUES ('1', 'chưa xư lý');
+INSERT INTO `books_shop`.`status_order` (`id_status`, `name_status`) VALUES ('2', 'đang giao');
+INSERT INTO `books_shop`.`status_order` (`id_status`, `name_status`) VALUES ('3', 'đã giao');
+
+INSERT INTO `books_shop`.`users` (`id_user`, `name`, `birth_of_day`, `email_user`, `gender_user`, `is_delete`, `pass_user`, `phone`, `id_role`) VALUES ('1', 'dolphin', '1998-01-20', 'sang@gmail.com', 0, 0, '$2a$12$B0M4rlqEl5N/3KTtKcRGgeUsFru.yEAp.PsWAxteAE6EYMiDRT3AG', '123', '1');
+INSERT INTO `books_shop`.`users` (`id_user`, `name`, `birth_of_day`, `email_user`, `gender_user`, `is_delete`, `pass_user`, `phone`, `id_role`) VALUES ('2', 'jax', '2000-01-01', 'jax@gmail.com', 0, 0, '$2a$12$AnIiZUMQ5AcxC3BblrJzduFWDy1cZnt0YWBgQ2KxXv4czmGtehHWq', '123', '2');

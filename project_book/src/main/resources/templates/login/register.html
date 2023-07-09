@@ -35,7 +35,7 @@
             margin-top: 10px;
         }
 
-        input[type="text"],
+        input[type="text"],input[type="password"],
         input[type="email"],
         textarea {
             width: 100%;
@@ -67,7 +67,8 @@
             color: red;
         }
     </style>
-
+    <!--		Create: Huynh Duc-->
+    <!--		Day: 08/07/2023-->
 </head>
 <body style="background: rgb(243, 242, 236)">
 <div th:insert="user/navbar :: copy" ></div>
@@ -112,8 +113,14 @@
             <input type="radio" th:field="*{genderUser}" id="other" value=""/>Other
         </div>
         <div>
-            <label style="font-weight: bold" for="pass">Password<span class="spanRed">(*)</span>:</label><br>
-            <input id="pass" type="text" th:field="*{passUser}"/>
+            <label style="font-weight:bold" for="pass">Password<span class="spanRed">(*)</span>:</label><br>
+            <input id="pass" type="password" th:field="*{passUser}"/>
+            <span style="color: red" th:if="${#fields.hasErrors('passUser')}" th:errors="*{passUser}"></span>
+        </div>
+        <div>
+            <label style="font-weight:bold" for="pass1">Confirm Password<span class="spanRed">(*)</span>:</label><br>
+            <input id="confirm-password" type="password"  oninput="checkPassword()"/>
+            <small id="pass1" class="mt-1" style="color: red;font-weight: bolder "></small>
             <span style="color: red" th:if="${#fields.hasErrors('passUser')}" th:errors="*{passUser}"></span>
         </div>
         <input type="submit" class="mt-4" style="background-color: #DAA55A"/>
@@ -131,6 +138,17 @@
         if (inputDate > currentDate) {
             alert("Vui lòng nhập một ngày nhỏ hơn tương lai.");
             document.getElementById("myDate").value = "";
+        }
+    }
+    function checkPassword() {
+        let passwordFirst = document.getElementById("pass").value;
+        let passwordLast = document.getElementById("confirm-password").value;
+        if (passwordLast !== "") {
+            if (passwordFirst === passwordLast) {
+                document.getElementById("pass1").innerText = "";
+            } else {
+                document.getElementById("pass1").innerText = "Invalid password";
+            }
         }
     }
 </script>

@@ -15,7 +15,7 @@ public class UsersDto implements Validator {
     //    Create: Huynh Duc
     //    Day: 06/07/2023
     @NotBlank(message = "First and last name cannot be left blank")
-    @Max(value = 50,message = "Up to 50 characters")
+    @Size(min = 2,max = 50,message = "Up to 50 characters")
     @Pattern(regexp = "^[A-Z][a-z]*(\\s[A-Z][a-z]*)*$", message = "Invalid first and last name!")
     private String name;
     //    Create: Huynh Duc

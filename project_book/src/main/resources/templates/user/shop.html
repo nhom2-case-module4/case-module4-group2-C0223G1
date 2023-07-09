@@ -19,15 +19,28 @@
     <!-- script
     ================================================== -->
     <script src="/js/modernizr.js"></script>
+    <!--		Create: Huynh Duc-->
+    <!--		Day: 08/07/2023-->
+    <link rel="stylesheet" href="/css/dropdownAccount.css">
+
     <style>
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(200%);
+            }
+        }
+
         .toast {
             background-color: rgb(231, 216, 169);
             color: #7a6565;
             padding: 15px;
             border-radius: 10px;
             position: fixed;
-            top: 300px;
-            right: 0px;
+            top: 50px;
+            right: 42%;
             font-weight: bold;
             z-index: 1;
             display: none;
@@ -38,8 +51,127 @@
 </head>
 
 <body>
-<div th:insert="user/navbar :: copy"></div>
-<div id="toastMessage" class="toast"></div>
+<div id="header-wrap" th:fragment="copy" th:object="${cart}">
+    <input hidden="hidden" th:id="sang" th:value="${cart.getItems().size()}">
+    <div class="top-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="social-links">
+                        <ul>
+                            <li>
+                                <a href="#"><i class="icon icon-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="icon icon-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="icon icon-youtube-play"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="icon icon-behance-square"></i></a>
+                            </li>
+                        </ul>
+                    </div><!--social-links-->
+                </div>
+
+                <div class="col-md-6">
+
+                    <!--                Create: Huynh Duc-->
+                    <!--                Day: 06/07/2023-->
+                    <div class="right-element" th:if="${#request.userPrincipal!=null}" th:object="${user}">
+                        <i class="icon icon-user"></i>
+                        <b><span th:text="${user.name}" ></span></b>
+                        </span>
+                        <a href="/welcome/logout" class="user-account for-buy"><span> | Logout</span></a>
+                        <a href="/cart/show-cart" class="cart for-buy"><i class="icon icon-clipboard"></i><span
+                                th:id="size" th:text="'Cart: '+${cart.getItems().size()}"></span></a>
+
+                        <div class="action-menu">
+
+                            <div class="search-bar">
+                                <a href="#" class="search-button search-toggle" data-selector="#header-wrap">
+                                    <i class="icon icon-search"></i>
+                                </a>
+                                <form role="search" method="get" class="search-box">
+                                    <input class="search-field text search-input" placeholder="Search" type="search">
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--                Create: Huynh Duc-->
+                    <!--                Day: 06/07/2023-->
+                    <div class="right-element" th:unless="${#request.userPrincipal!=null}">
+
+                        <a href="/welcome/login" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
+                        <a href="/cart/show-cart" class="cart for-buy"><i class="icon icon-clipboard"></i><span
+                                th:text="'Cart: '+${cart.getItems().size()}"></span></a>
+
+                        <div class="action-menu">
+
+                            <div class="search-bar">
+                                <a href="#" class="search-button search-toggle" data-selector="#header-wrap">
+                                    <i class="icon icon-search"></i>
+                                </a>
+                                <form role="search" method="get" class="search-box">
+                                    <input class="search-field text search-input" placeholder="Search" type="search">
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--top-right-->
+                </div>
+
+            </div>
+        </div>
+    </div><!--top-content-->
+
+    <header id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="main-logo">
+                        <a th:href="@{/welcome}"><img src="/images/main-logo.png" alt="logo"></a>
+                    </div>
+
+                </div>
+
+                <div class="col-md-10">
+
+                    <nav id="navbar">
+                        <div class="main-menu stellarnav">
+                            <ul class="menu-list">
+                                <li class="menu-item active"><a th:href="@{/welcome}" data-effect="Home">Home</a></li>
+                                <li class="menu-item"><a href="#about" class="nav-link" data-effect="About">About</a>
+                                </li>
+                                <li class="menu-item has-sub">
+                                <li class="menu-item"><a th:href="@{/welcome/view-all}" class="nav-link"
+                                                         data-effect="Shop">Shop</a></li>
+                                <li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">Articles</a>
+                                </li>
+                            </ul>
+
+                            <div class="hamburger">
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                            </div>
+
+                        </div>
+                    </nav>
+
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+</div><!--header-wrap-->
+
+
+<div id="toast" class="toast"></div>
 <section class="padding-large">
     <div class="container">
         <div class="row">
@@ -63,9 +195,9 @@
                                        th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}">
                                         <img th:src="${book.getImg()}" alt="Books" class="product-item">
                                     </a>
-                                    <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
-                                        <a style="text-decoration: none; color: white"
-                                           th:href="@{/cart/add/{id}/{num}(id=${book.getIdProduct()},num =1)}">Add to Cart</a>
+                                    <button type="button" class="add-to-cart" data-product-tile="add-to-cart"
+                                            th:attr="onclick=|addCart('${book.getIdProduct()}')|">
+                                        <a style="text-decoration: none; color: white">Add to Cart</a>
                                     </button>
                                     <figcaption>
                                         <h3><a style="text-decoration: none"
@@ -90,9 +222,9 @@
                                        th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}">
                                         <img th:src="${book.getImg()}" alt="Books" class="product-item">
                                     </a>
-                                    <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
-                                        <a style="text-decoration: none; color: white"
-                                           th:href="@{/cart/add/{id}/{num}(id=${book.getIdProduct()},num =1)}">Add to Cart</a>
+                                    <button type="button" class="add-to-cart" data-product-tile="add-to-cart"
+                                            th:attr="onclick=|addCart('${book.getIdProduct()}')|">
+                                        <a style="text-decoration: none; color: white">Add to Cart</a>
                                     </button>
                                     <figcaption>
                                         <h3><a style="text-decoration: none"
@@ -117,9 +249,9 @@
                                        th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}">
                                         <img th:src="${book.getImg()}" alt="Books" class="product-item">
                                     </a>
-                                    <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
-                                        <a style="text-decoration: none; color: white"
-                                           th:href="@{/cart/add/{id}/{num}(id=${book.getIdProduct()},num =1)}">Add to Cart</a>
+                                    <button type="button" class="add-to-cart" data-product-tile="add-to-cart"
+                                            th:attr="onclick=|addCart('${book.getIdProduct()}')|">
+                                        <a style="text-decoration: none; color: white">Add to Cart</a>
                                     </button>
                                     <figcaption>
                                         <h3><a style="text-decoration: none"
@@ -144,9 +276,9 @@
                                        th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}">
                                         <img th:src="${book.getImg()}" alt="Books" class="product-item">
                                     </a>
-                                    <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
-                                        <a style="text-decoration: none; color: white"
-                                           th:href="@{/cart/add/{id}/{num}(id=${book.getIdProduct()},num =1)}">Add to Cart</a>
+                                    <button type="button" class="add-to-cart" data-product-tile="add-to-cart"
+                                            th:attr="onclick=|addCart('${book.getIdProduct()}')|">
+                                        <a style="text-decoration: none; color: white">Add to Cart</a>
                                     </button>
                                     <figcaption>
                                         <h3><a style="text-decoration: none"
@@ -171,9 +303,9 @@
                                        th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}">
                                         <img th:src="${book.getImg()}" alt="Books" class="product-item">
                                     </a>
-                                    <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
-                                        <a style="text-decoration: none; color: white"
-                                           th:href="@{/cart/add/{id}/{num}(id=${book.getIdProduct()},num =1)}">Add to Cart</a>
+                                    <button type="button" class="add-to-cart" data-product-tile="add-to-cart"
+                                            th:attr="onclick=|addCart('${book.getIdProduct()}')|">
+                                        <a style="text-decoration: none; color: white">Add to Cart</a>
                                     </button>
                                     <figcaption>
                                         <h3><a style="text-decoration: none"
@@ -198,9 +330,9 @@
                                    th:href="@{/welcome/view/{id}(id=${book.getIdProduct()})}">
                                     <img th:src="${book.getImg()}" alt="Books" class="product-item">
                                 </a>
-                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
-                                    <a style="text-decoration: none; color: white"
-                                       th:href="@{/cart/add/{id}/{num}(id=${book.getIdProduct()},num =1)}">Add to Cart</a>
+                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart"
+                                        th:attr="onclick=|addCart('${book.getIdProduct()}')|">
+                                    <a style="text-decoration: none; color: white">Add to Cart</a>
                                 </button>
                                 <figcaption>
                                     <h3><a style="text-decoration: none"
@@ -226,23 +358,41 @@
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/plugins.js"></script>
 <script src="/js/script.js"></script>
-<script th:if="${check}">
-    // Function to show the toast message
-    function showToast(message) {
-        var toast = document.getElementById("toastMessage");
-        toast.style.display = "block";
-        toast.innerText = message;
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var arr = [];
 
+    function addCart(productId) {
+        let size = +document.getElementById("sang").value;
+        if (arr.indexOf(productId) === -1) {
+            arr.push(productId);
+        }
+        size += arr.length;
+        document.getElementById("size").innerText = "Cart: " + size;
+
+        var toast = document.getElementById("toast");
+
+        // Thiết lập nội dung toast
+        toast.innerText = "Item Added to your Cart!";
+
+        // Hiển thị toast
+        toast.style.display = "block";
+
+        // Tự động ẩn toast sau 3 giây
         setTimeout(function () {
             toast.style.display = "none";
-        }, 1200); // Hide the toast message after 3 seconds
+        }, 1500);
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/cart/add-cart/' + productId,
+            data: {productId: productId},
+            success: function (response) {
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
     }
-
-    // Automatically show the toast message when the page is reloaded
-    window.addEventListener('load', function () {
-        showToast("Item Added to your Cart!");
-    });
 </script>
-
 </body>
-</html>	
+</html>
