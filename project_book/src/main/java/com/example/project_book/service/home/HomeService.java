@@ -32,8 +32,8 @@ public class HomeService implements IHomeService {
     }
 
     @Override
-    public ProductProjection getProductByName() {
-        return homeRepesitory.getProductByName();
+    public List<ProductProjection> getProductBestSellByName() {
+        return homeRepesitory.getProductBestSellByName();
     }
 
     @Override
