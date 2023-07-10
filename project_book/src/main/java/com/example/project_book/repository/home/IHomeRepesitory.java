@@ -16,4 +16,6 @@ public interface IHomeRepesitory extends JpaRepository<Product,Integer> {
     List<ProductProjection> getProductBestSellByName();
 
     Product findBynameProductIs(String name);
+
+    List<Product> findByNameProductContainingIgnoreCase(String name);
 }

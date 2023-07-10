@@ -1,12 +1,18 @@
 package com.example.project_book.controller.payment_controller;
 
 import com.example.project_book.config.PaymentConfig;
+import com.example.project_book.model.*;
+import com.example.project_book.service.IUsersService;
+import com.example.project_book.service.cart.ICartService;
+import com.example.project_book.service.home.IHomeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -18,16 +24,28 @@ import java.util.*;
 @RequestMapping("/payment")
 public class PaymentController {
 
-    @PostMapping("/create")
-    public ModelAndView create(@RequestParam int quantity, @RequestParam int total, @RequestParam int idPassenger) throws UnsupportedEncodingException {
+    @Autowired
+    private IHomeService homeService;
+
+    @Autowired
+    private ICartService cartService;
+
+    @Autowired
+    private IUsersService usersService;
+
+    @GetMapping("/create")
+    public ModelAndView create(@SessionAttribute Cart cart) throws UnsupportedEncodingException {
         String orderType = "150000";
-        String amount = String.valueOf(total * 100);
+        int totalMoney = (int)cart.getTotalMoney();
+        String amount = String.valueOf(totalMoney * 100 * 24000);
         String vnp_TxnRef = PaymentConfig.getRandomNumber(8);
 //        String vnp_IpAddr = Config.getIpAddress(req);
         String vnp_TmnCode = PaymentConfig.vnp_TmnCode;
         Map<String, String> vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", PaymentConfig.vnp_Version);
         vnp_Params.put("vnp_Command", PaymentConfig.vnp_Command);
+
+
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
@@ -79,13 +97,27 @@ public class PaymentController {
     }
 
     @GetMapping("/return")
-    public String showReturn( @RequestParam String vnp_ResponseCode
-            , Model model) {
-        if(vnp_ResponseCode.equals("00")){
-
+    public String showReturn(@RequestParam String vnp_ResponseCode, Model model, @SessionAttribute Cart cart,
+                             HttpServletRequest request, HttpSession session) {
+        String email = request.getUserPrincipal().getName();
+        User user = usersService.findByEmailUser(email);
+        cartService.deleteCartByIdUser(user.getIdUser());
+        if (vnp_ResponseCode.equals("00")) {
+            List<Item> list = cart.getItems();
+            for (int i = 0; i <list.size(); i++) {
+                Product product = list.get(i).getProduct();
+                product.setQuantityBooks(list.get(i).getProduct().getQuantityBooks()-list.get(i).getAmount());
+                homeService.update(product);
+            }
+            Order order = (Order) session.getAttribute("order");
+            cartService.oderBook(cart, order);
+            cart.clearCart();
+            model.addAttribute("user", user);
+            model.addAttribute("cart", cart);
+            return "user/thank-you";
         }
-
-
-        return "return";
+        model.addAttribute("cart", cart);
+        model.addAttribute("order", new Order());
+        return "user/cart";
     }
 }

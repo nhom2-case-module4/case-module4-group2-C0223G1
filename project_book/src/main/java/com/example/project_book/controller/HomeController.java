@@ -51,6 +51,7 @@ public class HomeController {
 
     @Autowired
     private ICartService cartService;
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showFormLogin(Model model) {
         String authentication = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -147,6 +148,7 @@ public class HomeController {
         model.addAttribute("book", homeService.getBookById(id));
         return "user/single-product";
     }
+
     //    Create: Huynh Duc
     //    Day: 06/07/2023
     @GetMapping("/view-all")
@@ -166,6 +168,7 @@ public class HomeController {
         model.addAttribute("list5", homeService.getBooksByType(5));
         return "user/shop";
     }
+
     //    Create: Huynh Duc
     //    Day: 06/07/2023
     @GetMapping("/view-blog")
@@ -180,17 +183,36 @@ public class HomeController {
     }
 
     @GetMapping("/begin")
-    public String goHome(@SessionAttribute Cart cart,HttpServletRequest request){
+    public String goHome(@SessionAttribute Cart cart, HttpServletRequest request) {
         String email = request.getUserPrincipal().getName();
         User user = usersService.findByEmailUser(email);
         List<CartOrder> list = cartService.getCartByIdUser(user.getIdUser());
         for (int i = 0; i < list.size(); i++) {
             Product product = homeService.getBookById(list.get(i).getIdProduct());
             int quantity = list.get(i).getQuantityProduct();
-            Item item = new Item(product,quantity);
+            Item item = new Item(product, quantity);
             cart.addItem(item);
         }
         return "redirect:/welcome";
+    }
+
+    @PostMapping("/search")
+    public String searchBook(@RequestParam("search") String name, Model model,HttpServletRequest request,
+                             @SessionAttribute Cart cart) {
+        if (request.getUserPrincipal() == null) {
+            model.addAttribute("check", "check");
+        } else {
+            String email = request.getUserPrincipal().getName();
+            model.addAttribute("user", usersService.findByEmailUser(email));
+        }
+        model.addAttribute("cart", cart);
+        model.addAttribute("list", homeService.searchProduct(name));
+        model.addAttribute("list1", homeService.getBooksByType(1));
+        model.addAttribute("list2", homeService.getBooksByType(2));
+        model.addAttribute("list3", homeService.getBooksByType(3));
+        model.addAttribute("list4", homeService.getBooksByType(4));
+        model.addAttribute("list5", homeService.getBooksByType(5));
+        return "user/shop";
     }
 
 }

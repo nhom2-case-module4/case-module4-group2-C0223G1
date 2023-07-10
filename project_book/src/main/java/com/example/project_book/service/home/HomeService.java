@@ -40,4 +40,9 @@ public class HomeService implements IHomeService {
     public Product findBynameProductIs(String name) {
         return homeRepesitory.findBynameProductIs(name);
     }
+
+    @Override
+    public List<Product> searchProduct(String name) {
+        return homeRepesitory.findByNameProductContainingIgnoreCase(name);
+    }
 }
