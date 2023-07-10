@@ -229,7 +229,6 @@ public class HomeController {
             String message = "Hi " + principal.getName() //
                     + "<br> You do not have permission to access this page!";
             model.addAttribute("message", message);
-
         }
 
         return "/login/403";
