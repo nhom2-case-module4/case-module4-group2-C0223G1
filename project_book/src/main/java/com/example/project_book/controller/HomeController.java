@@ -194,6 +194,25 @@ public class HomeController {
         return "redirect:/welcome";
     }
 
+    @PostMapping("/search")
+    public String searchBook(@RequestParam("search") String name, Model model,HttpServletRequest request,
+                             @SessionAttribute Cart cart) {
+        if (request.getUserPrincipal() == null) {
+            model.addAttribute("check", "check");
+        } else {
+            String email = request.getUserPrincipal().getName();
+            model.addAttribute("user", usersService.findByEmailUser(email));
+        }
+        model.addAttribute("cart", cart);
+        model.addAttribute("list", homeService.searchProduct(name));
+        model.addAttribute("list1", homeService.getBooksByType(1));
+        model.addAttribute("list2", homeService.getBooksByType(2));
+        model.addAttribute("list3", homeService.getBooksByType(3));
+        model.addAttribute("list4", homeService.getBooksByType(4));
+        model.addAttribute("list5", homeService.getBooksByType(5));
+        return "user/shop";
+    }
+
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String accessDenied(Model model, Principal principal) {
 
