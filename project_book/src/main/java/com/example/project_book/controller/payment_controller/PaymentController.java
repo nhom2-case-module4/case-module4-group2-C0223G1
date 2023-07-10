@@ -5,12 +5,15 @@ import com.example.project_book.model.*;
 import com.example.project_book.service.IUsersService;
 import com.example.project_book.service.cart.ICartService;
 import com.example.project_book.service.home.IHomeService;
+import com.example.project_book.service.order.IEmailServicee;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
@@ -32,6 +35,9 @@ public class PaymentController {
 
     @Autowired
     private IUsersService usersService;
+    @Autowired
+    private IEmailServicee emailService;
+
 
     @GetMapping("/create")
     public ModelAndView create(@SessionAttribute Cart cart) throws UnsupportedEncodingException {
@@ -98,7 +104,7 @@ public class PaymentController {
 
     @GetMapping("/return")
     public String showReturn(@RequestParam String vnp_ResponseCode, Model model, @SessionAttribute Cart cart,
-                             HttpServletRequest request, HttpSession session) {
+                             HttpServletRequest request, HttpSession session) throws MessagingException {
         String email = request.getUserPrincipal().getName();
         User user = usersService.findByEmailUser(email);
         cartService.deleteCartByIdUser(user.getIdUser());
@@ -109,6 +115,8 @@ public class PaymentController {
                 product.setQuantityBooks(list.get(i).getProduct().getQuantityBooks()-list.get(i).getAmount());
                 homeService.update(product);
             }
+            String emailBody = "Thank you for your purchase!";
+            emailService.sendEmail(user.getEmailUser(), "Order Confirmation", emailBody);
             Order order = (Order) session.getAttribute("order");
             cartService.oderBook(cart, order);
             cart.clearCart();
