@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -104,7 +105,8 @@ public class CartController {
 //    Day: 07/07/2023
     @PostMapping("/send")
     public String oderBook(@SessionAttribute Cart cart, @ModelAttribute Order order, Model model,
-                           BindingResult bindingResult, HttpServletRequest request,RedirectAttributes redirectAttributes) {
+                           BindingResult bindingResult, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                           HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "";
         }
@@ -126,21 +128,22 @@ public class CartController {
             redirectAttributes.addFlashAttribute("msg","you haven't bought anything yet");
             return "redirect:/cart/show-cart";
         }
-        for (int i = 0; i <list.size(); i++) {
-            Product product = list.get(i).getProduct();
-            product.setQuantityBooks(list.get(i).getProduct().getQuantityBooks()-list.get(i).getAmount());
-            homeService.update(product);
-        }
+//        for (int i = 0; i <list.size(); i++) {
+//            Product product = list.get(i).getProduct();
+//            product.setQuantityBooks(list.get(i).getProduct().getQuantityBooks()-list.get(i).getAmount());
+//            homeService.update(product);
+//        }
         String email = request.getUserPrincipal().getName();
         User user = usersService.findByEmailUser(email);
-        cartService.deleteCartByIdUser(user.getIdUser());
+//        cartService.deleteCartByIdUser(user.getIdUser());
         order.setDayOrder(LocalDate.now());
         order.setUser(user);
         order.setStatus(new Status(1, "chưa xử lý"));
-        cartService.oderBook(cart, order);
-        cart.clearCart();
-        model.addAttribute("user", user);
-        return "user/thank-you";
+        session.setAttribute("order",order);
+//        cartService.oderBook(cart, order);
+//        cart.clearCart();
+//        model.addAttribute("user", user);
+        return "redirect:/payment/create";
 
     }
 
