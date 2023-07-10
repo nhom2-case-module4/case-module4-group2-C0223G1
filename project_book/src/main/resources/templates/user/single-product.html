@@ -1,192 +1,238 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title>Book Store</title>
-		<meta charset="utf-8">
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	    <meta name="format-detection" content="telephone=no">
-	    <meta name="apple-mobile-web-app-capable" content="yes">
-	    <meta name="author" content="">
-	    <meta name="keywords" content="">
-	    <meta name="description" content="">
+<head>
+    <title>Book Store</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
 
-	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
-	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
-	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
-	    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
+    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
 
-		<!-- script
-		================================================== -->
-		<script src="/js/modernizr.js"></script>
-		<style>
-			@keyframes slideInLeft {
-				from {
-					transform: translateX(0);
-				}
-				to {
-					transform: translateX(200%);
-				}
-			}
+    <!-- script
+    ================================================== -->
+    <script src="/js/modernizr.js"></script>
+    <style>
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(200%);
+            }
+        }
 
-			.toast {
-				background-color: rgb(231, 216, 169);
-				color: #7a6565;
-				padding: 15px;
-				border-radius: 10px;
-				position: fixed;
-				top: 50px;
-				right: 42%;
-				font-weight: bold;
-				z-index: 1;
-				display: none;
-				animation: slideInLeft ease 2s, fadeOut linear 1s 2s forwards;
-				transition: all linear 0.3s;
-			}
-		</style>
-<!--		Create: Huynh Duc-->
-<!--		Day: 08/07/2023-->
-		<link rel="stylesheet" href="/css/dropdownAccount.css">
+        .toast {
+            background-color: rgb(231, 216, 169);
+            color: #7a6565;
+            padding: 15px;
+            border-radius: 10px;
+            position: fixed;
+            top: 50px;
+            right: 42%;
+            font-weight: bold;
+            z-index: 1;
+            display: none;
+            animation: slideInLeft ease 2s, fadeOut linear 1s 2s forwards;
+            transition: all linear 0.3s;
+        }
+    </style>
+    <!--		Create: Huynh Duc-->
+    <!--		Day: 08/07/2023-->
+    <link rel="stylesheet" href="/css/dropdownAccount.css">
 
-	</head>
+</head>
 
 <body>
 
 
 <div id="header-wrap" th:fragment="copy" th:object="${cart}">
-	<input hidden="hidden" th:id="sang" th:value="${cart.getItems().size()}">
-	<div class="top-content">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="social-links">
-						<ul>
-							<li>
-								<a href="#"><i class="icon icon-facebook"></i></a>
-							</li>
-							<li>
-								<a href="#"><i class="icon icon-twitter"></i></a>
-							</li>
-							<li>
-								<a href="#"><i class="icon icon-youtube-play"></i></a>
-							</li>
-							<li>
-								<a href="#"><i class="icon icon-behance-square"></i></a>
-							</li>
-						</ul>
-					</div><!--social-links-->
-				</div>
+    <input hidden="hidden" th:id="sang" th:value="${cart.getItems().size()}">
+    <div class="top-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="social-links">
+                        <ul>
+                            <li>
+                                <a href="#"><i class="icon icon-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="icon icon-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="icon icon-youtube-play"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="icon icon-behance-square"></i></a>
+                            </li>
+                        </ul>
+                    </div><!--social-links-->
+                </div>
 
-				<div class="col-md-6">
+                <div class="col-md-6">
 
-					<!--                Create: Huynh Duc-->
-					<!--                Day: 06/07/2023-->
-					<div class="right-element" th:if="${#request.userPrincipal!=null}" th:object="${user}">
-						<i class="icon icon-user"></i>
-						<b><span th:text="${user.name}" ></span></b>
-						</span>
-						<a href="/welcome/logout" class="user-account for-buy"><span> | Logout</span></a>
-						<a href="/cart/show-cart" class="cart for-buy"><i class="icon icon-clipboard"></i><span
-								th:id="size" th:text="'Cart: '+${cart.getItems().size()}"></span></a>
+                    <!--                Create: Huynh Duc-->
+                    <!--                Day: 09/07/2023-->
+                    <div class="right-element" th:if="${#request.userPrincipal!=null}" th:object="${user}">
+                        <!--admin-->
+                        <div class="dropdown" th:if="${user.roleUser.nameRole=='ADMIN'}">
+                            <button class="dropbtn">
+                                <i class="icon icon-user"></i>
+                                <span th:text="${user.name}"></span>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="#">
+                                    Product
+                                </a>
+                                <a href="#">
+                                    Order
+                                </a>
+                                <a href="/welcome/logout">
+                                    Logout
+                                </a>
+                            </div>
+                        </div>
+                        <!--admin-->
 
-					</div>
-					<!--                Create: Huynh Duc-->
-					<!--                Day: 06/07/2023-->
-					<div class="right-element" th:unless="${#request.userPrincipal!=null}">
 
-						<a href="/welcome/login" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
-						<a href="/cart/show-cart" class="cart for-buy"><i class="icon icon-clipboard"></i><span
-								th:text="'Cart: '+${cart.getItems().size()}"></span></a>
+                        <!--user-->
+                        <div class="dropdown" th:if="${user.roleUser.nameRole=='USER'}">
+                            <button class="dropbtn">
+                                <i class="icon icon-user"></i>
+                                <span th:text="${user.name}"></span>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="/welcome/logout">
+                                    Logout
+                                </a>
+                            </div>
+                        </div>
+                        <!--user-->
 
-						<div class="action-menu">
+                        <a href="/cart/show-cart" class="cart for-buy"><i class="icon icon-clipboard"></i><span
+                                th:id="size" th:text="'Cart: '+${cart.getItems().size()}"></span></a>
 
-							<div class="search-bar">
-								<a class="search-button search-toggle" data-selector="#header-wrap">
-									<i class="icon icon-search"></i>
-								</a>
-								<form role="search" method="post" class="search-box" action="/welcome/search">
-									<input name="search" class="search-field text search-input" placeholder="Search" type="search">
-								</form>
-							</div>
-						</div>
+                        <div class="action-menu">
 
-					</div>
-					<!--top-right-->
-				</div>
+                            <div class="search-bar">
+                                <a class="search-button search-toggle" data-selector="#header-wrap">
+                                    <i class="icon icon-search"></i>
+                                </a>
+                                <form role="search" method="post" class="search-box" action="/welcome/search">
+                                    <input name="search" class="search-field text search-input" placeholder="Search"
+                                           type="search">
+                                </form>
+                            </div>
+                        </div>
 
-			</div>
-		</div>
-	</div><!--top-content-->
+                    </div>
+                    <!--                Create: Huynh Duc-->
+                    <!--                Day: 06/07/2023-->
+                    <div class="right-element" th:unless="${#request.userPrincipal!=null}">
 
-	<header id="header">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-2">
-					<div class="main-logo">
-						<a th:href="@{/welcome}"><img src="/images/main-logo.png" alt="logo"></a>
-					</div>
+                        <a href="/welcome/login" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
+                        <a href="/cart/show-cart" class="cart for-buy"><i class="icon icon-clipboard"></i><span
+                                th:text="'Cart: '+${cart.getItems().size()}"></span></a>
 
-				</div>
+                        <div class="action-menu">
 
-				<div class="col-md-10">
+                            <div class="search-bar">
+                                <a class="search-button search-toggle" data-selector="#header-wrap">
+                                    <i class="icon icon-search"></i>
+                                </a>
+                                <form role="search" method="post" class="search-box" action="/welcome/search">
+                                    <input name="search" class="search-field text search-input" placeholder="Search"
+                                           type="search">
+                                </form>
+                            </div>
+                        </div>
 
-					<nav id="navbar">
-						<div class="main-menu stellarnav">
-							<ul class="menu-list">
-								<li class="menu-item active"><a th:href="@{/welcome}" data-effect="Home">Home</a></li>
-								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">About</a>
-								</li>
-								<li class="menu-item has-sub">
-								<li class="menu-item"><a th:href="@{/welcome/view-all}" class="nav-link"
-														 data-effect="Shop">Shop</a></li>
-								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">Articles</a>
-								</li>
-							</ul>
+                    </div>
+                    <!--top-right-->
+                </div>
 
-							<div class="hamburger">
-								<span class="bar"></span>
-								<span class="bar"></span>
-								<span class="bar"></span>
-							</div>
+            </div>
+        </div>
+    </div><!--top-content-->
 
-						</div>
-					</nav>
+    <header id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="main-logo">
+                        <a th:href="@{/welcome}"><img src="/images/main-logo.png" alt="logo"></a>
+                    </div>
 
-				</div>
+                </div>
 
-			</div>
-		</div>
-	</header>
+                <div class="col-md-10">
+
+                    <nav id="navbar">
+                        <div class="main-menu stellarnav">
+                            <ul class="menu-list">
+                                <li class="menu-item active"><a th:href="@{/welcome}" data-effect="Home">Home</a></li>
+                                <li class="menu-item"><a href="#about" class="nav-link" data-effect="About">About</a>
+                                </li>
+                                <li class="menu-item has-sub">
+                                <li class="menu-item"><a th:href="@{/welcome/view-all}" class="nav-link"
+                                                         data-effect="Shop">Shop</a></li>
+                                <li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">Articles</a>
+                                </li>
+                            </ul>
+
+                            <div class="hamburger">
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                            </div>
+
+                        </div>
+                    </nav>
+
+                </div>
+
+            </div>
+        </div>
+    </header>
 
 </div><!--header-wrap-->
 
 <div id="toast" class="toast"></div>
 
 <section class="bg-sand padding-large">
-	<div class="container">
-		<div class="row" th:object="${book}">
+    <div class="container">
+        <div class="row" th:object="${book}">
 
-			<div class="col-md-6">
-				<a href="#" class="product-image"><img th:src="${book.getImg()}"></a>
-			</div>
+            <div class="col-md-6" style="text-align: center">
+                <a href="#" class="product-image"><img th:src="${book.getImg()}"></a>
+            </div>
 
-			<div class="col-md-6 pl-5">
-				<div class="product-detail">
-					<h1 th:text="${book.getNameProduct()}"></h1>
-					<p th:text="'Author: '+${book.getAuthor()}"></p>
-					<p th:text="${'category: '+book.getTypeProduct().getNameTypeProduct()}"></p>
-					<span class="price colored" th:text="'$ '+${book.getPriceBook()}"></span>
+            <div class="col-md-6 pl-5">
+                <div class="product-detail">
+                    <h1 th:text="${book.getNameProduct()}"></h1>
+                    <p th:text="'Author: '+${book.getAuthor()}"></p>
+                    <p th:text="${'category: '+book.getTypeProduct().getNameTypeProduct()}"></p>
+                    <span class="price colored" th:text="'$ '+${book.getPriceBook()}"></span>
 
-					<p th:text="${book.getDescribeBook()}"></p>
-					<p th:text="${'quantity: '+book.getQuantityBooks()}"></p>
+                    <p th:text="${book.getDescribeBook()}"></p>
+                    <p th:text="${'quantity: '+book.getQuantityBooks()}"></p>
 
-					<button type="submit" th:attr="onclick=|addCart('${book.getIdProduct()}')|" class="button"><a style="color: white">Add to cart</a></button>
-					
-				</div>
-			</div>
+                    <button type="submit" th:attr="onclick=|addCart('${book.getIdProduct()}')|" class="button"><a
+                            style="color: white">Add to cart</a></button>
 
-		</div>
-	</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </section>
 
 <div th:insert="user/footer :: copy"></div>
@@ -196,37 +242,38 @@
 <script src="/js/script.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-	var arr = [];
-	function addCart(productId) {
-		let size = +document.getElementById("sang").value;
-		if (arr.indexOf(productId)===-1){
-			arr.push(productId);
-		}
-		size += arr.length;
-		document.getElementById("size").innerText = "Cart: "+size;
-		var toast = document.getElementById("toast");
+    var arr = [];
 
-		// Thiết lập nội dung toast
-		toast.innerText = "Item Added to your Cart!";
+    function addCart(productId) {
+        let size = +document.getElementById("sang").value;
+        if (arr.indexOf(productId) === -1) {
+            arr.push(productId);
+        }
+        size += arr.length;
+        document.getElementById("size").innerText = "Cart: " + size;
+        var toast = document.getElementById("toast");
 
-		// Hiển thị toast
-		toast.style.display = "block";
+        // Thiết lập nội dung toast
+        toast.innerText = "Item Added to your Cart!";
 
-		// Tự động ẩn toast sau 3 giây
-		setTimeout(function () {
-			toast.style.display = "none";
-		}, 1500);
-		$.ajax({
-			type: 'POST',
-			url: 'http://localhost:8080/cart/add-cart/' + productId,
-			data: {productId: productId},
-			success: function (response) {
-			},
-			error: function (xhr, status, error) {
-				console.log(error);
-			}
-		});
-	}
+        // Hiển thị toast
+        toast.style.display = "block";
+
+        // Tự động ẩn toast sau 3 giây
+        setTimeout(function () {
+            toast.style.display = "none";
+        }, 1500);
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/cart/add-cart/' + productId,
+            data: {productId: productId},
+            success: function (response) {
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
 </script>
 </body>
 </html>	
