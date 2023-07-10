@@ -117,7 +117,11 @@
                                                     <label for="phoneNumber" style="font-weight: bold">Phone<span
                                                             class="spanRed">(*)</span></label>
                                                     <input id="phoneNumber" type="text" th:field="*{phone}"
+                                                           pattern="^0[0-9]{9}$"
+                                                           required oninput="checkPhoneNumber()"
                                                            placeholder="ex:0123456789"/>
+                                                    <small id="phone1" class="mt-1"
+                                                           style="color: red;font-weight: bolder "></small>
                                                     <span style="color: red" th:if="${#fields.hasErrors('phone')}"
                                                           th:errors="*{phone}"></span>
                                                 </div>
@@ -209,6 +213,15 @@
             } else {
                 document.getElementById("pass1").innerText = "Invalid password";
             }
+        }
+    }
+    function checkPhoneNumber() {
+        let name = document.getElementById("phoneNumber").value;
+        let regexPhone = /^((\+84)|0)[0-9]{9,10}$/;
+        if (regexPhone.test(name)) {
+            document.getElementById("phone1").innerText = "";
+        } else {
+            document.getElementById("phone1").innerText = "Phone numbers starting at 0,+84 must be 9 or 10 numbers.";
         }
     }
 </script>
