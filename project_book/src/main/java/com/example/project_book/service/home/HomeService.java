@@ -32,7 +32,7 @@ public class HomeService implements IHomeService {
     }
 
     @Override
-    public List<ProductProjection> getProductBestSellByName() {
+    public ProductProjection getProductBestSellByName() {
         return homeRepesitory.getProductBestSellByName();
     }
 
