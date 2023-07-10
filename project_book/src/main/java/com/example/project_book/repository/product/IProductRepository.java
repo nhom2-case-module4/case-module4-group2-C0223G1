@@ -12,5 +12,6 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
 
     Product getProductByIdProductAndIsDeleteIsFalse(int id);
 
-    Page<Product> findAllByNameProductContainingIgnoreCase(String name,Pageable pageable);
+    Page<Product> findByNameProductContainingIgnoreCaseAndAuthorContainingIgnoreCase(String name, String author,Pageable pageable);
+
 }

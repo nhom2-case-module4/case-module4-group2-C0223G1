@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductService implements IProductService {
     @Autowired
@@ -21,7 +23,7 @@ public class ProductService implements IProductService {
 
     @Override
     public Product findById(int id) {
-        return productRepository.findById(id).get();
+        return productRepository.findById(id).orElse(null);
 
     }
 
@@ -43,7 +45,9 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Page<Product> findOne(String name, Pageable pageable) {
-        return this.productRepository.findAllByNameProductContainingIgnoreCase(name,pageable);
+    public Page<Product> search(String name, String author, Pageable pageable) {
+        return productRepository.findByNameProductContainingIgnoreCaseAndAuthorContainingIgnoreCase(name,author,pageable);
     }
+
+
 }

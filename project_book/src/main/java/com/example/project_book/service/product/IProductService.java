@@ -1,7 +1,7 @@
 package com.example.project_book.service.product;
 
 import com.example.project_book.model.Product;
-import com.example.project_book.model.User;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,5 +16,6 @@ public interface IProductService {
 
     void add(Product product);
 
-    Page<Product> findOne(String name, Pageable pageable);
+
+     Page<Product> search(String name, String author,Pageable pageable);
 }

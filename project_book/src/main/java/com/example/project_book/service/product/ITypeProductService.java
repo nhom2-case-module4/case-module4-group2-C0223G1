@@ -14,4 +14,6 @@ public interface ITypeProductService {
     void add(TypeProduct typeProduct);
 
     TypeProduct getTypeProductById(Integer id);
+
+    void delete(int id);
 }

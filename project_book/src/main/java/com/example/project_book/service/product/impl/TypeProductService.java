@@ -26,4 +26,9 @@ public class TypeProductService implements ITypeProductService {
     public TypeProduct getTypeProductById(Integer id) {
         return typeProductRepository.findById(id).get();
     }
+
+    @Override
+    public void delete(int id) {
+        typeProductRepository.deleteById(id);
+    }
 }

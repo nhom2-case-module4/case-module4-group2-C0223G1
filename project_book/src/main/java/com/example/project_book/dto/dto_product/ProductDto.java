@@ -3,10 +3,7 @@ package com.example.project_book.dto.dto_product;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 
 public class ProductDto implements Validator {
@@ -14,27 +11,28 @@ public class ProductDto implements Validator {
     private int idProduct;
     @NotBlank(message = "Image URL cannot be null")
     private String img;
-    @NotBlank(message = "Product name cannot be null")
+
     @Size(min = 2, max = 100, message = "Product nam must be >2 and <100 characters")
     private String nameProduct;
-
+    @Max(value = 2023)
     @Pattern(regexp = "\\d{4}", message = "Publication year must be a 4-degit number")
     private String publicationYear;
     @NotBlank(message = "Author cannot be null")
     private String author;
-    @NotBlank(message = "not null")
+    @NotBlank(message = "Not null")
     private String describeBook;
-    @NotBlank(message = "not null")
+    @NotBlank(message = "Not null")
     private String nationBook;
-    @NotBlank(message = "not null")
+    @NotBlank(message = "Not null")
     private String publishingCompany;
 
-//    @Pattern(regexp = "\"^(?!0\\d)\\d+$\"gm")
+    @Min(value = 0, message = "Quantity books must be greater than or equal to 0")
     private int quantityBooks;
-    @NotNull(message = "Price of book cannot be null")
-    private double priceBook;
-    private boolean isDelete;
 
+    @DecimalMin(value = "0.0", message = "Price book must be greater than 0")
+    private double priceBook;
+
+    private boolean isDelete;
     private TypeProductDto typeProductDto;
 
     public ProductDto() {
