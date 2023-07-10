@@ -128,15 +128,15 @@ public class HomeController {
         model.addAttribute("list", homeService.getlistBook());
         if (request.getUserPrincipal() == null) {
             model.addAttribute("check", "check");
-            String nameBook = String.valueOf(homeService.getProductBestSellByName().getNameProduct());
-            Product product = homeService.findBynameProductIs(nameBook);
-            model.addAttribute("bestSell",product);
+//            String nameBook = String.valueOf(homeService.getProductBestSellByName().getNameProduct());
+//            Product product = homeService.findBynameProductIs(nameBook);
+//            model.addAttribute("bestSell",product);
         } else {
             String email = request.getUserPrincipal().getName();
             model.addAttribute("user", usersService.findByEmailUser(email));
-            String nameBook = String.valueOf(homeService.getProductBestSellByName().getNameProduct());
-            Product product = homeService.findBynameProductIs(nameBook);
-            model.addAttribute("bestSell",product);
+//            String nameBook = String.valueOf(homeService.getProductBestSellByName().getNameProduct());
+//            Product product = homeService.findBynameProductIs(nameBook);
+//            model.addAttribute("bestSell",product);
         }
         return "user/index";
     }
