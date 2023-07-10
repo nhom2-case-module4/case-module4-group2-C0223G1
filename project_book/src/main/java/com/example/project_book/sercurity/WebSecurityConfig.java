@@ -39,6 +39,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
+//    Create: Huynh Duc
+//    Day: 08/07/2023
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -48,15 +50,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/cart/**","welcome/*").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
         http.authorizeRequests().antMatchers("/users", "/order", "/product","/cart/*").access("hasRole('ROLE_ADMIN')");
 
-//        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
         http.authorizeRequests()
                 .and().formLogin()//
-
                 // Submit URL của trang login
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
                 .loginPage("/welcome/login")//
                 .defaultSuccessUrl("/welcome/begin")//
-                .failureUrl("/login?error=true")
+                .failureUrl("/welcome/login?error=true")
                 .usernameParameter("email")///negin
                 .passwordParameter("password")
 

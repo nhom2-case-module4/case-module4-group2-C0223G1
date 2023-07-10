@@ -3,6 +3,7 @@ package com.example.project_book.controller;
 import com.example.project_book.dto.dto_users.UsersDto;
 import com.example.project_book.model.*;
 import com.example.project_book.repository.cart.ICartOrdeRepository;
+import com.example.project_book.sercurity.WebUtils;
 import com.example.project_book.service.IUsersService;
 import com.example.project_book.service.IUsersTypeService;
 import com.example.project_book.service.cart.CartService;
@@ -193,4 +194,22 @@ public class HomeController {
         return "redirect:/welcome";
     }
 
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String accessDenied(Model model, Principal principal) {
+
+        if (principal != null) {
+            org.springframework.security.core.userdetails.User loginedUser = (org.springframework.security.core.userdetails.User) ((Authentication) principal).getPrincipal();
+
+            String userInfo = WebUtils.toString(loginedUser);
+
+            model.addAttribute("userInfo", userInfo);
+
+            String message = "Hi " + principal.getName() //
+                    + "<br> You do not have permission to access this page!";
+            model.addAttribute("message", message);
+
+        }
+
+        return "/login/403";
+    }
 }
