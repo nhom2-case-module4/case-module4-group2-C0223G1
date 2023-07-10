@@ -85,22 +85,22 @@
 <form method="POST" th:action="@{/welcome/create}" th:object="${add}">
     <div class="user">
         <div>
-            <label for="name" style="font-weight: bold">Full name<span class="spanRed">(*)</span>:</label><br>
+            <label for="name" style="font-weight: bold">Full name<span class="spanRed">(*)</span>:</label>
             <input id="name" type="text" th:field="*{name}" placeholder="Dang Tuan Vu"/>
             <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
         </div>
         <div>
-            <label for="phoneNumber"style="font-weight: bold">Phone<span class="spanRed">(*)</span></label><br>
+            <label for="phoneNumber"style="font-weight: bold">Phone<span class="spanRed">(*)</span></label>
             <input id="phoneNumber" type="text" th:field="*{phone}" placeholder="ex:0123456789"/>
             <span style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
         </div>
         <div class="div1" style="margin-bottom: 10px;">
-            <label for="myDate" style="display: block;font-weight: bold;">Date of birth<span class="spanRed">(*)</span>:</label><br>
+            <label for="myDate" style="display: block;font-weight: bold;">Date of birth<span class="spanRed">(*)</span>:</label>
             <input style="width: 100%;padding: 5px" type="date" id="myDate" onchange="validateDate()" th:field="*{birthOfDay}">
-            <span style="color: red" th:if="${#fields.hasErrors('birthOfDay')}" th:errors="*{birthOfDay}"></span>
+            <span style="color: red" th:if="${#fields.hasErrors('birthOfDay')}" th:errors="*{birthOfDay}"></span><br>
         </div>
         <div>
-            <label for="email"style="font-weight: bold">Email<span class="spanRed">(*)</span>:</label><br>
+            <label for="email"style="font-weight: bold">Email<span class="spanRed">(*)</span>:</label>
             <input  id="email" type="text" th:field="*{emailUser}" placeholder="exam@gmail.com"/>
             <span style="color: red" th:if="${#fields.hasErrors('emailUser')}" th:errors="*{emailUser}"></span>
         </div>
@@ -113,12 +113,12 @@
             <input type="radio" th:field="*{genderUser}" id="other" value=""/>Other
         </div>
         <div>
-            <label style="font-weight:bold" for="pass">Password<span class="spanRed">(*)</span>:</label><br>
+            <label style="font-weight:bold" for="pass">Password<span class="spanRed">(*)</span>:</label>
             <input id="pass" type="password" th:field="*{passUser}"/>
             <span style="color: red" th:if="${#fields.hasErrors('passUser')}" th:errors="*{passUser}"></span>
         </div>
         <div>
-            <label style="font-weight:bold" for="pass1">Confirm Password<span class="spanRed">(*)</span>:</label><br>
+            <label style="font-weight:bold" for="pass1">Confirm Password<span class="spanRed">(*)</span>:</label>
             <input id="confirm-password" type="password"  oninput="checkPassword()"/>
             <small id="pass1" class="mt-1" style="color: red;font-weight: bolder "></small>
             <span style="color: red" th:if="${#fields.hasErrors('passUser')}" th:errors="*{passUser}"></span>
