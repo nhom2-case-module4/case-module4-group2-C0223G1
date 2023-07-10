@@ -29,7 +29,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="social-links">
+                    <div class="social-links mt-5">
                         <ul>
                             <li>
                                 <a href="#"><i class="icon icon-facebook"></i></a>
@@ -54,7 +54,7 @@
                     <div class="right-element" th:if="${#request.userPrincipal!=null}" th:object="${user}">
                         <!--admin-->
                         <div class="dropdown" th:if="${user.roleUser.nameRole=='ADMIN'}">
-                            <button class="dropbtn">
+                            <button class="dropbtn p-0">
                                 <i class="icon icon-user"></i>
                                 <span th:text="${user.name}"></span>
                             </button>

@@ -3,6 +3,7 @@ package com.example.project_book.controller;
 import com.example.project_book.dto.dto_users.UsersDto;
 import com.example.project_book.model.*;
 import com.example.project_book.repository.cart.ICartOrdeRepository;
+import com.example.project_book.sercurity.WebUtils;
 import com.example.project_book.service.IUsersService;
 import com.example.project_book.service.IUsersTypeService;
 import com.example.project_book.service.cart.CartService;
@@ -51,7 +52,6 @@ public class HomeController {
 
     @Autowired
     private ICartService cartService;
-
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showFormLogin(Model model) {
         String authentication = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -148,7 +148,6 @@ public class HomeController {
         model.addAttribute("book", homeService.getBookById(id));
         return "user/single-product";
     }
-
     //    Create: Huynh Duc
     //    Day: 06/07/2023
     @GetMapping("/view-all")
@@ -168,7 +167,6 @@ public class HomeController {
         model.addAttribute("list5", homeService.getBooksByType(5));
         return "user/shop";
     }
-
     //    Create: Huynh Duc
     //    Day: 06/07/2023
     @GetMapping("/view-blog")
@@ -183,14 +181,14 @@ public class HomeController {
     }
 
     @GetMapping("/begin")
-    public String goHome(@SessionAttribute Cart cart, HttpServletRequest request) {
+    public String goHome(@SessionAttribute Cart cart,HttpServletRequest request){
         String email = request.getUserPrincipal().getName();
         User user = usersService.findByEmailUser(email);
         List<CartOrder> list = cartService.getCartByIdUser(user.getIdUser());
         for (int i = 0; i < list.size(); i++) {
             Product product = homeService.getBookById(list.get(i).getIdProduct());
             int quantity = list.get(i).getQuantityProduct();
-            Item item = new Item(product, quantity);
+            Item item = new Item(product,quantity);
             cart.addItem(item);
         }
         return "redirect:/welcome";
@@ -215,4 +213,22 @@ public class HomeController {
         return "user/shop";
     }
 
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String accessDenied(Model model, Principal principal) {
+
+        if (principal != null) {
+            org.springframework.security.core.userdetails.User loginedUser = (org.springframework.security.core.userdetails.User) ((Authentication) principal).getPrincipal();
+
+            String userInfo = WebUtils.toString(loginedUser);
+
+            model.addAttribute("userInfo", userInfo);
+
+            String message = "Hi " + principal.getName() //
+                    + "<br> You do not have permission to access this page!";
+            model.addAttribute("message", message);
+
+        }
+
+        return "/login/403";
+    }
 }
