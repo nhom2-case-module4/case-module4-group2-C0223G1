@@ -48,6 +48,7 @@ public class UsersController {
                           RedirectAttributes redirectAttributes, Model model) {
         new UsersDto().validate(usersDto, bindingResult);
         if (bindingResult.hasErrors()) {
+            model.addAttribute("roleUser", this.usersTypeService.getListUsers());
             return "/form-add";
         }
         User users = new User();
@@ -83,8 +84,9 @@ public class UsersController {
     //    Create by: Tuan Vu
     //    Day: 06/07/2023
     @PostMapping("/edit")
-    public String edit(@ModelAttribute(name = "edit") UsersDto usersDto, RedirectAttributes redirectAttributes) {
+    public String edit(@ModelAttribute(name = "edit") UsersDto usersDto, RedirectAttributes redirectAttributes,Model model) {
         if (usersService.findById(usersDto.getIdUser()) == null) {
+            model.addAttribute("roleUser", this.usersTypeService.getListUsers());
             redirectAttributes.addFlashAttribute("msg", "not found");
         } else {
             User users = new User();

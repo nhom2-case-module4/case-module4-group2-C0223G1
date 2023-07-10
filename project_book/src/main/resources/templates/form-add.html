@@ -31,7 +31,7 @@
         }
 
         input[type="submit"] {
-            background-color: #4CAF50;
+            background-color: black;
             color: white;
             padding: 12px 20px;
             border: none;
@@ -43,66 +43,84 @@
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+
         .background-image {
             background-image: url("https://haycafe.vn/wp-content/uploads/2022/03/background-sach-nen-may-tinh.jpg");
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
-            height: 130vh;
+            height: 140vh;
         }
+
         label.required::after {
             content: "*";
             color: red;
             margin-right: 5px;
         }
+        .font{
+            color: black;
+            font-size: 20px;
+        }
+        .date{
+            width: 100%;
+            padding: 5px;
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap">
 </head>
-<h1 style="text-align: center;background-color: #f1f1f1">THÊM MỚI NGƯỜI DÙNG</h1>
+<h1 style="text-align: center;background-color: #f1f1f1">ADD NEW USER</h1>
 <body>
 <div class="background-image">
-<form method="POST" action="/users/add" th:object="${add}">
-    <div class="user">
-        <div>
-            <label for="name" class="required">Name:</label><br>
-            <input id="name" type="text" th:field="*{name}" placeholder="Dang Tuan Vu"/>
-            <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    <form method="POST" action="/users/add" th:object="${add}">
+        <div class="user">
+            <div>
+                <label for="name" class="required">Name:</label>
+                <input id="name" type="text" th:field="*{name}" placeholder="Dang Tuan Vu"/>
+                <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+            <div>
+                <label for="phoneNumber" class="required">PhoneNumbers:</label>
+                <input id="phoneNumber" type="text" th:field="*{phone}" placeholder="ex:0123456789"/>
+                <span style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+            </div>
+            <div>
+                <label for="myDate">DateOfBirth:</label>
+                <input type="date" id="myDate" onchange="validateDate()" th:field="*{birthOfDay}"
+                       class="date">
+                <span style="color: red" th:if="${#fields.hasErrors('birthOfDay')}" th:errors="*{birthOfDay}"></span>
+            </div>
+            <br>
+            <div>
+                <label for="email" class="required">Email:</label>
+                <input id="email" type="text" th:field="*{emailUser}" placeholder="exam@gmail.com"/>
+                <span style="color: red" th:if="${#fields.hasErrors('emailUser')}" th:errors="*{emailUser}"></span>
+            </div>
+            <div>
+                <label>Gender:</label>
+                <input type="radio" th:field="*{genderUser}" id="male" value="0"/>Male &nbsp&nbsp
+                <input type="radio" th:field="*{genderUser}" id="female" value="1"/>Female &nbsp&nbsp
+                <input type="radio" th:field="*{genderUser}" id="other" value=""/>Other
+            </div>
+            <br>
+            <div>
+                <label for="pass" class="required">Pass:</label>
+                <input id="pass" type="text" th:field="*{passUser}"/>
+                <span style="color: red" th:if="${#fields.hasErrors('passUser')}" th:errors="*{passUser}"></span>
+            </div>
+            <div>
+                <label for="userType">UsersType:</label><br>
+                <select id="userType" th:field="*{roleUser.idRole}">
+                    <option th:each="r, items : ${roleUser}" th:text="${r.nameRole}" th:value="${r.idRole}">
+                    </option>
+                </select>
+            </div>
+            <input type="submit"/>
+            <div style="padding-top: 20px;">
+                <a href="/users" class="font"><i class="fa-solid fa-arrow-left"></i></a>
+            </div>
         </div>
-        <div>
-            <label for="phoneNumber" class="required">PhoneNumbers:</label><br>
-            <input id="phoneNumber" type="text" th:field="*{phone}" placeholder="ex:0123456789"/>
-            <span style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
-        </div>
-        <div>
-            <label for="myDate">DateOfBirth:</label><br>
-            <input type="date" id="myDate" onchange="validateDate()" th:field="*{birthOfDay}">
-            <span style="color: red" th:if="${#fields.hasErrors('birthOfDay')}" th:errors="*{birthOfDay}"></span>
-        </div>
-        <div>
-            <label for="email" class="required">Email:</label><br>
-            <input id="email" type="text" th:field="*{emailUser}" placeholder="exam@gmail.com"/>
-            <span style="color: red" th:if="${#fields.hasErrors('emailUser')}" th:errors="*{emailUser}"></span>
-        </div>
-        <div>
-            <label>Gender:</label>
-            <input type="radio" th:field="*{genderUser}" id="male" value="0"/>Male
-            <input type="radio" th:field="*{genderUser}" id="female" value="1"/>Female
-            <input type="radio" th:field="*{genderUser}" id="other" value=""/>Other
-        </div>
-        <div>
-            <label for="pass" class="required">Pass:</label><br>
-            <input id="pass" type="text" th:field="*{passUser}"/>
-            <span style="color: red" th:if="${#fields.hasErrors('passUser')}" th:errors="*{passUser}"></span>
-        </div>
-        <div>
-            <label for="userType">UsersType:</label><br>
-            <select id="userType" th:field="*{roleUser.idRole}">
-                <option th:each="r, items : ${roleUser}" th:text="${r.nameRole}" th:value="${r.idRole}">
-                </option>
-            </select>
-        </div>
-        <input type="submit"/>
-    </div>
-</form>
+    </form>
 </div>
 <script>
     function validateDate() {
