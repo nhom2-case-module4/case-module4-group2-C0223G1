@@ -100,6 +100,13 @@ public class CartController {
         model.addAttribute("order", new Order());
         return "user/cart";
     }
+    @PostMapping("/delete")
+    public String delete(@RequestParam("idDelete") int idDelete, @SessionAttribute Cart cart, Model model) {
+        cart.removeItem(idDelete);
+        model.addAttribute("cart", cart);
+        model.addAttribute("order", new Order());
+        return "user/cart";
+    }
 
     //    Create: Huynh Duc
 //    Day: 07/07/2023

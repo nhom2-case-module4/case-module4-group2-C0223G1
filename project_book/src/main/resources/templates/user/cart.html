@@ -71,13 +71,38 @@
                                                    th:value="${item.getProduct().getPriceBook()}*${item.getAmount()}">
 
                                         </div>
-                                        `
                                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                            <a th:href="@{/cart/delete/{id}(id=${item.getProduct().getIdProduct()})}"
-                                               class="text-muted"><i class="fas fa-times"></i></a>
+<!--                                            <a th:href="@{/cart/delete/{id}(id=${item.getProduct().getIdProduct()})}"-->
+<!--                                               class="text-muted"><i class="fas fa-times"></i></a>-->
+                                            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                    th:attr="onclick=|remove('${item.getProduct().getNameProduct()}','${item.getProduct().getIdProduct()}')|">
+                                                <i class="fas fa-times"></i>
+                                            </button>
                                         </div>
                                     </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">This function cannot be undone</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Are you sure want to delete the book:</p>
+                                                    <p style="color:red" id="nameDelete"></p>
 
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form action="/cart/delete" method="post">
+                                                        <input type="hidden" name="idDelete" id="idDelete">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                        <button type="submit" class="btn btn-light">Yes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <hr class="my-4">
 
                                     <div class="pt-5">
@@ -136,6 +161,11 @@
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
+    function remove(name,id) {
+        document.getElementById("nameDelete").innerText = name+" ?";
+        document.getElementById("idDelete").value = id;
+    }
+
     function totalPrice() {
         var elements = document.querySelectorAll('[id^="price"]');
         let total = 0;
