@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+        @media (min-width: 1025px) {
+            .h-custom {
+                height: 100vh !important;
+            }
+        }
+        .status{
+            height: 50px;
+            width: 185px;
+        }
+        .card-registration .select-input.form-control[readonly]:not([disabled]) {
+            font-size: 1rem;
+            line-height: 2.15;
+            padding-left: .75em;
+            padding-right: .75em;
+        }
+
+        .card-registration .select-arrow {
+            top: 13px;
+        }
+
+        .bg-grey {
+            background-color: #eae8e8;
+        }
+
+        @media (min-width: 992px) {
+            .card-registration-2 .bg-grey {
+                border-top-right-radius: 16px;
+                border-bottom-right-radius: 16px;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .card-registration-2 .bg-grey {
+                border-bottom-left-radius: 16px;
+                border-bottom-right-radius: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+<section class="h-100 h-custom" style="background-color: #d2c9ff;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12">
+                <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <div class="col-lg-8">
+                                <div class="p-5">
+                                    <div class="d-flex justify-content-between align-items-center mb-5">
+                                        <h2 class="fw-bold mb-0 text-black">Customer&nbsp:&nbsp<span th:text="${customer}"></span></h2>
+
+                                    </div>
+                                    <div th:each="detail:${details}">
+                                        <hr class="my-4">
+
+                                        <div class="row mb-4 d-flex justify-content-between align-items-center">
+                                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                                <img
+                                                        th:src="${detail.getImg()}"
+                                                        class="img-fluid rounded-3" alt="Cotton T-shirt">
+                                            </div>
+                                            <div class="col-md-5 col-lg-5 col-xl-5">
+                                                <h6 class="text-muted"
+                                                    th:text="${detail.getNameProduct()}"></h6>
+                                                <h6 class="text-black mb-0"
+                                                    th:text="${detail.getAuthor()}"></h6>
+                                            </div>
+                                            <div class="col-md-1 col-lg-1 col-xl-1 d-flex">
+                                                <input type="hidden" th:text="${detail.getNumberDetail()}">
+                                            </div>
+                                            <div class="col-md-2 col-lg-2 col-xl-2 offset-lg-2">
+                                                <h6 class="mb-0" th:text="${detail.getPriceBook()}+'$'"></h6>
+                                            </div>
+                                            <div class="col-md-2 col-lg-2 col-xl-1 text-end">
+                                                <!--                                                <a th:href="@{/shopping/delete/{id}(id=${product.getKey().getId()})}" class="text-muted"><i class="fas fa-times">Delete</i></a>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="my-4">
+
+                                    <div class="pt-5">
+                                        <h6 class="mb-0"><a th:href="@{/order}" class="text-body"><i
+                                                class="fas fa-long-arrow-alt-left me-2"></i>Back to order</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 bg-grey">
+                                <div class="pt-5 pb-3">
+                                    <h3 class="fw-bold  mt-2 pt-1" style="text-align: center">Summary</h3>
+                                </div>
+                                <h5 class="text-uppercase mb-2 px-3">Address</h5>
+
+                                <div class="mb-1 px-3">
+                                    <div class="form-outline">
+                                <textarea th:text="${address}" readonly placeholder="note" style="width: 100%"></textarea>
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+                                <div th:each="money, istart:${details}">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <h5  class=" px-3" style="font-weight: bold;" >Item&nbsp<span th:text="${istart.count}"></span></h5>
+                                        <h5><span
+                                                th:text="${money.getPriceBook()}*${money.getNumberDetail()}+'$'" class="px-3"></span>
+                                        </h5>
+                                    </div>
+                                </div>
+
+                                <hr class="my-4">
+
+                                <div class="d-flex justify-content-between mb-1">
+                                    <h5 class="text-uppercase px-3">Total price</h5>
+                                    <h5><span class="px-3" th:text="${sum}+'$'"></span></h5>
+                                </div>
+                                <div style="text-align: center" th:if="${status!='Cancel order'}">
+                                    <button  type="button" class="btn btn-primary  btn-lg status"
+                                            data-mdb-ripple-color="dark">Paid
+                                    </button>
+                                </div>
+                                <div style="text-align: center" th:if="${status=='Cancel order'}">
+                                    <button  type="button" class="btn btn-danger  btn-lg status"
+                                            data-mdb-ripple-color="dark">Cancelled Order
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<script>
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+</html>

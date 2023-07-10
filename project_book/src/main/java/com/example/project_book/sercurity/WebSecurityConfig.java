@@ -39,26 +39,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
+//    Create: Huynh Duc
+//    Day: 08/07/2023
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests().antMatchers("/welcome", "/welcome/login", "/welcome/logout", "welcome/register"
-                ,"/css/**","/icomoon/**","/images/**","/js/**","/static/**","cart/add/{id}/{num}"
-                ,"/cart/show-cart","/cart/plus/{id}","/cart/minus/{id}","/cart/delete/{id}").permitAll();
-        http.authorizeRequests().antMatchers("/cart/send","welcome/*").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
-        http.authorizeRequests().antMatchers("/users", "/order", "/product").access("hasRole('ROLE_ADMIN')");
+                ,"/css/**","/icomoon/**","/images/**","/js/**","/static/**","/bootstrap520/**").permitAll();
+        http.authorizeRequests().antMatchers("/cart/**","welcome/*").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/users", "/order", "/product","/cart/*").access("hasRole('ROLE_ADMIN')");
 
-//        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/welcome/403");
         http.authorizeRequests()
                 .and().formLogin()//
-
                 // Submit URL của trang login
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
                 .loginPage("/welcome/login")//
-                .defaultSuccessUrl("/welcome")//
-                .failureUrl("/login?error=true")
-                .usernameParameter("email")//
+                .defaultSuccessUrl("/welcome/begin")//
+                .failureUrl("/welcome/login?error=true")
+                .usernameParameter("email")///negin
                 .passwordParameter("password")
 
                 // Cấu hình cho Logout Page.
