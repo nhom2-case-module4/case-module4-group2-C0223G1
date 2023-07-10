@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/cart/**","welcome/*").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
         http.authorizeRequests().antMatchers("/users", "/order", "/product","/cart/*").access("hasRole('ROLE_ADMIN')");
 
-        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/welcome/403");
         http.authorizeRequests()
                 .and().formLogin()//
                 // Submit URL của trang login
