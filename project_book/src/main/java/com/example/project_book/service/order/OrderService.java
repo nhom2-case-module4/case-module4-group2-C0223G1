@@ -1,6 +1,7 @@
 package com.example.project_book.service.order;
 
 import com.example.project_book.model.Order;
+import com.example.project_book.projections.OrderDetailProjection;
 import com.example.project_book.projections.OrderProjection;
 import com.example.project_book.repository.IBooksOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,18 @@ public class OrderService implements IOrderService{
     }
 
     @Override
-    public void optionStatus(int id, int option) {
-        booksOrderRepository.updateStatus(id,option);
+    public void giveProduct(int number, int id) {
+        booksOrderRepository.giveProduct(number,id);
+    }
+
+    @Override
+    public void returnProduct(int number, int id) {
+        booksOrderRepository.returnProduct(number,id);
+    }
+
+    @Override
+    public void optionStatus(int option, int id) {
+        booksOrderRepository.updateStatus(option,id);
     }
 
     @Override
@@ -45,5 +56,9 @@ public class OrderService implements IOrderService{
         return booksOrderRepository.searchBooksOrders(dateStart,dateEnd,id,pageable);
     }
 
+    @Override
+    public Page<OrderDetailProjection> findDetail(int id, Pageable pageable) {
+        return booksOrderRepository.findAllOrderDetail(id,pageable);
+    }
 
 }
