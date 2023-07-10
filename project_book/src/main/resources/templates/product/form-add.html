@@ -165,7 +165,7 @@
                             style="color: red">*</span>)</label>
                     <select required id="userType" th:field="*{typeProductDto.idTypeProduct}">
                         <option th:each="t, items : ${typeProductList}" th:text="${t.nameTypeProduct}"
-                                th:value="${t.idTypeProduct}">
+                                th:value="${t.idProduct}">
                         </option>
                     </select>
                 </div>

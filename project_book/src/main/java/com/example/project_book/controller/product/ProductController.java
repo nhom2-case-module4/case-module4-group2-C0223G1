@@ -28,7 +28,7 @@ import javax.validation.Valid;
 
 
 @Controller
-//@SessionAttribute("cart")
+@SessionAttributes("cart")
 @RequestMapping("/products")
 public class ProductController {
     @Autowired
@@ -36,25 +36,25 @@ public class ProductController {
 
     @Autowired
     private ITypeProductService typeProductService;
-//    @Autowired
-//    private IUsersService usersService;
+    @Autowired
+    private IUsersService usersService;
 
-//    @ModelAttribute("cart")
-//    public Cart setupCart() {
-//        return new Cart();
-//    }
+    @ModelAttribute("cart")
+    public Cart setupCart() {
+        return new Cart();
+    }
 
     @GetMapping()
     public String getList(@PageableDefault(size = 5) Pageable pageable, Model model, HttpServletRequest request,
                           @RequestParam(name = "addedItemId", required = false) Long addedItemId) {
         Page<Product> productList = this.productService.findAllByIsDeleteIsFalse(pageable);
-//        if (request.getUserPrincipal() == null) {
-//            model.addAttribute("check", "check");
-//        } else {
-//            String email = request.getUserPrincipal().getName();
-//            User user = usersService.findByEmailUser(email);
-//            model.addAttribute("user", user);
-//        }
+        if (request.getUserPrincipal() == null) {
+            model.addAttribute("check", "check");
+        } else {
+            String email = request.getUserPrincipal().getName();
+            User user = usersService.findByEmailUser(email);
+            model.addAttribute("user", user);
+        }
         model.addAttribute("productList", productList);
         return "/product/list";
     }
@@ -149,9 +149,16 @@ public class ProductController {
     @GetMapping("/search")
     public String searchProducts(@RequestParam(name = "name", required = false) String name,
                                  @RequestParam(name = "author", required = false) String author,
-                                 @PageableDefault(size = 5) Pageable pageable,
+                                 @PageableDefault(size = 5) Pageable pageable, HttpServletRequest request,
                                  Model model) {
         Page<Product> productList = productService.search(name, author, pageable);
+        if (request.getUserPrincipal() == null) {
+            model.addAttribute("check", "check");
+        } else {
+            String email = request.getUserPrincipal().getName();
+            User user = usersService.findByEmailUser(email);
+            model.addAttribute("user", user);
+        }
         model.addAttribute("productList", productList);
         model.addAttribute("search", name);
         model.addAttribute("author", author);

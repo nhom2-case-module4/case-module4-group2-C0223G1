@@ -23,7 +23,7 @@
             <td th:text="${row.count}"></td>
             <td th:text="${typeProduct.nameTypeProduct}"></td>
             <td>
-                <form th:action="@{/typeProducts/delete/{id}(id=${typeProduct.idTypeProduct})}" method="get">
+                <form th:action="@{/typeProducts/delete/{id}(id=${typeProduct.idProduct})}" method="get">
                     <input type="hidden" name="_method" value="delete" />
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
