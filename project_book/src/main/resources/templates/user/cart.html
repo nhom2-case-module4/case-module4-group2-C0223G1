@@ -94,7 +94,7 @@
                                     <div class="d-flex justify-content-between mb-4">
                                         <h5 class="text-uppercase" th:text="'Item: '+${cart.getItems().size()}"></h5>
                                     </div>
-                                    <form th:action="@{/email/orders}" method="post" th:object="${order}">
+                                    <form th:action="@{/cart/send}" method="post" th:object="${order}">
                                         <h5 class="text-uppercase mb-3">Address<span style="color: red">*</span></h5>
                                         <div>
                                             <input type="hidden" th:field="*{user.emailUser}">
