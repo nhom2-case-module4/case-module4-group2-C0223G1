@@ -33,12 +33,12 @@
 .dropdown:hover .dropdown-content {
     display: block;
 }
-button {
-    font-size: 14px;
-    font-weight: 600;
-    border: none;
-    height: 65px;
-    cursor: pointer;
-    text-transform: uppercase;
-}
+/*button {*/
+/*    font-size: 14px;*/
+/*    font-weight: 600;*/
+/*    border: none;*/
+/*    height: 65px;*/
+/*    cursor: pointer;*/
+/*    text-transform: uppercase;*/
+/*}*/
 
