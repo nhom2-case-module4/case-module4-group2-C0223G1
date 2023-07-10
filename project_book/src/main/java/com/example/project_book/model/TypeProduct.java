@@ -15,8 +15,8 @@ public class TypeProduct {
     public TypeProduct() {
     }
 
-    public TypeProduct(int idProduct, String nameTypeProduct) {
-        this.idProduct = idProduct;
+    public TypeProduct(int idTypeProduct, String nameTypeProduct) {
+        this.idProduct = idTypeProduct;
         this.nameTypeProduct = nameTypeProduct;
     }
 
@@ -24,8 +24,8 @@ public class TypeProduct {
         return idProduct;
     }
 
-    public void setIdProduct(int idProduct) {
-        this.idProduct = idProduct;
+    public void setIdProduct(int idTypeProduct) {
+        this.idProduct = idTypeProduct;
     }
 
     public String getNameTypeProduct() {
