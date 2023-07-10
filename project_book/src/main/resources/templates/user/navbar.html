@@ -59,11 +59,14 @@
                                 <span th:text="${user.name}"></span>
                             </button>
                             <div class="dropdown-content">
-                                <a href="#">
+                                <a href="">
                                     Product
                                 </a>
-                                <a href="#">
+                                <a href="/order">
                                     Order
+                                </a>
+                                <a href="/users">
+                                    Users
                                 </a>
                                 <a href="/welcome/logout">
                                     Logout
@@ -71,8 +74,6 @@
                             </div>
                         </div>
                         <!--admin-->
-
-
                         <!--user-->
                         <div class="dropdown" th:if="${user.roleUser.nameRole=='USER'}">
                             <button class="dropbtn">
@@ -88,7 +89,7 @@
                         <!--user-->
 
                         <a href="/cart/show-cart" class="cart for-buy"><i class="icon icon-clipboard"></i><span
-                              th:id="size"  th:text="'Cart: '+${cart.getItems().size()}"></span></a>
+                                th:id="size" th:text="'Cart: '+${cart.getItems().size()}"></span></a>
 
                         <div class="action-menu">
 
@@ -97,7 +98,8 @@
                                     <i class="icon icon-search"></i>
                                 </a>
                                 <form role="search" method="post" class="search-box" action="/welcome/search">
-                                    <input name="search" class="search-field text search-input" placeholder="Search" type="search">
+                                    <input name="search" class="search-field text search-input" placeholder="Search"
+                                           type="search">
                                 </form>
                             </div>
                         </div>
@@ -118,7 +120,8 @@
                                     <i class="icon icon-search"></i>
                                 </a>
                                 <form role="search" method="post" class="search-box" action="/welcome/search">
-                                    <input name="search" class="search-field text search-input" placeholder="Search" type="search">
+                                    <input name="search" class="search-field text search-input" placeholder="Search"
+                                           type="search">
                                 </form>
                             </div>
                         </div>
