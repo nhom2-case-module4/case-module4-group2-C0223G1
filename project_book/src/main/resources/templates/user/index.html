@@ -19,7 +19,9 @@
 		<!-- script
 		================================================== -->
 		<script src="/js/modernizr.js"></script>
-
+		<!--		Create: Huynh Duc-->
+		<!--		Day: 08/07/2023-->
+		<link rel="stylesheet" href="/css/dropdownAccount.css">
 	</head>
 
 <body style="background: rgb(243, 242, 236)">
@@ -140,11 +142,11 @@
 
 			<div class="col-md-8 col-md-offset-2">
 
-				<div class="row">
+				<div class="row" th:object="${bestSell}">
 
 					<div class="col-md-6">
 						<figure class="products-thumb">
-							<img src="/images/single-image.jpg" alt="book" class="single-image">
+							<img th:src="${bestSell.getImg()}" alt="book" class="single-image">
 						</figure>
 					</div>
 
@@ -153,12 +155,12 @@
 							<h2 class="section-title divider">Best Selling Book</h2>
 
 							<div class="products-content">
-								<div class="author-name">By Timbur Hood</div>
-								<h3 class="item-title">Birds gonna be happy</h3>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero ipsum enim pharetra hac.</p>
-								<div class="item-price">$ 45.00</div>
+								<div class="author-name" th:text="'By '+${bestSell.getAuthor()}"></div>
+								<h3 class="item-title" th:text="${bestSell.getNameProduct()}"></h3>
+								<p th:text="${bestSell.getDescribeBook()}"></p>
+								<div class="item-price" th:text="'$'+${bestSell.getPriceBook()}"></div>
 								<div class="btn-wrap">
-									<a href="#" class="btn-accent-arrow">shop it now <i class="icon icon-ns-arrow-right"></i></a>
+									<a th:href="@{/welcome/view/{id}(id=${bestSell.getIdProduct()})}" class="btn-accent-arrow">shop it now <i class="icon icon-ns-arrow-right"></i></a>
 								</div>
 							</div>
 

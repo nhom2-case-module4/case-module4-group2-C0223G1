@@ -12,7 +12,11 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-   </head>
+<!--    Create: Huynh Duc-->
+<!--    Day: 08/07/2023-->
+    <link rel="stylesheet" href="/css/dropdownAccount.css">
+
+</head>
 <body style="background: rgb(243, 242, 236)">
 
 
@@ -29,8 +33,8 @@
                                         <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
                                         <h6 class="mb-0 text-muted" th:text="${cart.getItems().size()}+' Items'"></h6>
                                     </div>
+                                    <b><p style="color: red" th:if="${msg}" th:text="${msg}"></p></b>
                                     <hr class="my-4">
-
                                     <div class="row mb-4 d-flex justify-content-between align-items-center"
                                          th:each="item: ${cart.getItems()}">
                                         <div class="col-md-2 col-lg-2 col-xl-2">
@@ -40,37 +44,69 @@
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-xl-3">
                                             <h6 class="text-muted" th:text="${item.getProduct().getNameProduct()}"></h6>
+                                            <h6 class="text-black mb-0"
+                                                th:text="'$ '+${item.getProduct().getPriceBook()}"></h6>
+                                            <h6 class="text-black mb-0"
+                                                th:text="'remain: '+${item.getProduct().getQuantityBooks()}"></h6>
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                            <button class="btn btn-link px-2">
-                                                <a th:href="@{/cart/minus/{id}(id=${item.getProduct().getIdProduct()})}">
-                                                    <i class="fas fa-minus"></i>
-                                                </a>
+                                            <button class="btn btn-link px-2"
+                                                    th:attr="onclick=|decreaseQuantity('${item.getProduct().getIdProduct()}','${item.getProduct().getPriceBook()}')|">
+                                                <i class="fas fa-minus"></i>
                                             </button>
-
-                                            <input readonly min="0" name="quantity" th:value="${item.getAmount()}"
+                                            <input readonly min="0" th:id="'id'+${item.getProduct().getIdProduct()}"
+                                                   th:value="${item.getAmount()}"
                                                    type="number"
                                                    class="form-control form-control-sm"/>
-
-                                            <button class="btn btn-link px-2">
-                                                <a th:href="@{/cart/plus/{id}(id=${item.getProduct().getIdProduct()})}">
-                                                    <i class="fas fa-plus"></i>
-                                                </a>
+                                            <button class="btn btn-link px-2"
+                                                    th:attr="onclick=|increaseQuantity('${item.getProduct().getIdProduct()}','${item.getProduct().getPriceBook()}')|">
+                                                <i class="fas fa-plus"></i>
                                             </button>
                                         </div>
                                         <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                            <h6 class="mb-0" th:text="'$ '+${item.getProduct().getPriceBook()}"></h6>
+                                            <h6 class="mb-0" th:id="'bookPrice'+${item.getProduct().getIdProduct()}"
+                                                th:text="'$ '+${item.getProduct().getPriceBook()}"></h6>
+                                            <input readonly hidden="hidden" class="mb-0"
+                                                   th:id="'price'+${item.getProduct().getIdProduct()}"
+                                                   th:value="${item.getProduct().getPriceBook()}*${item.getAmount()}">
+
                                         </div>
                                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                            <a th:href="@{/cart/delete/{id}(id=${item.getProduct().getIdProduct()})}"
-                                               class="text-muted"><i class="fas fa-times"></i></a>
+<!--                                            <a th:href="@{/cart/delete/{id}(id=${item.getProduct().getIdProduct()})}"-->
+<!--                                               class="text-muted"><i class="fas fa-times"></i></a>-->
+                                            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                    th:attr="onclick=|remove('${item.getProduct().getNameProduct()}','${item.getProduct().getIdProduct()}')|">
+                                                <i class="fas fa-times"></i>
+                                            </button>
                                         </div>
                                     </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">This function cannot be undone</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Are you sure want to delete the book:</p>
+                                                    <p style="color:red" id="nameDelete"></p>
 
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form action="/cart/delete" method="post">
+                                                        <input type="hidden" name="idDelete" id="idDelete">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                        <button type="submit" class="btn btn-light">Yes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <hr class="my-4">
 
                                     <div class="pt-5">
-                                        <h6 class="mb-0"><a href="/welcome/" class="text-body"><i
+                                        <h6 class="mb-0"><a href="/welcome/view-all" class="text-body"><i
                                                 class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
                                     </div>
                                 </div>
@@ -85,7 +121,9 @@
                                     </div>
                                     <form th:action="@{/cart/send}" method="post" th:object="${order}">
                                         <h5 class="text-uppercase mb-3">Address<span style="color: red">*</span></h5>
-
+                                        <div>
+                                            <input type="hidden" th:field="*{user.emailUser}">
+                                        </div>
                                         <div class="mb-4 pb-2">
                                             <textarea th:field="*{addressPeople}" placeholder="address"
                                                       style="width: 100%; height: 20%"
@@ -106,14 +144,13 @@
 
                                         <div class="d-flex justify-content-between mb-5">
                                             <h5 class="text-uppercase">TOTAL PRICE</h5>
-                                            <h5 th:text="'$'+${cart.getTotalMoney()}"></h5>
+                                            <h5 id="total"></h5>
                                         </div>
 
                                         <button type="submit" class="btn btn-dark btn-block btn-lg"
                                                 data-mdb-ripple-color="dark">ORDER
                                         </button>
                                     </form>
-
                                 </div>
                             </div>
                         </div>
@@ -123,7 +160,69 @@
         </div>
     </div>
 </section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    function remove(name,id) {
+        document.getElementById("nameDelete").innerText = name+" ?";
+        document.getElementById("idDelete").value = id;
+    }
 
+    function totalPrice() {
+        var elements = document.querySelectorAll('[id^="price"]');
+        let total = 0;
+        var values = [];
+        for (var i = 0; i < elements.length; i++) {
+            total += (+elements[i].value);
+            var value = +elements[i].value; // Chuyển đổi giá trị thành số nếu cần thiết
+            values.push(value);
+        }
+        console.log(values);
+        document.getElementById("total").innerText = '$' + total;
+
+    }
+
+    totalPrice();
+
+    function increaseQuantity(productId, price) {
+        let quantity = +document.getElementById("id" + productId).value;
+        quantity = quantity + 1;
+        document.getElementById("id" + productId).value = quantity;
+        document.getElementById("price" + productId).value = quantity * price;
+        document.getElementById("bookPrice" + productId).innerText = '$ ' + (quantity * price);
+        totalPrice()
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/cart/increase/' + productId,
+            data: {productId: productId},
+            success: function (response) {
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function decreaseQuantity(productId, price) {
+        let quantity = +document.getElementById("id" + productId).value;
+        if (quantity !== 0) {
+            quantity = quantity - 1;
+            document.getElementById("price" + productId).value = quantity * price;
+            document.getElementById("bookPrice" + productId).innerText = '$ ' + (quantity * price);
+            document.getElementById("id" + productId).value = quantity;
+            totalPrice()
+        }
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/cart/decrease/' + productId,
+            data: {productId: productId},
+            success: function (response) {
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
 
 </body>
 </html>

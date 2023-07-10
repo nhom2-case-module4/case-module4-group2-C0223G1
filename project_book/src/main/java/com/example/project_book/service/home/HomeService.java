@@ -1,6 +1,7 @@
 package com.example.project_book.service.home;
 
 import com.example.project_book.model.Product;
+import com.example.project_book.projections.ProductProjection;
 import com.example.project_book.repository.home.IHomeRepesitory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,25 @@ public class HomeService implements IHomeService {
     @Override
     public List<Product> getBooksByType(int idType) {
         return homeRepesitory.findByisDeleteIsFalseAndTypeProduct_idProductIs(idType);
+    }
+
+    @Override
+    public void update(Product product) {
+        homeRepesitory.save(product);
+    }
+
+    @Override
+    public ProductProjection getProductBestSellByName() {
+        return homeRepesitory.getProductBestSellByName();
+    }
+
+    @Override
+    public Product findBynameProductIs(String name) {
+        return homeRepesitory.findBynameProductIs(name);
+    }
+
+    @Override
+    public List<Product> searchProduct(String name) {
+        return homeRepesitory.findByNameProductContainingIgnoreCase(name);
     }
 }

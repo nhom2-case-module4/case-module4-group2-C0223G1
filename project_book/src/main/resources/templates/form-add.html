@@ -43,19 +43,32 @@
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+        .background-image {
+            background-image: url("https://haycafe.vn/wp-content/uploads/2022/03/background-sach-nen-may-tinh.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            height: 130vh;
+        }
+        label.required::after {
+            content: "*";
+            color: red;
+            margin-right: 5px;
+        }
     </style>
 </head>
 <h1 style="text-align: center;background-color: #f1f1f1">THÊM MỚI NGƯỜI DÙNG</h1>
 <body>
+<div class="background-image">
 <form method="POST" action="/users/add" th:object="${add}">
     <div class="user">
         <div>
-            <label for="name">Name:</label><br>
+            <label for="name" class="required">Name:</label><br>
             <input id="name" type="text" th:field="*{name}" placeholder="Dang Tuan Vu"/>
             <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
         </div>
         <div>
-            <label for="phoneNumber">PhoneNumbers:</label><br>
+            <label for="phoneNumber" class="required">PhoneNumbers:</label><br>
             <input id="phoneNumber" type="text" th:field="*{phone}" placeholder="ex:0123456789"/>
             <span style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
         </div>
@@ -65,17 +78,18 @@
             <span style="color: red" th:if="${#fields.hasErrors('birthOfDay')}" th:errors="*{birthOfDay}"></span>
         </div>
         <div>
-            <label for="email">Email:</label><br>
+            <label for="email" class="required">Email:</label><br>
             <input id="email" type="text" th:field="*{emailUser}" placeholder="exam@gmail.com"/>
             <span style="color: red" th:if="${#fields.hasErrors('emailUser')}" th:errors="*{emailUser}"></span>
         </div>
         <div>
-            <label for="gender">Gender:</label><br>
-            <input id="gender" type="text" th:field="*{genderUser}" placeholder="ex:Nam|Nữ|Khác"/>
-            <span style="color: red" th:if="${#fields.hasErrors('genderUser')}" th:errors="*{genderUser}"></span>
+            <label>Gender:</label>
+            <input type="radio" th:field="*{genderUser}" id="male" value="0"/>Male
+            <input type="radio" th:field="*{genderUser}" id="female" value="1"/>Female
+            <input type="radio" th:field="*{genderUser}" id="other" value=""/>Other
         </div>
         <div>
-            <label for="pass">Pass:</label><br>
+            <label for="pass" class="required">Pass:</label><br>
             <input id="pass" type="text" th:field="*{passUser}"/>
             <span style="color: red" th:if="${#fields.hasErrors('passUser')}" th:errors="*{passUser}"></span>
         </div>
@@ -89,11 +103,11 @@
         <input type="submit"/>
     </div>
 </form>
+</div>
 <script>
     function validateDate() {
         let inputDate = new Date(document.getElementById("myDate").value);
         let currentDate = new Date();
-
         if (inputDate > currentDate) {
             alert("Vui lòng nhập một ngày nhỏ hơn tương lai.");
             document.getElementById("myDate").value = "";
