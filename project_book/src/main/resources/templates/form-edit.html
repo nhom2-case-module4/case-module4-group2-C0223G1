@@ -43,6 +43,7 @@
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+
         .background-image {
             background-image: url("https://haycafe.vn/wp-content/uploads/2022/03/background-sach-nen-may-tinh.jpg");
             background-repeat: no-repeat;
@@ -50,69 +51,95 @@
             background-position: center;
             height: 150vh;
         }
-        .font{
+
+        .font {
             color: black;
             font-size: 20px;
+        }
+        .submit{
+            padding-top: 20px;
+        }
+        .type{
+            width: 100%;
+            padding: 8px;
+            font-size: medium;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap">
 </head>
-<h1 style="text-align: center; background-color: #f1f1f1">EDIT USER</h1>
+
 <body>
 <div class="background-image">
-<form method="POST" action="/users/edit" th:object="${edit}">
-    <div class="table">
-        <div>
-            <label for="id">Id:</label>
-            <input id="id" type="text" th:field="*{idUser}" readonly/>
-            <span style="color: red" th:if="${#fields.hasErrors('idUser')}" th:errors="*{idUser}"></span>
+    <h1 style="text-align: center; background-color: #f1f1f1">EDIT USER</h1>
+    <form method="POST" action="/users/edit" th:object="${usersDto}">
+        <div class="table">
+            <div>
+                <label for="id">Id:</label>
+                <input id="id" type="text" th:field="*{idUser}" readonly/>
+                <span style="color: red" th:if="${#fields.hasErrors('idUser')}" th:errors="*{idUser}"></span>
+            </div>
+            <div>
+                <label for="name">Name:</label>
+                <input id="name" type="text" th:field="*{name}"/>
+                <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+            <div>
+                <label for="phoneNumber">PhoneNumbers:</label>
+                <input pattern="^0[0-9]{9}$"
+                       required oninput="checkPhoneNumber()" id="phoneNumber" type="text" th:field="*{phone}"/>
+                <small id="phone1" class="mt-1"
+                       style="color: red;font-weight: bolder "></small>
+                <span style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+            </div>
+            <div>
+                <label for="dateOfBirth">DateOfBirth:</label>
+                <input style="padding: 5px;width: 100%" id="dateOfBirth" type="date" th:field="*{birthOfDay}"/>
+                <span style="color: red" th:if="${#fields.hasErrors('birthOfDay')}" th:errors="*{birthOfDay}"></span>
+            </div>
+            <br>
+            <div>
+                <label for="email">Email:</label>
+                <input id="email" type="text" th:field="*{emailUser}"/>
+                <span style="color: red" th:if="${#fields.hasErrors('emailUser')}" th:errors="*{emailUser}"></span>
+            </div>
+            <div>
+                <label>Gender:</label>
+                <input type="radio" th:field="*{genderUser}" id="male" value="0"/>Male &nbsp&nbsp
+                <input type="radio" th:field="*{genderUser}" id="female" value="1"/>Female &nbsp&nbsp
+                <input type="radio" th:field="*{genderUser}" id="other" value=""/>Other
+            </div>
+            <div>
+                <label for="pass">Pass:</label>
+                <input id="pass" type="text" th:field="*{passUser}"/>
+                <span style="color: red" th:if="${#fields.hasErrors('passUser')}" th:errors="*{passUser}"></span>
+            </div>
+            <div>
+                <label for="userType">UsersType:</label>
+                <select class="type" id="userType" th:field="*{roleUser.idRole}">
+                    <option th:each="t, items : ${roleUser}" th:text="${t.nameRole}" th:value="${t.idRole}">
+                    </option>
+                </select>
+            </div>
         </div>
-        <div>
-            <label for="name">Name:</label>
-            <input id="name" type="text" th:field="*{name}"/>
-            <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        <div class="submit">
+        <input style="background-color: #DAA55A" type="submit"/>
         </div>
-        <div>
-            <label for="phoneNumber">PhoneNumbers:</label>
-            <input id="phoneNumber" type="text" th:field="*{phone}"/>
-            <span style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+        <div style="padding-top: 20px;">
+            <a href="/users" class="font"><i class="fa-solid fa-arrow-left"></i></a>
         </div>
-        <div>
-            <label for="dateOfBirth">DateOfBirth:</label>
-            <input style="padding: 5px;width: 100%" id="dateOfBirth" type="date" th:field="*{birthOfDay}"/>
-            <span style="color: red" th:if="${#fields.hasErrors('birthOfDay')}" th:errors="*{birthOfDay}"></span>
-        </div>
-        <br>
-        <div>
-            <label for="email">Email:</label>
-            <input id="email" type="text" th:field="*{emailUser}"/>
-            <span style="color: red" th:if="${#fields.hasErrors('emailUser')}" th:errors="*{emailUser}"></span>
-        </div>
-        <div>
-            <label>Gender:</label>
-            <input type="radio" th:field="*{genderUser}" id="male" value="0"/>Male &nbsp&nbsp
-            <input type="radio" th:field="*{genderUser}" id="female" value="1"/>Female &nbsp&nbsp
-            <input type="radio" th:field="*{genderUser}" id="other" value=""/>Other
-        </div>
-        <div>
-            <label for="pass">Pass:</label>
-            <input id="pass" type="text" th:field="*{passUser}"/>
-            <span style="color: red" th:if="${#fields.hasErrors('passUser')}" th:errors="*{passUser}"></span>
-        </div>
-        <div>
-            <label for="userType">UsersType:</label>
-            <select id="userType" th:field="*{roleUser.idRole}">
-                <option th:each="t, items : ${roleUser}" th:text="${t.nameRole}" th:value="${t.idRole}">
-                </option>
-            </select>
-        </div>
-    </div>
-    <input type="submit"/>
-    <div style="padding-top: 20px;">
-        <a href="/users" class="font"><i class="fa-solid fa-arrow-left"></i></a>
-    </div>
-</form>
+    </form>
 </div>
 </body>
+<script>
+    function checkPhoneNumber() {
+        let name = document.getElementById("phoneNumber").value;
+        let regexPhone = /^((\+84)|0)[0-9]{9,10}$/;
+        if (regexPhone.test(name)) {
+            document.getElementById("phone1").innerText = "";
+        } else {
+            document.getElementById("phone1").innerText = "Phone numbers starting at 0,+84 must be 9 or 10 numbers.";
+        }
+    }
+</script>
 </html>

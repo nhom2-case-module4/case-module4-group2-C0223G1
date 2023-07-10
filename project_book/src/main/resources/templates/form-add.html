@@ -65,13 +65,21 @@
             width: 100%;
             padding: 5px;
         }
+        .type{
+            width: 100%;
+            padding: 8px;
+            font-size: medium;
+        }
+        .submit{
+            padding-top: 20px;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap">
 </head>
-<h1 style="text-align: center;background-color: #f1f1f1">ADD NEW USER</h1>
 <body>
 <div class="background-image">
+    <h1 style="text-align: center;background-color: #f1f1f1">ADD NEW USER</h1>
     <form method="POST" action="/users/add" th:object="${add}">
         <div class="user">
             <div>
@@ -81,7 +89,10 @@
             </div>
             <div>
                 <label for="phoneNumber" class="required">PhoneNumbers:</label>
-                <input id="phoneNumber" type="text" th:field="*{phone}" placeholder="ex:0123456789"/>
+                <input  pattern="^0[0-9]{9}$"
+                        required oninput="checkPhoneNumber()" id="phoneNumber" type="text" th:field="*{phone}" placeholder="ex:0123456789"/>
+                <small id="phone1" class="mt-1"
+                       style="color: red;font-weight: bolder "></small>
                 <span style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
             </div>
             <div>
@@ -93,7 +104,8 @@
             <br>
             <div>
                 <label for="email" class="required">Email:</label>
-                <input id="email" type="text" th:field="*{emailUser}" placeholder="exam@gmail.com"/>
+                <input  id="email" type="text" th:field="*{emailUser}" placeholder="exam@gmail.com"/>
+
                 <span style="color: red" th:if="${#fields.hasErrors('emailUser')}" th:errors="*{emailUser}"></span>
             </div>
             <div>
@@ -110,13 +122,15 @@
             </div>
             <div>
                 <label for="userType">UsersType:</label><br>
-                <select id="userType" th:field="*{roleUser.idRole}">
+                <select class="type" id="userType" th:field="*{roleUser.idRole}">
                     <option th:each="r, items : ${roleUser}" th:text="${r.nameRole}" th:value="${r.idRole}">
                     </option>
                 </select>
             </div>
-            <input type="submit"/>
-            <div style="padding-top: 20px;">
+            <div class="submit" >
+            <input style="background-color: #DAA55A" type="submit"/>
+            </div>
+            <div>
                 <a href="/users" class="font"><i class="fa-solid fa-arrow-left"></i></a>
             </div>
         </div>
@@ -129,6 +143,15 @@
         if (inputDate > currentDate) {
             alert("Vui lòng nhập một ngày nhỏ hơn tương lai.");
             document.getElementById("myDate").value = "";
+        }
+    }
+    function checkPhoneNumber() {
+        let name = document.getElementById("phoneNumber").value;
+        let regexPhone = /^((\+84)|0)[0-9]{9,10}$/;
+        if (regexPhone.test(name)) {
+            document.getElementById("phone1").innerText = "";
+        } else {
+            document.getElementById("phone1").innerText = "Phone numbers starting at 0,+84 must be 9 or 10 numbers.";
         }
     }
 </script>

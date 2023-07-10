@@ -1,6 +1,7 @@
 package com.example.project_book.controller.user;
 
 import com.example.project_book.dto.dto_users.UsersDto;
+import com.example.project_book.model.Cart;
 import com.example.project_book.model.User;
 import com.example.project_book.service.IUsersService;
 import com.example.project_book.service.IUsersTypeService;
@@ -15,11 +16,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 //    Create by: Tuan Vu
 //    Day: 06/07/2023
 @Controller
+@SessionAttributes("cart")
 @RequestMapping("/users")
 public class UsersController {
 
@@ -28,10 +31,21 @@ public class UsersController {
     @Autowired
     private IUsersTypeService usersTypeService;
 
+    @ModelAttribute("cart")
+    public Cart setupCart() {
+        return new Cart();
+    }
+
     //    Create by: Tuan Vu
     //    Day: 06/07/2023
     @GetMapping()
-    public String getList(@PageableDefault(size = 5) Pageable pageable, Model model) {
+    public String getList(@PageableDefault(size = 5) Pageable pageable, Model model, HttpServletRequest request) {
+        if (request.getUserPrincipal() == null) {
+            model.addAttribute("check", "check");
+        } else {
+            String email = request.getUserPrincipal().getName();
+            model.addAttribute("user", usersService.findByEmailUser(email));
+        }
         model.addAttribute("users", this.usersService.findAllByIsDeleteIsFalse(pageable));
         return "/list";
     }
@@ -58,7 +72,7 @@ public class UsersController {
         User users = new User();
         BeanUtils.copyProperties(usersDto, users);
         this.usersService.add(users);
-        redirectAttributes.addFlashAttribute("msg", "successfully");
+        redirectAttributes.addFlashAttribute("toast", "successfully");
         return "redirect:/users";
     }
 
@@ -67,11 +81,11 @@ public class UsersController {
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable int id, RedirectAttributes redirectAttributes) {
         if (usersService.findById(id) == null) {
-            redirectAttributes.addFlashAttribute("msg", "not found");
+            redirectAttributes.addFlashAttribute("toast", "not found");
             return "redirect:/users";
         }
         usersService.deleteById(id);
-        redirectAttributes.addFlashAttribute("msg", "successfully");
+        redirectAttributes.addFlashAttribute("toast", "successfully");
         return "redirect:/users";
     }
 
@@ -83,7 +97,9 @@ public class UsersController {
             redirectAttributes.addFlashAttribute("msg", "not found");
             return "redirect:/users";
         } else {
-            model.addAttribute("edit", usersService.findById(id));
+            UsersDto usersDto=new UsersDto();
+            BeanUtils.copyProperties(usersService.findById(id),usersDto);
+            model.addAttribute("usersDto", usersDto);
             model.addAttribute("roleUser", this.usersTypeService.getListUsers());
             return "/form-edit";
         }
@@ -92,15 +108,16 @@ public class UsersController {
     //    Create by: Tuan Vu
     //    Day: 06/07/2023
     @PostMapping("/edit")
-    public String edit(@ModelAttribute(name = "edit") UsersDto usersDto, RedirectAttributes redirectAttributes, Model model) {
-        if (usersService.findById(usersDto.getIdUser()) == null) {
-            model.addAttribute("roleUser", this.usersTypeService.getListUsers());
-            redirectAttributes.addFlashAttribute("msg", "not found");
+    public String edit(@Valid @ModelAttribute() UsersDto usersDto,BindingResult bindingResult ,RedirectAttributes redirectAttributes, Model model) {
+        new UsersDto().validate(usersDto,bindingResult);
+        if(bindingResult.hasErrors()){
+         model.addAttribute("roleUser",this.usersTypeService.getListUsers());
+         return "/form-edit";
         } else {
             User users = new User();
             BeanUtils.copyProperties(usersDto, users);
             usersService.edit(users);
-            redirectAttributes.addFlashAttribute("msg", "successfully");
+            redirectAttributes.addFlashAttribute("toast", "successfully");
         }
         return "redirect:/users";
     }
@@ -108,8 +125,14 @@ public class UsersController {
     //    Create by: Tuan Vu
     //    Day: 06/07/2023
     @GetMapping("/search")
-    public String search(@RequestParam(name = "name") String name, Pageable pageable, Model model) {
+    public String search(@RequestParam(name = "name") String name, Pageable pageable, Model model,HttpServletRequest request) {
         Page<User> users = usersService.findOne(name, pageable);
+        if (request.getUserPrincipal() == null) {
+            model.addAttribute("check", "check");
+        } else {
+            String email = request.getUserPrincipal().getName();
+            model.addAttribute("user", usersService.findByEmailUser(email));
+        }
         model.addAttribute("users", users);
         model.addAttribute("search", name);
         return "/list";
