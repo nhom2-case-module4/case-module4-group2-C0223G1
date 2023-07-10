@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+
 //    Create by: Tuan Vu
 //    Day: 06/07/2023
 @Controller
@@ -26,6 +27,7 @@ public class UsersController {
     private IUsersService usersService;
     @Autowired
     private IUsersTypeService usersTypeService;
+
     //    Create by: Tuan Vu
     //    Day: 06/07/2023
     @GetMapping()
@@ -33,6 +35,7 @@ public class UsersController {
         model.addAttribute("users", this.usersService.findAllByIsDeleteIsFalse(pageable));
         return "/list";
     }
+
     //    Create by: Tuan Vu
     //    Day: 06/07/2023
     @GetMapping("/form-add")
@@ -41,6 +44,7 @@ public class UsersController {
         model.addAttribute("roleUser", this.usersTypeService.getListUsers());
         return "/form-add";
     }
+
     //    Create by: Tuan Vu
     //    Day: 06/07/2023
     @PostMapping("/add")
@@ -57,22 +61,25 @@ public class UsersController {
         redirectAttributes.addFlashAttribute("msg", "successfully");
         return "redirect:/users";
     }
+
     //    Create by: Tuan Vu
     //    Day: 06/07/2023
-    @GetMapping("/delete/{id}")
-    @ResponseBody
-    public void delete(@PathVariable int id, RedirectAttributes redirectAttributes) {
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable int id, RedirectAttributes redirectAttributes) {
         if (usersService.findById(id) == null) {
             redirectAttributes.addFlashAttribute("msg", "not found");
+            return "redirect:/users";
         }
         usersService.deleteById(id);
         redirectAttributes.addFlashAttribute("msg", "successfully");
+        return "redirect:/users";
     }
+
     //    Create by: Tuan Vu
     //    Day: 06/07/2023
     @GetMapping("/{id}/edit")
     public String showFormEdit(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
-        if(usersService.findById(id)==null){
+        if (usersService.findById(id) == null) {
             redirectAttributes.addFlashAttribute("msg", "not found");
             return "redirect:/users";
         } else {
@@ -81,10 +88,11 @@ public class UsersController {
             return "/form-edit";
         }
     }
+
     //    Create by: Tuan Vu
     //    Day: 06/07/2023
     @PostMapping("/edit")
-    public String edit(@ModelAttribute(name = "edit") UsersDto usersDto, RedirectAttributes redirectAttributes,Model model) {
+    public String edit(@ModelAttribute(name = "edit") UsersDto usersDto, RedirectAttributes redirectAttributes, Model model) {
         if (usersService.findById(usersDto.getIdUser()) == null) {
             model.addAttribute("roleUser", this.usersTypeService.getListUsers());
             redirectAttributes.addFlashAttribute("msg", "not found");
@@ -96,13 +104,14 @@ public class UsersController {
         }
         return "redirect:/users";
     }
+
     //    Create by: Tuan Vu
     //    Day: 06/07/2023
     @GetMapping("/search")
-    public String search(@RequestParam(name="name") String name, Pageable pageable, Model model) {
+    public String search(@RequestParam(name = "name") String name, Pageable pageable, Model model) {
         Page<User> users = usersService.findOne(name, pageable);
         model.addAttribute("users", users);
-        model.addAttribute("search",name);
-        return"/list";
+        model.addAttribute("search", name);
+        return "/list";
     }
 }
