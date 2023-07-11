@@ -124,7 +124,7 @@ public class HomeController {
     //    Create: Huynh Duc
 //    Day: 06/07/2023
     @GetMapping("")
-    public String showHome(Model model, HttpServletRequest request) {
+    public String showHome(Model model, HttpServletRequest request, @ModelAttribute Cart cart) {
         model.addAttribute("list", homeService.getlistBook());
         if (request.getUserPrincipal() == null) {
             model.addAttribute("check", "check");
@@ -137,6 +137,14 @@ public class HomeController {
             String nameBook = String.valueOf(homeService.getProductBestSellByName().getNameProduct());
             Product product = homeService.findBynameProductIs(nameBook);
             model.addAttribute("bestSell",product);
+            User user = usersService.findByEmailUser(email);
+            List<CartOrder> list = cartService.getCartByIdUser(user.getIdUser());
+            for (int i = 0; i < list.size(); i++) {
+                Product product1 = homeService.getBookById(list.get(i).getIdProduct());
+                int quantity = list.get(i).getQuantityProduct();
+                Item item = new Item(product1,quantity);
+                cart.addItem(item);
+            }
         }
         return "user/index";
     }

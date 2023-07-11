@@ -63,7 +63,12 @@ public class CartController {
 
     @GetMapping("/show-cart")
     public String showCart(@SessionAttribute Cart cart, Model model) {
-        model.addAttribute("cart", cart);
+        Cart cart1 = new Cart();
+        for (int i = 0; i < cart.getItems().size(); i++) {
+            Item item = new Item(homeService.getBookById(cart.getItems().get(i).getProduct().getIdProduct()), cart.getItems().get(i).getAmount());
+            cart1.addItem(item);
+        }
+        model.addAttribute("cart", cart1);
         model.addAttribute("order", new Order());
         return "user/cart";
     }
@@ -97,12 +102,22 @@ public class CartController {
     public String deleteItem(@PathVariable int id, @SessionAttribute Cart cart, Model model) {
         cart.removeItem(id);
         model.addAttribute("cart", cart);
+
         model.addAttribute("order", new Order());
         return "user/cart";
     }
     @PostMapping("/delete")
-    public String delete(@RequestParam("idDelete") int idDelete, @SessionAttribute Cart cart, Model model) {
+    public String delete(@RequestParam("idDelete") int idDelete, @SessionAttribute Cart cart, Model model,
+                         HttpServletRequest request) {
         cart.removeItem(idDelete);
+        String email = request.getUserPrincipal().getName();
+        User user = usersService.findByEmailUser(email);
+        cartService.deleteCartByIdUser(user.getIdUser());
+        for (int i = 0; i < cart.getItems().size(); i++) {
+            CartOrder cartOrder = new CartOrder(cart.getItems().get(i).getProduct().getIdProduct(),
+                    cart.getItems().get(i).getAmount(),user.getIdUser());
+            cartService.updateCart(cartOrder);
+        }
         model.addAttribute("cart", cart);
         model.addAttribute("order", new Order());
         return "user/cart";
@@ -121,7 +136,7 @@ public class CartController {
         Boolean flag = false;
         List<Item> list = cart.getItems();
         for (int i = 0; i <list.size(); i++) {
-            if (list.get(i).getAmount()>list.get(i).getProduct().getQuantityBooks()){
+            if (list.get(i).getAmount()>homeService.getBookById(list.get(i).getProduct().getIdProduct()).getQuantityBooks()){
                 str += list.get(i).getProduct().getNameProduct()+", ";
                 flag = true;
             }
@@ -135,11 +150,11 @@ public class CartController {
             redirectAttributes.addFlashAttribute("msg","you haven't bought anything yet");
             return "redirect:/cart/show-cart";
         }
-//        for (int i = 0; i <list.size(); i++) {
-//            Product product = list.get(i).getProduct();
-//            product.setQuantityBooks(list.get(i).getProduct().getQuantityBooks()-list.get(i).getAmount());
-//            homeService.update(product);
-//        }
+        for (int i = 0; i <list.size(); i++) {
+            Product product = list.get(i).getProduct();
+            product.setQuantityBooks(homeService.getBookById(list.get(i).getProduct().getIdProduct()).getQuantityBooks()-list.get(i).getAmount());
+            homeService.update(product);
+        }
         String email = request.getUserPrincipal().getName();
         User user = usersService.findByEmailUser(email);
 //        cartService.deleteCartByIdUser(user.getIdUser());
