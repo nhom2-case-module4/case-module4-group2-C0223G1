@@ -1,41 +1,44 @@
-package com.example.project_book.model;
+package com.example.project_book.dto.dto_product;
 
-import javax.persistence.*;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
-@Entity
-@Table(name = "products")
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_product")
+import javax.validation.constraints.*;
+
+
+public class ProductDto implements Validator {
+
     private int idProduct;
-    @Column(columnDefinition = "longtext",nullable = false)
+    @NotBlank(message = "Image URL cannot be null")
     private String img;
-    @Column(nullable = false)
-    private String nameProduct;
-    @Column(nullable = false)
-    private String publicationYear;
-    @Column(nullable = false)
-    private String author;
-    @Column(columnDefinition = "longtext",nullable = true)
-    private String describeBook;
-    @Column(nullable = false)
-    private String nationBook;
-    @Column(nullable = false)
-    private String publishingCompany;
-    @Column(nullable = false)
-    private int quantityBooks;
-    @Column(nullable = false)
-    private double priceBook;
-    private boolean isDelete =false;
-    @ManyToOne
-    @JoinColumn(name = "id_type_product",nullable = false)
-    private TypeProduct typeProduct;
 
-    public Product() {
+    @Size(min = 2, max = 100, message = "Product nam must be >2 and <100 characters")
+    private String nameProduct;
+    @Max(value = 2023)
+    @Pattern(regexp = "\\d{4}", message = "Publication year must be a 4-degit number")
+    private String publicationYear;
+    @NotBlank(message = "Author cannot be null")
+    private String author;
+    @NotBlank(message = "Not null")
+    private String describeBook;
+    @NotBlank(message = "Not null")
+    private String nationBook;
+    @NotBlank(message = "Not null")
+    private String publishingCompany;
+
+    @Min(value = 0, message = "Quantity books must be greater than or equal to 0")
+    private int quantityBooks;
+
+    @DecimalMin(value = "0.0", message = "Price book must be greater than 0")
+    private double priceBook;
+
+    private boolean isDelete;
+    private TypeProductDto typeProductDto;
+
+    public ProductDto() {
     }
 
-    public Product(int idProduct, String img, String nameProduct, String publicationYear, String author, String describeBook, String nationBook, String publishingCompany, int quantityBooks, double priceBook, boolean isDelete, TypeProduct typeProduct) {
+    public ProductDto(int idProduct, String img, String nameProduct, String publicationYear, String author, String describeBook, String nationBook, String publishingCompany, int quantityBooks, double priceBook, boolean isDelete, TypeProductDto typeProductDto) {
         this.idProduct = idProduct;
         this.img = img;
         this.nameProduct = nameProduct;
@@ -47,7 +50,7 @@ public class Product {
         this.quantityBooks = quantityBooks;
         this.priceBook = priceBook;
         this.isDelete = isDelete;
-        this.typeProduct = typeProduct;
+        this.typeProductDto = typeProductDto;
     }
 
     public int getIdProduct() {
@@ -138,11 +141,21 @@ public class Product {
         isDelete = delete;
     }
 
-    public TypeProduct getTypeProduct() {
-        return typeProduct;
+    public TypeProductDto getTypeProductDto() {
+        return typeProductDto;
     }
 
-    public void setTypeProduct(TypeProduct typeProduct) {
-        this.typeProduct = typeProduct;
+    public void setTypeProductDto(TypeProductDto typeProductDto) {
+        this.typeProductDto = typeProductDto;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+
     }
 }

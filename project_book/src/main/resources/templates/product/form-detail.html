@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title th:text="${product.nameProduct}">Product Details</title>
+    <style>
+        .product-details {
+            align-items: start;
+        }
+
+        .slide-out {
+            animation: slide-out 5s ease-in-out forwards;
+        }
+
+        @keyframes slide-out {
+            0% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+        }
+
+        .background-image {
+            background-image: url("https://png.pngtree.com/background/20210710/original/pngtree-creative-synthesis-simple-book-education-and-training-background-picture-image_1048845.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            opacity: 0.8;
+            position: relative;
+        }
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.8); /* Thiết lập màu nền với độ mờ là 0.8 */
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="background-image">
+
+
+    <div class="container content" style="width: 90%">
+        <h1 class="text-center" style="font-family: Serif; color: #DAA55A" th:text="${product.nameProduct}">Product
+            Details</h1>
+        <div class="row d-flex product-details">
+            <div class="col-md-4">
+                <img th:src="${product.img}" alt="" class="img-fluid">
+            </div>
+            <div class="col-md-8">
+                <h4 style="color: #0d6efd;font-weight: bold; font-family: Serif ">Description:</h4>
+                <p style="color: fuchsia;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.describeBook}"></p>
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td style="color: blueviolet">Name:</td>
+                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.nameProduct}"></td>
+                    </tr>
+                    <tr>
+                        <td style="color: blueviolet">Publication Year:</td>
+                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.publicationYear}"></td>
+                    </tr>
+                    <tr>
+                        <td style="color: blueviolet">Author:</td>
+                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.author}"></td>
+                    </tr>
+                    <tr>
+                        <td style="color: blueviolet">National Book:</td>
+                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.nationBook}"></td>
+                    </tr>
+                    <tr>
+                        <td style="color: blueviolet">Publishing Company:</td>
+                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.publishingCompany}"></td>
+                    </tr>
+                    <tr>
+                        <td style="color: blueviolet">Quantity Book:</td>
+                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.quantityBooks}"></td>
+                    </tr>
+                    <tr>
+                        <td style="color: blueviolet">Price Book ($):</td>
+                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.priceBook}"></td>
+                    </tr>
+                    <tr>
+                        <td style="color: blueviolet">Type Book:</td>
+                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.typeProduct.nameTypeProduct}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a href="/products" class="btn btn-primary" id="back-to-products">Back to Product List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
+        integrity="sha384-7Jg5uY5XITP1xpW0ZzYvJcG0MjKkW+Z1yJLevLqgB+gZI5mGwo5tVzNcNuW0cB6J"
+        crossorigin="anonymous"></script>
+<script>
+    $(function () {
+        $("#back-to-products").on("click", function (e) {
+            e.preventDefault();
+            $(this).addClass("slide-out");
+            setTimeout(function () {
+                window.location.href = "/products";
+            }, 5000);
+        });
+    });
+</script>
+</body>
+</html>
