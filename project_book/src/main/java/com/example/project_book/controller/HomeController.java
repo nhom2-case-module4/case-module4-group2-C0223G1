@@ -95,7 +95,7 @@ public class HomeController {
         BeanUtils.copyProperties(usersDto, users);
         boolean check = usersService.existsByEmailUser(users.getEmailUser());
         if (check) {
-            redirectAttributes.addFlashAttribute("msg", "Email already exists");
+            redirectAttributes.addFlashAttribute("email1", "Email already exists");
             return "/login/register";
         } else {
             this.usersService.add(users);

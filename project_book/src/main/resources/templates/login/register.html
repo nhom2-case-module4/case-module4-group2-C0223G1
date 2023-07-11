@@ -89,6 +89,9 @@
                             <div class="card-body p-4 p-lg-5 text-black">
                                 <form method="POST" th:action="@{/welcome/create}" th:object="${add}">
                                     <h3>Registration Form</h3>
+                                    <div class="alert alert-danger" role="alert" th:if="${email1!=null}">
+                                        <strong th:text="${email1}"></strong>
+                                    </div>
                                     <div class="user">
                                         <div class="row">
                                             <div class="col-6">
