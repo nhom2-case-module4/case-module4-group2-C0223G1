@@ -32,7 +32,7 @@ public class OrderController {
     private IOrderService orderService;
 
     @GetMapping("")
-    public String showList(@PageableDefault(size = 5) Pageable pageable, Model model,HttpServletRequest request) {
+    public String showList(Model model, HttpServletRequest request) {
         if (request.getUserPrincipal() == null) {
             model.addAttribute("check", "check");
         } else {
@@ -195,29 +195,30 @@ public class OrderController {
 //    }
 
     @GetMapping("/detail/{id}")
-    public String showDetail(@PathVariable("id") int id,Model model,Pageable pageable){
-        List<OrderDetailProjection> orderDetailProjectionList = orderService.findDetail(id,pageable).getContent();
-        List<OrderProjection> orderProjections=orderService.findAllOrder(pageable).getContent();
-        double sum=0;
-        String status="";
-        String note="";
-        for (OrderProjection item:orderProjections) {
-            if(item.getId()==id){
-                status=item.getNameStatus();
-                note=item.getNoteOrder();
+    public String showDetail(@PathVariable("id") int id, Model model, Pageable pageable) {
+        List<OrderDetailProjection> orderDetailProjectionList = orderService.findDetail(id, pageable).getContent();
+        List<OrderProjection> orderProjections = orderService.findAllOrder(pageable).getContent();
+        double sum = 0;
+        String status = "";
+        String note = "";
+        for (OrderProjection item : orderProjections) {
+            if (item.getId() == id) {
+                status = item.getNameStatus();
+                note = item.getNoteOrder();
                 break;
             }
         }
-        for (OrderDetailProjection order: orderDetailProjectionList) {
-            sum+=order.getPriceBook()*order.getNumberDetail();
+        for (OrderDetailProjection order : orderDetailProjectionList) {
+            sum += order.getPriceBook() * order.getNumberDetail();
         }
-        model.addAttribute("note",note);
-        model.addAttribute("status",status);
-        model.addAttribute("sum",sum);
-        model.addAttribute("customer",orderDetailProjectionList.get(0).getNameUser());
-        model.addAttribute("details",orderService.findDetail(id,pageable));
+        model.addAttribute("note", note);
+        model.addAttribute("status", status);
+        model.addAttribute("sum", sum);
+        model.addAttribute("customer", orderDetailProjectionList.get(0).getNameUser());
+        model.addAttribute("details", orderService.findDetail(id, pageable));
         return "orders/detail";
     }
+
     //
 //
 //    @PostMapping  ("/delete")
@@ -234,8 +235,12 @@ public class OrderController {
 //    }
     @GetMapping("/list")
     @ResponseBody
-    public ResponseEntity<?> getALL(Pageable pageable) {
+    public ResponseEntity<?> getALL(@PageableDefault(size = 5) Pageable pageable) {
         return new ResponseEntity<>(orderService.findAllOrder(pageable), HttpStatus.OK);
+    }
+    @GetMapping("/error")
+    public String showError(){
+        return "/orders/error.404";
     }
 
 //    @GetMapping("")
@@ -243,7 +248,6 @@ public class OrderController {
 //        model.addAttribute("orders", orderService.findAllOrder(pageable));
 //        return "orders/list";
 //    }
-
 
 
     @CrossOrigin("*")
@@ -267,43 +271,28 @@ public class OrderController {
     public ResponseEntity<?> optionStatus(@PathVariable("option") String option, Pageable pageable) {
         String[] arrStr = option.split(",");
         Optional<Order> order = orderService.findByOrder(Integer.parseInt(arrStr[1]));
-        if(Integer.parseInt(arrStr[0])==5){
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        List<OrderDetailProjection> orderDetailList = orderService.findDetail(Integer.parseInt(arrStr[1]), pageable).getContent();
         if (!order.isPresent() || order.get().isFlagDelete()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            if (arrStr[0].equals("3")) {
-                if (order.get().getStatus().getIdStatus() == 4) {
-                    for (OrderDetailProjection a : orderDetailList) {
-                        orderService.giveProduct(a.getNumberDetail(), a.getIdProduct());
-                    }
-                }
-                order.get().setDayTake(LocalDate.now());
-                orderService.updateOrder(order.get());
-            } else if ((arrStr[0].equals("4"))) {
-                for (OrderDetailProjection a : orderDetailList) {
-                    orderService.returnProduct(a.getNumberDetail(), a.getIdProduct());
-                }
-                order.get().setDayTake(null);
-                orderService.updateOrder(order.get());
-            } else {
-                if (order.get().getStatus().getIdStatus() == 4) {
-                    for (OrderDetailProjection a : orderDetailList) {
-                        orderService.giveProduct(a.getNumberDetail(), a.getIdProduct());
-                    }
-                }
-                order.get().setDayTake(null);
-                orderService.updateOrder(order.get());
-            }
-            orderService.optionStatus(Integer.parseInt(arrStr[0]), Integer.parseInt(arrStr[1]));
-            return new ResponseEntity<>(HttpStatus.OK);
         }
+        if(order.get().getStatus().getIdStatus()==3||order.get().getStatus().getIdStatus()==4||order.get().getStatus().getIdStatus()==5){
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+        List<OrderDetailProjection> orderDetailList = orderService.findDetail(Integer.parseInt(arrStr[1]), pageable).getContent();
+        if (arrStr[0].equals("5")) {
+            for (OrderDetailProjection a : orderDetailList) {
+                orderService.returnProduct(a.getNumberDetail(), a.getIdProduct());
+            }
+        }
+        if(arrStr[0].equals("3")){
+            order.get().setDayTake(LocalDate.now());
+            orderService.updateOrder(order.get());
+        }
+        orderService.optionStatus(Integer.parseInt(arrStr[0]), Integer.parseInt(arrStr[1]));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
-//
+    //
 //    @GetMapping("/option/{option}")
 //    public String optionStatus(@PathVariable("option") String option,Pageable pageable) {
 //        String[] arrStr = option.split(",");
@@ -347,15 +336,18 @@ public class OrderController {
         System.out.println(dateEnd);
         System.out.println(dateStart);
         System.out.println(select);
-        if (dateEnd.equals("") && dateStart.equals("")) {
-            dateEnd = "2050-05-16";
-            dateStart = "2020-04-26";
+        if (dateEnd.equals("") && dateStart.equals("")&& select ==0) {
+            return new ResponseEntity<>(orderService.findAllOrder(pageable), HttpStatus.OK);
+        }
+        if(dateEnd.equals("") && dateStart.equals("")){
+            dateStart="2000-01-15";
+            dateEnd="2050-01-15";
         }
         if (!dateEnd.matches("^\\d{4}[\\/\\-](0?[1-9]|1[012])[\\/\\-](0?[1-9]|[12][0-9]|3[01])$") || !dateStart.matches("^\\d{4}[\\/\\-](0?[1-9]|1[012])[\\/\\-](0?[1-9]|[12][0-9]|3[01])$")) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         System.out.println(orderService.searchAllOrder(dateStart, dateEnd, select, pageable).getContent().size());
-        return new ResponseEntity<>(orderService.searchAllOrder(dateStart, dateEnd, select, pageable),HttpStatus.OK);
+        return new ResponseEntity<>(orderService.searchAllOrder(dateStart, dateEnd, select, pageable), HttpStatus.OK);
     }
 }
 
