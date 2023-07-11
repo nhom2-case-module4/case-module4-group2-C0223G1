@@ -45,7 +45,7 @@ public class ProductController {
     }
 
     @GetMapping()
-    public String getList(@PageableDefault(size = 5) Pageable pageable, Model model, HttpServletRequest request,
+    public String getList(@PageableDefault(size = 4) Pageable pageable, Model model, HttpServletRequest request,
                           @RequestParam(name = "addedItemId", required = false) Long addedItemId) {
         Page<Product> productList = this.productService.findAllByIsDeleteIsFalse(pageable);
         if (request.getUserPrincipal() == null) {

@@ -110,8 +110,8 @@
                 <input type="radio" th:field="*{genderUser}" id="other" value=""/>Other
             </div>
             <div>
-                <label for="pass">Pass:</label>
-                <input id="pass" type="text" th:field="*{passUser}"/>
+<!--                <label for="pass">Pass:</label>-->
+                <input id="pass" type="hidden" th:field="*{passUser}"/>
                 <span style="color: red" th:if="${#fields.hasErrors('passUser')}" th:errors="*{passUser}"></span>
             </div>
             <div>
