@@ -110,11 +110,11 @@ public class PaymentController {
         cartService.deleteCartByIdUser(user.getIdUser());
         if (vnp_ResponseCode.equals("00")) {
             List<Item> list = cart.getItems();
-            for (int i = 0; i <list.size(); i++) {
-                Product product = list.get(i).getProduct();
-                product.setQuantityBooks(list.get(i).getProduct().getQuantityBooks()-list.get(i).getAmount());
-                homeService.update(product);
-            }
+//            for (int i = 0; i <list.size(); i++) {
+//                Product product = list.get(i).getProduct();
+//                product.setQuantityBooks(list.get(i).getProduct().getQuantityBooks()-list.get(i).getAmount());
+//                homeService.update(product);
+//            }
             String emailBody = "Thank you for your purchase!";
             emailService.sendEmail(user.getEmailUser(), "Order Confirmation", emailBody);
             Order order = (Order) session.getAttribute("order");
@@ -123,6 +123,12 @@ public class PaymentController {
             model.addAttribute("user", user);
             model.addAttribute("cart", cart);
             return "user/thank-you";
+        }
+        List<Item> list = cart.getItems();
+        for (int i = 0; i <list.size(); i++) {
+            Product product = list.get(i).getProduct();
+            product.setQuantityBooks(homeService.getBookById(list.get(i).getProduct().getIdProduct()).getQuantityBooks()+list.get(i).getAmount());
+            homeService.update(product);
         }
         model.addAttribute("cart", cart);
         model.addAttribute("order", new Order());
