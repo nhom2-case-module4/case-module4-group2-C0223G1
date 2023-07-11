@@ -59,6 +59,14 @@
         input {
             border-radius: 5px;
         }
+        button {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
     </style>
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -69,7 +77,7 @@
     <link rel="stylesheet" type="text/css" href="/css/normalize.css">
     <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
     <link rel="stylesheet" type="text/css" href="/css/vendor.css">
-    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 
     <!-- script
     ================================================== -->
@@ -136,7 +144,6 @@
                 <thead>
                 <tr>
                     <th scope="col">STT</th>
-                    <th scope="col">ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Order Date</th>
                     <th scope="col">Delivery Date</th>
@@ -217,9 +224,9 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <!--                <form th:action="@{/order/delete}" method="post">-->
                 <!--                    <input type="hidden" id="id" name="id">-->
-                                    <button type="button" onclick="deleteOrder()" class="btn btn-primary">Delete</button>
+                <button type="button" onclick="deleteOrder()" class="btn btn-primary">Delete</button>
                 <!--                </form>-->
-<!--                <button type="button" onclick="deleteOrder()">Delete</button>-->
+                <!--                <button type="button" onclick="deleteOrder()">Delete</button>-->
             </div>
         </div>
     </div>
@@ -238,7 +245,6 @@
                     orderStr += `
                     <tr>
                     <td>${++number}</td>
-                    <td >${order.id}</td>
                     <td >${order.nameUser}</td>
                     <td >${order.dayOrder}</td>
                     <td >${order.dayTake != null ? order.dayTake : ''}</td>
@@ -251,7 +257,7 @@
                     <option value="4,${order.id}" ${order.nameStatus === 'Cancel order' ? 'selected' : ''}>Cancel order</option>
                     </select>
                      <td>
-                        <button type="button"
+                        <button type="button" class="b1"
                                 onclick="deleteModal('${order.id}','${order.nameUser}','${order.addressPeople}')"
                                 data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i>
                         </button>
@@ -259,7 +265,7 @@
 
                     <td>
 
-                        <button type="button" onclick="detailOrder('${order.id}')">
+                        <button type="button" class="b1" onclick="detailOrder('${order.id}')">
                                Detail
                         </button>
 
@@ -341,7 +347,6 @@
                     orderSearch += `
                    <tr>
                     <td>${++number}</td>
-                    <td >${order.id}</td>
                     <td >${order.nameUser}</td>
                     <td >${order.dayOrder}</td>
                     <td >${order.dayTake != null ? order.dayTake : ''}</td>
@@ -418,6 +423,7 @@
     // $(document).ready(function () {
     //     getList();
     // })
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
