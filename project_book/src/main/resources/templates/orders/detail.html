@@ -131,24 +131,9 @@
                                     <h5 class="text-uppercase px-3">Total price</h5>
                                     <h5><span class="px-3" th:text="${sum}+'$'"></span></h5>
                                 </div>
-                                <div style="text-align: center" th:if="${status=='Processing'}">
+                                <div style="text-align: center" th:if="${status!='Cancel order'}">
                                     <button  type="button" class="btn btn-primary  btn-lg status"
-                                            data-mdb-ripple-color="dark">Processing
-                                    </button>
-                                </div>
-                                <div style="text-align: center" th:if="${status=='Delivery'}">
-                                    <button  type="button" class="btn btn-primary  btn-lg status"
-                                             data-mdb-ripple-color="dark">Delivery
-                                    </button>
-                                </div>
-                                <div style="text-align: center" th:if="${status=='Delivered'}">
-                                    <button  type="button" class="btn btn-primary  btn-lg status"
-                                             data-mdb-ripple-color="dark">Delivered
-                                    </button>
-                                </div>
-                                <div style="text-align: center" th:if="${status=='Return Order'}">
-                                    <button  type="button" class="btn btn-primary  btn-lg status"
-                                             data-mdb-ripple-color="dark">Return Order
+                                            data-mdb-ripple-color="dark">Paid
                                     </button>
                                 </div>
                                 <div style="text-align: center" th:if="${status=='Cancel order'}">

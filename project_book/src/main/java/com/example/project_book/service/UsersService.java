@@ -49,7 +49,6 @@ public class UsersService implements IUsersService {
 
     @Override
     public void edit(User users) {
-        users.setPassUser(bCryptPasswordEncoder.encode(users.getPassUser()));
         usersRepo.save(users);
     }
 
