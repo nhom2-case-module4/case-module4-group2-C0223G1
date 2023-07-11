@@ -37,14 +37,18 @@
             opacity: 0.8;
             position: relative;
         }
+
         .content {
             position: absolute;
             top: 50%;
-            left: 50%;
+            height: 70vh;
+            left: 53%;
             transform: translate(-50%, -50%);
             background-color: rgba(255, 255, 255, 0.8); /* Thiết lập màu nền với độ mờ là 0.8 */
             padding: 20px;
             border-radius: 10px;
+            width: 80%;
+            max-width: 90%;
         }
     </style>
 </head>
@@ -52,49 +56,59 @@
 <div class="background-image">
 
 
-    <div class="container content" style="width: 90%">
-        <h1 class="text-center" style="font-family: Serif; color: #DAA55A" th:text="${product.nameProduct}">Product
-            Details</h1>
+    <div class="row container content" style="width: 90%">
+        <div>
+            <h1 class=" col-12 col-md-12 text-center" style="font-family: Serif; color: #DAA55A" th:text="${product.nameProduct}"></h1>
+        </div>
         <div class="row d-flex product-details">
-            <div class="col-md-4">
+            <div class="col-12  col-md-4">
                 <img th:src="${product.img}" alt="" class="img-fluid">
             </div>
-            <div class="col-md-8">
+            <div class="col-12 col-md-8">
                 <h4 style="color: #0d6efd;font-weight: bold; font-family: Serif ">Description:</h4>
-                <p style="color: fuchsia;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.describeBook}"></p>
+                <p style="color: fuchsia;font-family: 'CommercialScript BT'; font-size: 20px"
+                   th:text="${product.describeBook}"></p>
                 <table class="table">
                     <tbody>
                     <tr>
                         <td style="color: blueviolet">Name:</td>
-                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.nameProduct}"></td>
+                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px"
+                            th:text="${product.nameProduct}"></td>
                     </tr>
                     <tr>
                         <td style="color: blueviolet">Publication Year:</td>
-                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.publicationYear}"></td>
+                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px"
+                            th:text="${product.publicationYear}"></td>
                     </tr>
                     <tr>
                         <td style="color: blueviolet">Author:</td>
-                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.author}"></td>
+                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px"
+                            th:text="${product.author}"></td>
                     </tr>
                     <tr>
                         <td style="color: blueviolet">National Book:</td>
-                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.nationBook}"></td>
+                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px"
+                            th:text="${product.nationBook}"></td>
                     </tr>
                     <tr>
                         <td style="color: blueviolet">Publishing Company:</td>
-                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.publishingCompany}"></td>
+                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px"
+                            th:text="${product.publishingCompany}"></td>
                     </tr>
                     <tr>
                         <td style="color: blueviolet">Quantity Book:</td>
-                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.quantityBooks}"></td>
+                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px"
+                            th:text="${product.quantityBooks}"></td>
                     </tr>
                     <tr>
                         <td style="color: blueviolet">Price Book ($):</td>
-                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.priceBook}"></td>
+                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px"
+                            th:text="${product.priceBook}"></td>
                     </tr>
                     <tr>
                         <td style="color: blueviolet">Type Book:</td>
-                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px" th:text="${product.typeProduct.nameTypeProduct}"></td>
+                        <td style="color:fuchsia ;font-family: 'CommercialScript BT'; font-size: 20px"
+                            th:text="${product.typeProduct.nameTypeProduct}"></td>
                     </tr>
                     </tbody>
                 </table>

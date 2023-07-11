@@ -144,16 +144,10 @@
             </form>
         </div>
 
-        <span th:if="${msg}" id="success" class="hai" style="float: left; background-color: #4CAF50;font-size: 30px"><p
+        <span th:if="${msg}" id="success" class="hai" style="float: left; background-color: rgb(231, 216, 169);font-size: 30px"><p
                 th:text="${msg}"></p></span>
 
 
-        <div style="float: left;">
-            <button class="my-button" style="display: inline; all:unset; margin-bottom: 1rem; border: none">
-                <a style="text-decoration: none" href="/products/form-add"><span style="color: black;  border-radius: 20px 20px 20px 20px;font-size: 25px;transition:background-color0.3s ease;
-            position: relative; z-index: 2;">Add New: <i class="fa-solid fa-book"></i></span></a>
-            </button>
-        </div>
 
 
         <form th:object="${productList}">
@@ -166,9 +160,7 @@
                     <th style="white-space: nowrap;">Quantity Book</th>
                     <th>Price(USD)</th>
                     <th>TypeProduct</th>
-                    <th>Delete</th>
-                    <th>Update</th>
-                    <th>Detail</th>
+                    <th> <a style="all:initial" href="/products/form-add"><i class="fa-solid fa-book"></i></a></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -185,15 +177,14 @@
                         <a style="all:unset" th:attr="onclick=|deleteId('${list.idProduct}', '${list.nameProduct}')|"
                            data-bs-toggle="modal"
                            data-bs-target="#modelId" class="btn btn-danger"
-                           th:href="@{/delete/__${list.idProduct}__}"><span class="font" style="color: blue;"> <i
+                           th:href="@{/delete/__${list.idProduct}__}"><span class="font"> <i
                                 class="fa-solid fa-trash"></i></span></a>
                     </td>
 
 
-                    <td><a th:href="@{/products/{id}/edit(id=${list.idProduct})}"><span class="font"
-                                                                                        style="color: green;"><i
+                    <td><a th:href="@{/products/{id}/edit(id=${list.idProduct})}"><span class="font"><i
                             class="fa-sharp fa-solid fa-user-pen"></i></span></a></td>
-                    <td><a th:href="@{/products/{id}(id=${list.idProduct})}"><span class="font" style="color: blue;"><i
+                    <td><a th:href="@{/products/{id}(id=${list.idProduct})}"><span class="font"><i
                             class="fa-solid fa-info"></i></span></a></td>
                 </tr>
                 </tbody>

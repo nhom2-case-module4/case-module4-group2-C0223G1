@@ -62,11 +62,11 @@ public class ProductController {
     @GetMapping("/delete")
     public String delete(@RequestParam("idDelete") int idDelete, RedirectAttributes redirectAttributes) {
         if (productService.findById(idDelete) == null) {
-            redirectAttributes.addFlashAttribute("msg", "id not found");
+            redirectAttributes.addFlashAttribute("msg", "Id not found");
             return "redirect:/products";
         }
         productService.delete(idDelete);
-        redirectAttributes.addFlashAttribute("msg", "successful delete!");
+        redirectAttributes.addFlashAttribute("msg", "Successful delete!");
         return "redirect:/products";
     }
 
@@ -75,7 +75,7 @@ public class ProductController {
     public String showFormEdit(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
         Product product = productService.findById(id);
         if (productService.findById(id) == null) {
-            redirectAttributes.addFlashAttribute("msg", "id not found");
+            redirectAttributes.addFlashAttribute("msg", "Id not found");
             return "redirect:/products";
         }
         ProductDto productDto = new ProductDto();
@@ -95,7 +95,7 @@ public class ProductController {
         }
         Product product = productService.findById(productDto.getIdProduct());
         if (product == null) {
-            redirectAttributes.addFlashAttribute("msg", "id not found");
+            redirectAttributes.addFlashAttribute("msg", "Id not found");
             return "redirect:/products";
         }
         BeanUtils.copyProperties(productDto, product);
