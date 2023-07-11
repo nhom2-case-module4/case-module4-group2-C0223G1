@@ -67,7 +67,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: wheat;
         border-radius: 12px;
         border-left: 16px solid #a0b4ff;
         min-width: 10em;
@@ -129,31 +128,25 @@
 <body>
 <div th:insert="user/navbar :: copy"></div>
 <div class="background-image">
-    <div class=" container" style="width: 98%">
-        <h1 style="text-align: center">
-            PRODUCT MANAGEMENT
-        </h1>
-
-        <div class="search-box">
-            <form method="get" action="/products/search">
-                <input type="text" name="name" placeholder="search name..." class="input" th:value="${search}">
-                <input type="text" name="author" placeholder="search author..." class="input" th:value="${author}">
-                <button type="submit"><span><i class="fa fa-search"></i></span></button>
-            </form>
-        </div>
-
-        <span th:if="${msg}" id="success" class="hai" style="float: left; background-color: #4CAF50;font-size: 30px"><p
+    <h1 style="text-align: center">
+        PRODUCT MANAGEMENT
+    </h1>
+    <div class="search-box">
+        <form method="get" action="/products/search">
+            <input type="text" name="name" placeholder="search name..." class="input" th:value="${search}">
+            <input type="text" name="author" placeholder="search author..." class="input" th:value="${author}">
+            <button type="submit"><span><i class="fa fa-search"></i></span></button>
+        </form>
+    </div>
+    <div class="container">
+        <span th:if="${msg}" id="success" class="hai" style="float: left; background-color: black;font-size: 20px"><p
                 th:text="${msg}"></p></span>
-
-
         <div style="float: left;">
             <button class="my-button" style="display: inline; margin-bottom: 1rem; border: none">
-                <a style="text-decoration: none" href="/products/form-add"><span style="color: black;  border-radius: 20px 20px 20px 20px;font-size: 25px;transition:background-color0.3s ease;
-            position: relative; z-index: 2;">Add New: <i class="fa-solid fa-book"></i></span></a>
+                <a style="text-decoration: none" href="/products/form-add"><span style="color: black; font-size: 20px;;
+            position: relative; z-index: 2;"> <i class="fa-solid fa-book"></i></span></a>
             </button>
         </div>
-
-
         <form th:object="${productList}">
             <table class="table">
                 <thead>
@@ -183,22 +176,20 @@
                         <a th:attr="onclick=|deleteId('${list.idProduct}', '${list.nameProduct}')|"
                            data-bs-toggle="modal"
                            data-bs-target="#modelId" class="btn btn-danger"
-                           th:href="@{/delete/__${list.idProduct}__}"><span class="font" style="color: blue;"> <i
+                           th:href="@{/delete/__${list.idProduct}__}"><span class="font" style="color: black;"> <i
                                 class="fa-solid fa-trash"></i></span></a>
                     </td>
 
 
                     <td><a th:href="@{/products/{id}/edit(id=${list.idProduct})}"><span class="font"
-                                                                                        style="color: green;"><i
+                                                                                        style="color: black;"><i
                             class="fa-sharp fa-solid fa-user-pen"></i></span></a></td>
-                    <td><a th:href="@{/products/{id}(id=${list.idProduct})}"><span class="font" style="color: blue;"><i
+                    <td><a th:href="@{/products/{id}(id=${list.idProduct})}"><span class="font"><i
                             class="fa-solid fa-info"></i></span></a></td>
                 </tr>
                 </tbody>
             </table>
         </form>
-
-
         <div class="d-flex justify-content-center">
             <nav>
                 <ul class="pagination">
@@ -275,7 +266,6 @@
         </div>
     </div>
 </div>
-
 <script>
     function deleteId(id, name) {
         document.getElementById("idDelete").value = id;
