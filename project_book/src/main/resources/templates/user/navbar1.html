@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Book Store</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
+    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <!-- script
+    ================================================== -->
+    <script src="/js/modernizr.js"></script>
+    <!--		Create: Huynh Duc-->
+    <!--		Day: 08/07/2023-->
+    <link rel="stylesheet" href="/css/dropdownAccount.css">
+</head>
+
+<body>
+
+<div id="header-wrap" th:fragment="copy" th:object="${cart}">
+
+    <div class="top-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="social-links">
+                        <ul>
+                            <li>
+                                <a href="#"><i class="icon icon-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="icon icon-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="icon icon-youtube-play"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="icon icon-behance-square"></i></a>
+                            </li>
+                        </ul>
+                    </div><!--social-links-->
+                </div>
+
+                <div class="col-md-6">
+
+                    <!--                Create: Huynh Duc-->
+                    <!--                Day: 09/07/2023-->
+                    <div class="right-element" th:if="${#request.userPrincipal!=null}" th:object="${user}">
+                        <!--admin-->
+                        <div class="dropdown" th:if="${user.roleUser.nameRole=='ADMIN'}">
+                            <button class="dropbtn p-0">
+                                <i class="icon icon-user"></i>
+                                <span th:text="${user.name}"></span>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="/products">
+                                    Product
+                                </a>
+                                <a href="/order">
+                                    Order
+                                </a>
+                                <a href="/users">
+                                    Users
+                                </a>
+                                <a href="/welcome/logout">
+                                    Logout
+                                </a>
+                            </div>
+                        </div>
+                        <!--admin-->
+                        <!--user-->
+                        <div class="dropdown" th:if="${user.roleUser.nameRole=='USER'}">
+                            <button class="dropbtn">
+                                <i class="icon icon-user"></i>
+                                <span th:text="${user.name}"></span>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="/welcome/logout">
+                                    Logout
+                                </a>
+                            </div>
+                        </div>
+                        <!--user-->
+
+                        <a href="/cart/show-cart" class="cart for-buy"><i class="icon icon-clipboard"></i><span
+                                th:id="size" th:text="'Cart: '+${cart.getItems().size()}"></span></a>
+
+
+                    </div>
+                    <!--                Create: Huynh Duc-->
+                    <!--                Day: 06/07/2023-->
+                    <div class="right-element" th:unless="${#request.userPrincipal!=null}">
+
+                        <a href="/welcome/login" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
+                        <a href="/cart/show-cart" class="cart for-buy"><i class="icon icon-clipboard"></i><span
+                                th:text="'Cart: '+${cart.getItems().size()}"></span></a>
+
+                        <div class="action-menu">
+
+                            <div class="search-bar">
+                                <a class="search-button search-toggle" data-selector="#header-wrap">
+                                    <i class="icon icon-search"></i>
+                                </a>
+                                <form role="search" method="post" class="search-box" action="/welcome/search">
+                                    <input name="search" class="search-field text search-input" placeholder="Search"
+                                           type="search">
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--top-right-->
+                </div>
+
+            </div>
+        </div>
+    </div><!--top-content-->
+
+    <header id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="main-logo">
+                        <a th:href="@{/welcome}"><img src="/images/main-logo.png" alt="logo"></a>
+                    </div>
+
+                </div>
+
+                <div class="col-md-10">
+
+                    <nav id="navbar">
+                        <div class="main-menu stellarnav">
+                            <ul class="menu-list">
+                                <li class="menu-item active"><a th:href="@{/welcome}" data-effect="Home">Home</a></li>
+                                <li class="menu-item"><a href="#about" class="nav-link" data-effect="About">About</a>
+                                </li>
+                                <li class="menu-item has-sub">
+                                <li class="menu-item"><a th:href="@{/welcome/view-all}" class="nav-link"
+                                                         data-effect="Shop">Shop</a></li>
+                                <li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">Articles</a>
+                                </li>
+                            </ul>
+
+                            <div class="hamburger">
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                            </div>
+
+                        </div>
+                    </nav>
+
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+</div><!--header-wrap-->
+
+
+<section id="client-holder" data-aos="fade-up">
+    <div class="container">
+        <div class="row">
+            <div class="inner-content">
+                <div class="logo-wrap">
+                    <div class="grid">
+                        <a href="#"><img src="/images/client-image1.png" alt="client"></a>
+                        <a href="#"><img src="/images/client-image2.png" alt="client"></a>
+                        <a href="#"><img src="/images/client-image3.png" alt="client"></a>
+                        <a href="#"><img src="/images/client-image4.png" alt="client"></a>
+                        <a href="#"><img src="/images/client-image5.png" alt="client"></a>
+                    </div>
+                </div><!--image-holder-->
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/js/jquery-1.11.0.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/script.js"></script>
+
+</body>
+</html>

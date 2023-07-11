@@ -67,6 +67,10 @@
             border-radius: 4px;
             font-size: 16px;
         }
+
+        span {
+            font-weight: bold;
+        }
     </style>
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -87,8 +91,12 @@
     <link rel="stylesheet" href="/css/dropdownAccount.css">
 
 </head>
-<body>
-<div th:insert="user/navbar :: copy"></div>
+
+<body style="background: rgb(243, 242, 236)">
+<!--		Create: Huynh Duc-->
+<!--		Day: 11/07/2023-->
+<div th:insert="user/navbar1 :: copy"></div>
+
 
 
 <div id="toast" class="toast"></div>
@@ -230,6 +238,11 @@
         </div>
     </div>
 </div>
+<!--Create: Huynh Duc-->
+<!--Day: 11/07/2023-->
+<script src="/js/jquery-1.11.0.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/script.js"></script>
 <script>
     const getList = () => {
         $.ajax({

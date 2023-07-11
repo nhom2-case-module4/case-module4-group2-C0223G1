@@ -9,6 +9,7 @@ import com.example.project_book.service.IUsersTypeService;
 import com.example.project_book.service.cart.CartService;
 import com.example.project_book.service.cart.ICartService;
 import com.example.project_book.service.home.IHomeService;
+import com.example.project_book.service.order.IEmailServicee;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -49,6 +51,8 @@ public class HomeController {
 
     //    Create: Huynh Duc
     //    Day: 07/07/2023
+    @Autowired
+    private IEmailServicee emailService;
 
     @Autowired
     private ICartService cartService;
@@ -86,7 +90,7 @@ public class HomeController {
     //    Day: 07/07/2023
     @PostMapping("/create")
     public String createUser(@Valid @ModelAttribute(name = "add") UsersDto usersDto, BindingResult bindingResult,
-                             RedirectAttributes redirectAttributes) {
+                             Model model) throws MessagingException {
         new UsersDto().validate(usersDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "/login/register";
@@ -95,11 +99,13 @@ public class HomeController {
         BeanUtils.copyProperties(usersDto, users);
         boolean check = usersService.existsByEmailUser(users.getEmailUser());
         if (check) {
-            redirectAttributes.addFlashAttribute("msg", "Email already exists");
+            model.addAttribute("email1", "Email already exists");
             return "/login/register";
         } else {
             this.usersService.add(users);
-            redirectAttributes.addFlashAttribute("msg", "Register success");
+            String emailBody = "Hi "+users.getName()+ ", welcome to BookSaw!";
+            emailService.sendEmail(users.getEmailUser(), "Register Success", emailBody);
+            model.addAttribute("msg", check);
             return "/login/login";
         }
     }
