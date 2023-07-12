@@ -84,19 +84,19 @@
                                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">This function cannot be undone</h5>
+                                                <div class="modal-header" style="background: rgb(213,209,191)">
+                                                    <h5 class="modal-title" id="exampleModalLabel" style="color: #9a3737">This function cannot be undone!</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <p>Are you sure want to delete the book:</p>
-                                                    <p style="color:red" id="nameDelete"></p>
+                                                <div class="modal-body" style="background: rgb(243, 242, 236)">
+                                                    <h6>Are you sure want to delete the book:</h6>
+                                                    <h6 style="color: #9a3737" id="nameDelete"></h6>
 
                                                 </div>
-                                                <div class="modal-footer">
+                                                <div class="modal-footer" style="background: rgb(213,209,191)">
                                                     <form action="/cart/delete" method="post">
                                                         <input type="hidden" name="idDelete" id="idDelete">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">No</button>
                                                         <button type="submit" class="btn btn-light">Yes</button>
                                                     </form>
                                                 </div>

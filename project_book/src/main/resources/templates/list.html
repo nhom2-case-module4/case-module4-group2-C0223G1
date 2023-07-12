@@ -48,9 +48,9 @@
             width: 100%;
         }
 
-        .table {
+        .table-responsive {
             width: 100%;
-            font-size: large;
+            font-size: x-large;
             height: 100%;
         }
 
@@ -117,7 +117,7 @@
     <h1 style="text-align: center">
         USERS MANAGEMENT
     </h1>
-    <div class="row">
+    <div class="row container">
         <div class="col-12">
             <div class="search-box">
                 <form method="get" action="/users/search">
@@ -186,20 +186,20 @@
 <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="background: rgb(213,209,191)">
                 <h4 class="modal-title" id="modelTitleId">DELETE USER</h4>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <span style="font-size: 20px; font-weight: bold">Do you want to delete USER </span> <span
-                    class="text-danger" style="font-weight: bold; font-size: 25px" id="nameDelete"></span>
+            <div class="modal-body" style="background: rgb(243, 242, 236)">
+                <span style="font-size: 15px; font-weight: bold">Do you want to delete USER?</span> <span
+                    class="text-danger" style="font-weight: bold; font-size: 15px" id="nameDelete"></span>
                 <br>
                 <br>
-                <div style="color: red; font-weight: bold; font-size: 25px">THIS ACTION CANNOT BE UNDONE!</div>
+                <div style="color: red; font-weight: bold; font-size: 15px">THIS ACTION CANNOT BE UNDONE!</div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style="background: rgb(213,209,191)">
                 <form id="deleteForm" th:action="@{/users/delete}" method="get">
                     <input type="hidden" id="idDelete" name="idDelete">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

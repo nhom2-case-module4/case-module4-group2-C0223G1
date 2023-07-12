@@ -198,6 +198,9 @@ public class OrderController {
     public String showDetail(@PathVariable("id") int id, Model model, Pageable pageable) {
         List<OrderDetailProjection> orderDetailProjectionList = orderService.findDetail(id, pageable).getContent();
         List<OrderProjection> orderProjections = orderService.findAllOrder(pageable).getContent();
+        if (orderDetailProjectionList.isEmpty()){
+            return "redirect:/order";
+        }
         double sum = 0;
         String status = "";
         String note = "";
